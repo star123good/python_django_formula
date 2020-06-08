@@ -1,4 +1,4 @@
-from django.shortcuts import render#, render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import redirect
@@ -237,9 +237,7 @@ class UserView():
     # 404 error page
     def error_404_view(request, exception):
         return render_to_response(request, 'pages/page-404.html')
-        # return render_to_response('pages/page-404.html')
 
     # 500 error page
-    def error_500_view(request, exception):
+    def error_500_view(request):
         return render(request, 'pages/page-500.html')
-        # return render_to_response('pages/page-500.html')
