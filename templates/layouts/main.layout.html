@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% load static %}
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" />
+
+        <!-- inline style to handle loading of various element-->
+        <style>body.loading {visibility: hidden;}</style>
+
+        <!-- App css -->
+        <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/app.css' %}" rel="stylesheet" type="text/css" id="main-style-container" />
+
+        <!-- Core app styles and javascripts -->
+
+        <!-- Allow extra inline CSS in a template -->
+        {% block extra_css %}{% endblock extra_css %}
+
+    </head>
+
+    <body class="loading" data-leftbar-compact-mode="condensed">
+        
+        {% csrf_token %}
+        
+        <!-- Begin page -->
+        <div class="wrapper">
+            {% include 'partials/left-sidebar.html' %}
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page" ng-controller="page">
+                <div class="content">
+                    {% include 'partials/topbar.html' %}
+                    
+                    <!-- Start Content-->
+                    {% block content %}{% endblock content %}
+                    <!-- container -->
+
+                </div>
+                <!-- content -->
+
+                <!-- Footer Start -->
+                {% include 'partials/footer.html' %}
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Right Sidebar -->
+        {% include 'partials/right-sidebar.html' %}
+        <!-- /Right-bar -->
+
+        <script type="text/javascript">
+            var connectionHubUrl = "http://gpserieslivetiming.cloudapp.net/streaming";
+            var series = "{{ championship }}";
+            if(series == "f2") series = "F2"; else series = "F3";
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'GTM-M8V3HMX']);
+            _gaq.push(['_setDomainName', '.gp2series.com']);
+            _gaq.push(['_trackPageview']);
+
+            var gameId = parseInt("{{ game_id }}");
+            var lastGameId = parseInt("{{ last_game_id }}");
+            var flagAjax = false;
+
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+
+        <!-- bundle -->
+        <script src="{% static 'js/app.js' %}"></script>
+
+        {% block extra_js %}{% endblock extra_js %}
+    </body>
+
+</html>

@@ -1,0 +1,63 @@
+{% load static %}
+<!-- Topbar Start -->
+<div class="navbar-custom">
+    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+        <!--
+        <li class="notification-list topbar-dropdown d-lg-block">
+            <button class="nav-link dropdown-toggle arrow-none btn btn-link right-bar-toggle">
+                <img src="{% static 'images/logos/championship/' %}{{formula_logo}}" alt="championship-image" class="img-fluid img-hidden-mobile" style="height: 60px;">
+            </button>
+        </li>
+        -->
+        <li class="notification-list topbar-dropdown d-lg-block">
+            <button class="nav-link dropdown-toggle arrow-none btn btn-link right-bar-toggle">
+                <img src="{% static 'images/logos/' %}{{championship}}/{{team_logo}}" alt="team-image" class="img-fluid img-hidden-mobile" style="height: 35px;">
+            </button>
+        </li>
+    
+        <li class="dropdown notification-list">
+            <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                aria-expanded="false">
+                <span class="account-user-avatar"> 
+                    <img src="{% static 'images/users/default-avatar.png' %}" alt="user-image" class="rounded-circle">
+                </span>
+                <span>
+                    <span class="account-user-name">{{ user_id }}</span>
+                    <span class="account-position">{{ privilege }}</span>
+                </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
+                <!-- item-->
+                <div class=" dropdown-header noti-title">
+                    <h6 class="text-overflow m-0">Welcome !</h6>
+                </div>
+
+                <!-- item-->
+                <a href="/user/logout" class="dropdown-item notify-item">
+                    <i class="mdi mdi-logout mr-1"></i>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+        </li>
+
+    </ul>
+
+    <button class="button-menu-mobile open-left disable-btn">
+        <i class="mdi mdi-menu"></i>
+    </button>
+    
+    <div class="app-search">
+        <h4>Formula Live Analysis</h4>
+        <!-- <form>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search...">
+                <span class="mdi mdi-magnify"></span>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form> -->
+    </div>
+</div>
+<!-- end Topbar -->

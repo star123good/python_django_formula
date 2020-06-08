@@ -1,0 +1,98 @@
+{% extends 'layouts/blank.layout.html' %}
+
+{% load static %}
+
+{% block title %}
+Formula - Log In
+{% endblock title %}
+
+{% block content %}
+
+<div class="account-pages mt-5 mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card">
+
+                    <!-- Logo -->
+                    <div class="card-header pt-4 pb-4 text-center bg-primary">
+                        <a href="/">
+                            <span><img src="{% static 'images/logo.png' %}" alt="" height="35"></span>
+                        </a>
+                    </div>
+
+                    <div class="card-body p-4">
+                        
+                        <div class="text-center w-75 m-auto">
+                            <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Live Timing Analysis Access</h4>
+                            <p class="text-muted mb-4">Welcome DAMS</p>
+                        </div>
+
+                        <form action="" method="POST">
+
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="userid">User ID</label>
+                                <input class="form-control" type="text" name="userid" id="userid" required placeholder="Enter your user id">
+                            </div>
+
+                            <div class="form-group">
+                                <a href="#" class="text-muted float-right"><small>Forgot your password?</small></a>
+                                <label for="userpassword">Password</label>
+                                <input class="form-control" type="password" required name="userpassword" id="userpassword" placeholder="Enter your password">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="championship">Championship</label>
+                                <select class="custom-select" name="championship" id="championship" required>
+                                    <option selected disabled>Select</option>
+                                    <option value="fe">FIA Formula E</option>
+                                    <option value="f2">FIA Formula 2</option>
+                                    <option value="f3">FIA Formula 3</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="team">Team</label>
+                                <select class="custom-select" name="team" id="team" required>
+                                    <option selected disabled>Select</option>
+                                    {% for team in teams %}
+                                    <option value="{{team.id}}">{{ team.team_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-primary" type="submit"> Log In </button>
+                            </div>
+
+                        </form>
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
+                <!--
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <p class="text-muted">Don't have an account? <a href="/user/register" class="text-muted ml-1"><b>Sign Up</b></a></p>
+                    </div> 
+                </div>
+            -->
+                <!-- end row -->
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end page -->
+
+{% endblock content %}
