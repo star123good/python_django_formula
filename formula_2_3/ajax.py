@@ -27,11 +27,13 @@ class Formula23Ajax():
     def set_gameId_championship(self, game_id):
         self.game_id = game_id
         try:
+            print("game id championship", self.game_id, Session.objects.get(id=self.game_id))
             self.session = Session.objects.get(id=self.game_id)
             self.championship = self.session.championship
             self.teams = Team.objects.filter(championship=self.championship)
             self.players = Player.objects.filter(is_enable=1, team__in=self.teams).order_by('number')
-        except ObjectDoesNotExist:
+        except ObjectDoesNotExist as e:
+            print("set_gameId_championship", e, self.game_id)
             pass
 
 
@@ -348,6 +350,7 @@ class Formula23Ajax():
         result = models.Data.objects.filter(id__in=datas).order_by('created_at', 'id')
         r_ids = set(r.id for r in result)
         result = filter(lambda x: x.id not in r_ids, result)
+        print("current game", result)
         # return result
         
         if flag and result : # reload

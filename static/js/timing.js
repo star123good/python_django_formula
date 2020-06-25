@@ -1690,7 +1690,8 @@ $(function () {
     }, 1000);
 
     if (connectionHubUrl === undefined) {
-        $.connection.hub.url = '/streaming';
+        // $.connection.hub.url = '/streaming';
+        $.connection.hub.url = 'https://ltss.fiaformula2.com/streaming';
     }
     else {
         $.connection.hub.url = connectionHubUrl;

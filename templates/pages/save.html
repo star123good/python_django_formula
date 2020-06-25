@@ -52,7 +52,7 @@ Formula - SAVE
     <!-- end page-wrapper -->
  
     <script type="text/javascript">
-        var connectionHubUrl = "http://gpserieslivetiming.cloudapp.net/streaming";
+        var connectionHubUrl = 'https://ltss.fiaformula2.com/streaming';
         var series = "{{ championship }}";
         if(series == "f2") series = "F2"; else series = "F3";
 
@@ -98,11 +98,11 @@ Formula - SAVE
 {% block extra_js %}
 
     <!-- signalR js -->
-    <script src="{% static 'js/jquery-1.12.2.min.js' %}"></script>
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
     <script src="{% static 'js/modernizr-custom.js' %}"></script>
-    <script src="{% static 'js/jquery.signalR-2.2.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery.signalR-2.4.1.min.js' %}"></script>
     <script src="{% static 'js/angular-1.5.0.min.js' %}"></script>
-    <script src="https://ltss.fiaformula2.com/streaming/hubs"></script>
+    <script src="{% static 'js/hubs.js' %}"></script>
     <script src="{% static 'js/timing.js' %}"></script>
     <!-- signalR js ends -->
     
