@@ -9,3 +9,4 @@ python manage.py migrate
 
 # run server
 python manage.py runserver
+nohup python3 manage.py runserver 0.0.0.0:80 &
