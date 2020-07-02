@@ -847,28 +847,37 @@ $(function () {
         return currentLists;
     }
 
-    function addVirtualDriver(selectRealDriverId, gapToAdd, virtualDriverName, selectColor){
-        let virtualDriver = {
-            initialRacingNumber : driverLines[selectRealDriverId].Driver.RacingNumber,
-            gapToAdd : gapToAdd,
-            name : virtualDriverName,
-            colorValue : selectColor
-        };
+    function addVirtualDriver(selectRealDriverIds, gapToAdd, virtualDriverNames, selectColor){
+        if (!selectRealDriverIds.length || selectRealDriverIds.length != virtualDriverNames.length) {
+            warningAlert("You must select & input corect numbers of Drivers.");
+            return ;
+        }
 
-        $("#table-board input[type=checkbox]").each(function(index){
-            this.checked = false;
+        selectRealDriverIds.forEach((selectRealDriverId, i) => {
+            let virtualDriverName = virtualDriverNames[i];
+
+            let virtualDriver = {
+                initialRacingNumber : driverLines[selectRealDriverId].Driver.RacingNumber,
+                gapToAdd : gapToAdd,
+                name : virtualDriverName,
+                colorValue : selectColor
+            };
+
+            $("#table-board input[type=checkbox]").each(function(index){
+                this.checked = false;
+            });
+
+            if(virtualDrivers.find((driver) => {return driver.name === virtualDriver.name})){
+                warningAlert("You must input the Different name of virtual Driver.");
+            }
+            else{
+                virtualDrivers.push(virtualDriver);
+                sortedRealDrivers = getTableData(driverLines, virtualDrivers);
+                timingScope.sortedRealDrivers = sortedRealDrivers;
+                timingScope.$apply();
+                successAlert("A virtual Driver has added now.");
+            }
         });
-
-        if(virtualDrivers.find((driver) => {return driver.name === virtualDriver.name})){
-            warningAlert("You must input the Different name of virtual Driver.");
-        }
-        else{
-            virtualDrivers.push(virtualDriver);
-            sortedRealDrivers = getTableData(driverLines, virtualDrivers);
-            timingScope.sortedRealDrivers = sortedRealDrivers;
-            timingScope.$apply();
-            successAlert("A virtual Driver has added now.");
-        }
     }
 
     function deleteVirtualDrivers(keys){
@@ -2323,11 +2332,12 @@ $(function () {
         
         // virtual driver add
         $(document).on("click", "#btn-add", function(){
-            const selectRealDriver = $("#select-driver").val();
+            const selectRealDrivers = $("#select-driver").val();
             const gapToAdd = $("#input-gap-add").val();
             const virtualDriverName = $("#input-drvier-name").val();
             const selectColor = $("#select-color").val();
-            if(!selectRealDriver){
+
+            if(!selectRealDrivers || !selectRealDrivers.length){
                 warningAlert("You must select a real driver to follow.");
             }
             else if(!gapToAdd){
@@ -2341,9 +2351,12 @@ $(function () {
             }
             else{
                 // add virtaul driver
-                const selectRealDriverId = parseInt(selectRealDriver);
+                let selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
+                let virtualDriverNames;
+                if (selectRealDrivers.length == 1) virtualDriverNames = [virtualDriverName];
+                else virtualDriverNames = selectRealDrivers.map((s, i) => virtualDriverName + i);
 
-                addVirtualDriver(selectRealDriverId, parseFloat(gapToAdd), virtualDriverName, selectColor);
+                addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
             }
         });
 
@@ -2353,28 +2366,24 @@ $(function () {
             // const gapAddConstant = 1;
             // $("#input-gap-add").val(gapAddConstant).change();
             const gapToAdd = $("#input-gap-add").val();
-
-            // let randomIndex = Math.floor(Math.random() * ($("#select-driver option").length - 1)) + 1;
-            // let selectRealDriver = $("#select-driver option:eq("+randomIndex+")").val();
-            // $("#select-driver").val(selectRealDriver);
-            const selectRealDriver = $("#select-driver").val();
-            let selectRealDriverId = parseInt(selectRealDriver);
+            const selectRealDrivers = $("#select-driver").val();
             
-            if(!selectRealDriver){
+            if(!selectRealDrivers || !selectRealDrivers.length){
                 warningAlert("You must select a real driver to follow.");
             }
             else if(!gapToAdd){
                 warningAlert("You must input the value of GAP to add.");
             }
             else{
+                let selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
                 randomIndex = Math.floor(Math.random() * ($("#select-color option").length - 1)) + 1;
                 let selectColor = $("#select-color option:eq("+randomIndex+")").val();
                 $("#select-color").val(selectColor);
 
-                let virtualDriverName = "VIRTUAL_"+selectRealDriver.replace(/[0-9]+ : /i, "").trim()+"_to_Follow";
-                $("#input-drvier-name").val(virtualDriverName).change();
+                let virtualDriverNames = selectRealDrivers.map(s => "VIRTUAL_"+s.replace(/[0-9]+ : /i, "").trim()+"_to_Follow");
+                $("#input-drvier-name").val(virtualDriverNames[0]).change();
 
-                addVirtualDriver(selectRealDriverId, parseFloat(gapToAdd), virtualDriverName, selectColor);
+                addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
             }
         });
 

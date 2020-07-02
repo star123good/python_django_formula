@@ -438,14 +438,14 @@ Formula - VIRTUAL
                                         <div class="btn-toolbar">
                                             <form class="form ml-auto mr-auto" role="form" id="form-virtual">
                                                 <div class="row mb-1">
-                                                    <div class="col-6 form-group" style="padding-left: 5px; padding-right: 5px;">
+                                                    <div class="col-12 form-group" style="padding-left: 5px; padding-right: 5px;">
                                                         <label class="sr-only" for="select-driver">Driver</label>
-                                                        <select class="custom-select is-valid" id="select-driver" required style="width:100%;">
+                                                        <select class="custom-select is-valid" id="select-driver" required  multiple>
                                                             <option selected disabled>Driver</option>
                                                             <option ng-repeat="line in lines track by $index" ng-if="line.Number">{{line.Driver.RacingNumber + " : " + line.GetDriverName(false)}}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-6 form-group" style="padding-left: 5px; padding-right: 5px;">
+                                                    <div class="col-12 form-group" style="padding-left: 5px; padding-right: 5px;">
                                                         <label class="sr-only" for="input-drvier-name">Ghost</label>
                                                         <input type="text" class="form-control is-valid" id="input-drvier-name" placeholder="Ghost" required style="width:100%;">
                                                     </div>
