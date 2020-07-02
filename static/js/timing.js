@@ -2380,7 +2380,7 @@ $(function () {
                 let selectColor = $("#select-color option:eq("+randomIndex+")").val();
                 $("#select-color").val(selectColor);
 
-                let virtualDriverNames = selectRealDrivers.map(s => "VIRTUAL_"+s.replace(/[0-9]+ : /i, "").trim()+"_to_Follow");
+                let virtualDriverNames = selectRealDrivers.map(s => "GHOST_"+s.replace(/[0-9]+ : /i, "").trim()+"");
                 $("#input-drvier-name").val(virtualDriverNames[0]).change();
 
                 addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
