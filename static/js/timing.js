@@ -190,8 +190,8 @@ $(function () {
 
     function init() {
 
-        lt.server.joinFeeds(series, ['data', 'weather', 'status', 'time', 'commentary']);
-        lt.server.getData2(series, ['data', 'statsfeed', 'weatherfeed', 'sessionfeed', 'trackfeed', 'commentaryfeed', 'timefeed']).done(processData);
+        lt.server.joinFeeds(series, ['data', 'weather', 'status', 'time', 'commentary','racedetails']);
+        lt.server.getData2(series, ['data', 'statsfeed', 'weatherfeed', 'sessionfeed', 'trackfeed', 'commentaryfeed', 'timefeed', 'racedetailsfeed']).done(processData);
 
         reconnectCounter++;
         $('.connection-status').removeClass('reconnecting reconnected disconnected');
@@ -257,6 +257,10 @@ $(function () {
             //            timefeed.running = tt[1];
             //            timefeed.remaining = parseTime(tt[2]);
         }
+        if (data.racedetailsfeed) {
+            var csf = data.racedetailsfeed;
+            lt.client.racedetailsfeed(csf[0], csf[1]);
+        }
 
         bestSorted = getBestSortedDrivers();
         timingScope.bestSorted = bestSorted;
@@ -264,6 +268,11 @@ $(function () {
         timingScope.sortedRealDrivers = sortedRealDrivers;
         timingScope.$apply();
         // timingrootScope.$apply();
+    }
+
+    function zeroPad(num, places) {
+        var zero = places - num.toString().length + 1;
+        return Array(+(zero > 0 && zero)).join('0') + num;
     }
 
     if (!lt || !lt.client) return;
@@ -275,6 +284,22 @@ $(function () {
         ajax_send({message: msg}, 'comment', 'commentary: ' + msg);
         //$('#commentary').append('<p>' + msg + '</p>'); $('#commentary').scrollTop($('#commentary')[0].scrollHeight); };
     };
+
+    lt.client.racedetailsfeed = function (sentTime, raceDetails) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        timingScope.roundSeason = raceDetails.Season;
+        timingScope.roundNumber = raceDetails.Round;
+        timingScope.roundRace = raceDetails.Race + ',';
+        timingScope.roundCountry = raceDetails.Country;
+        timingScope.roundCountryCode = raceDetails.CountryCode;
+        timingScope.roundCircuit = raceDetails.Circuit;
+        timingScope.roundDate = new Date(raceDetails.Date);
+        timingScope.roundSession = raceDetails.Session;
+        timingScope.day = zeroPad(timingScope.roundDate.getDate(), 2);
+        timingScope.month = months[timingScope.roundDate.getMonth()];
+        ajax_send({raceDetails : raceDetails, day : timingScope.day, month : timingScope.month}, 'racedetails', 'racedetails: ' + timingScope.day + ' ' + timingScope.month + 'Session is ' + timingScope.roundSession);
+    }
 
     lt.client.timefeed = function (sentTime, freerun, value) {
         try {
@@ -614,12 +639,21 @@ $(function () {
             sentTime = parseF1Date(sentTime);
             if (serverTime < sentTime) serverTime = sentTime;
             if (feed && feed.Session) {
-                if (feed.Series == 'F2' || feed.Series == 'GP2') {
+                /* if (feed.Series == 'F2' || feed.Series == 'GP2') {
                     timingScope.heading = 'Formula 2 ' + feed.Session + ' Session';
                 }
                 else {
                     timingScope.heading = feed.Series + ' Series ' + feed.Session + ' Session';
+                } */
+                var seriesName = "";
+                if (feed.Series == "F2") {
+                    seriesName = "Formula 2 ";
                 }
+                if (feed.Series == "F3") {
+                    seriesName = "Formula 3 ";
+                }
+                timingScope.heading = feed.Session == "Race" ? seriesName + "Race" : seriesName + feed.Session + " Session";
+                
                 if (feed.Session == 'Race'){
                     timingScope.feed.Session = 'Race';
                     timingScope.feed.Session1 = 'Race';

@@ -175,7 +175,7 @@ class Formula23View():
                 elif int(request.session.get('game_id', 0)) > 0:
                     game_id = int(request.session.get('game_id', 0))
 
-                # print(game_id, datas, stats, flag_reload)
+                print(method, game_id, datas, stats, flag_reload)
 
                 ajax_controller.set_gameId_championship(game_id)
 
@@ -220,6 +220,9 @@ class Formula23View():
                         result = ajax_controller.get_current_time_data(datas, flag_reload)
                     if len(stats) > 0 :
                         result.update(ajax_controller.get_current_time_stat(stats, flag_reload))
+                elif method == 'racedetails':
+                    # new feed
+                    pass
                 else :
                     # none
                     result = {'error' : 'There is no method.'}
