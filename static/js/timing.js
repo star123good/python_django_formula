@@ -2271,6 +2271,7 @@ $(function () {
         this.id = '';               // id of element
         this.x = 0;                 // x value of element
         this.y = 0;                 // y value of element
+        this.isWaiting = false;     // flag waiting
 
         this.initDriver();
         console.log("create new GDriver");
@@ -2436,12 +2437,19 @@ $(function () {
                 var gd = gDrivers.find(gd => gd.indexKey == d.indexKey);
                 if (gd) {
                     gd.setDriver(d);
+                    gd.isWaiting = false;
                 }
                 else {
                     gd = new GDriver(d);
                     gDrivers.push(gd);
                 }
-            })
+            });
+            // check until waiting
+            gDrivers = gDrivers.filter(gd => {
+                let flag = !gd.isWaiting;
+                gd.isWaiting = true;
+                return flag;
+            });
         }
     }
 
