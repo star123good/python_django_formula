@@ -4032,8 +4032,9 @@ svg.radar {
     height: auto;
 }
 svg.radar .base {
-    stroke: #404040;
+    stroke: #0e26bd;
     stroke-width: 1px;
+    fill: #fff;
 }
 svg.radar text.base {
     stroke: none;

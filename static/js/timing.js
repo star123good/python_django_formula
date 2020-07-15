@@ -627,9 +627,11 @@ $(function () {
         line.Update(lineUpdate);
         if (timingScope) timingScope.$apply();
     }
+
     var queuedDataFeed = [];
     var datafeedQueuing = true;
     var cutOffTime = {};
+
     lt.client.datafeed = function (sentTime, lineNo, feed) {
         if (datafeedQueuing) {
             queuedDataFeed.push({ 'sentTime': sentTime, 'feed': feed });
@@ -1150,8 +1152,10 @@ $(function () {
         sortedRealDrivers = mergeDrivers;
 
         // draw circle map drivers
+        if (GDriver.IS_ENABLE) {
+            GDriver.resetDrivers(sortedRealDrivers);
+        }
         
-    
         console.log("sorted Real Drivers", sortedRealDrivers);
         return sortedRealDrivers;
     }
@@ -2255,20 +2259,25 @@ $(function () {
      *      circle map
      */
     // Graph Driver class
-    GDriver = function(driver) {
-        this.driver = driver;
-        this.GAP = null;
-        this.position = null;
-        this.speed = null;
-        this.isNormal = true;
-        this.$element = null;
-        this.label = '';
-        this.class = '';
-        this.id = '';
-        this.x = 0;
-        this.y = -GDriver.CIRCLE_RADIUS[0];
+    var GDriver = function(driver) {
+        this.driver = driver;       // sorted driver
+        this.GAP = 0;               // GAP float value
+        this.LAP = 0;               // LAP int value
+        this.position = 0;          // radian value
+        this.$element = null;       // element of driver in circle map
+        this.indexKey = '';         // indexKey of driver
+        this.label = '';            // label of element
+        this.class = '';            // class name for color, etc
+        this.id = '';               // id of element
+        this.x = 0;                 // x value of element
+        this.y = 0;                 // y value of element
+
+        this.initDriver();
+        console.log("create new GDriver");
     };
 
+    // enable circle map
+    GDriver.IS_ENABLE = false;
     // redraw circle map step milliseconds
     GDriver.STEP_REDRAW = 1000;
     // min speed
@@ -2277,43 +2286,175 @@ $(function () {
     GDriver.MAX_SPEED = 0.5;
     // radius of circles
     GDriver.CIRCLE_RADIUS = [100, 85, 70];
+    // current LAP
+    GDriver.CURRENT_LAP = 0;
+    // total laptime
+    GDriver.TOTAL_LAPTIME = 100000;
+    // S1 position
+    GDriver.S1_POSITION = 2;
+    // S2 position
+    GDriver.S2_POSITION = 4.28;
     // first position
     GDriver.FIRST_POSITION = 0;
     // first speed
     GDriver.FIRST_SPEED = 0;
-    // current LAP
-    GDriver.CURRENT_LAP = 0;
+    // first S
+    GDriver.FIRST_S = 0;
 
-    // create and return graph car
-    GDriver.prototype.createTemplate = function () {
-        // create new graph car
-        this.$element = `<g class="car car-class-${this.class}">
-                            <line x1="0" x2="${this.x}" y1="0" y2="${this.y}"></line>
-                            <circle cx="${this.x}" cy="${this.y}" r="5"></circle>
-                            <text x="${this.x}" y="${this.y}">${this.label}</text>
-                        </g>`;
-    }
 
-    // get position of circle map
-    GDriver.prototype.getPosition = function(index) {
-        //
+    // list of GDrivers
+    var gDrivers = [];
+
+
+    // initialize driver
+    GDriver.prototype.initDriver = function() {
+        this.position = 0;
+        this.indexKey = this.driver.indexKey;
+        if (this.driver.indexKey.slice(0, 8) == 'virtual-') {
+            // virtual driver
+            this.class = 'pam';
+            this.label = this.driver.indexKey.replace('GHOST_', '').slice(8,10);
+        }
+        else {
+            // real driver
+            this.class = '';
+            this.label = this.driver.number;
+        }
+
+        this.setDriver();
     };
 
-    // set position of circle map
-    GDriver.prototype.setPosition = function(index, pos) {
-        //
+    // set driver
+    GDriver.prototype.setDriver = function() {
+        // GAP
+        let gapFloat = parseFloat(this.driver.GAP);
+        if (isNaN(gapFloat)) gapFloat = 0;
+        this.GAP = gapFloat * 1000;
+        // LAP
+        let lap = parseInt(this.driver.LAP);
+        if (isNaN(lap)) lap = 0;
+        this.LAP = lap;
+        // pos = id
+        this.id = parseInt(this.driver.pos);
+
+        this.setPosition();
+    };
+
+    // draw graph car
+    GDriver.prototype.drawCar = function () {
+        this.$element = $('svg.radar g#car-id-'+this.id);
+        if (this.$element.length) {
+            // caculate x, y
+            let circle, r;
+            if (this.LAP == GDriver.CURRENT_LAP) circle = 0;
+            else if (this.LAP == GDriver.CURRENT_LAP - 1) circle = 1;
+            else circle = 2;
+            r = GDriver.CIRCLE_RADIUS[circle];
+            this.x = r * Math.sin(this.position);
+            this.y = - r * Math.cos(this.position);
+
+            // draw
+            this.$element.attr('class', 'car car-class-'+this.class);
+            this.$element.removeAttr('hidden');
+            this.$element.find('line').attr('x2', this.x);
+            this.$element.find('line').attr('y2', this.y);
+            this.$element.find('circle').attr('cx', this.x);
+            this.$element.find('circle').attr('cy', this.y);
+            this.$element.find('text').attr('x', this.x);
+            this.$element.find('text').attr('y', this.y);
+            this.$element.find('text').text(this.label);
+        }
+    }
+
+    // set position of first
+    // calculate by speed, S
+    GDriver.prototype.setPositionFirst = function() {
+        // LAPTIME to milliseconds
+        let lapmilisec = parseTime(this.driver.LAPTIME).getTime();
+        // total laptime
+        if (!isNaN(lapmilisec) && lapmilisec > 0) GDriver.TOTAL_LAPTIME = lapmilisec;
+        // speed
+        GDriver.FIRST_SPEED = 2 * Math.PI / GDriver.TOTAL_LAPTIME;
+        // LAP
+        GDriver.setLAP(this.LAP);
+
+        // S1, S2, S3
+        let s1 = parseFloat(this.driver.S1),
+            s2 = parseFloat(this.driver.S2),
+            s3 = parseFloat(this.driver.S3),
+            new_s_part = 0;
+        // S position
+        if (!isNaN(s1)) GDriver.S1_POSITION = 2 * Math.PI * s1 / GDriver.TOTAL_LAPTIME;
+        if (!isNaN(s2)) GDriver.S2_POSITION = GDriver.S1_POSITION + 2 * Math.PI * s2 / GDriver.TOTAL_LAPTIME;
+        // s_part
+        if (isNaN(s3) && !isNaN(s2)) new_s_part = 2;
+        else if (isNaN(s2) && !isNaN(s1)) new_s_part = 1;
+
+        if (GDriver.FIRST_S != new_s_part) {
+            // by S
+            GDriver.FIRST_S = new_s_part;
+            if (new_s_part == 0) GDriver.FIRST_POSITION = 0;
+            else if (new_s_part == 1) GDriver.FIRST_POSITION = GDriver.S1_POSITION;
+            else if (new_s_part == 2) GDriver.FIRST_POSITION = GDriver.S2_POSITION;
+        }
+        else {
+            // by speed
+            GDriver.FIRST_POSITION = GDriver.FIRST_POSITION + GDriver.FIRST_SPEED * GDriver.STEP_REDRAW;
+        }
+    };
+
+    // set position
+    GDriver.prototype.setPosition = function() {
+        if (this.id == 1) {
+            // first driver
+            this.setPositionFirst();
+            this.position = GDriver.FIRST_POSITION;
+        }
+        else if ((this.GAP == 0) && (this.LAP < GDriver.CURRENT_LAP - 1)) {
+            // stop
+        }
+        else {
+            // others moving
+            // calculate by GAP
+            this.position = GDriver.FIRST_POSITION - GDriver.FIRST_SPEED * this.GAP;
+        }
     }
 
     // set current LAP
     GDriver.setLAP = function(lap) {
-        if (lap > 0) {
+        if (!isNaN(lap) && lap > 0) {
             GDriver.CURRENT_LAP = lap;
+            $('text#lap-0').text('Lap ' + lap);
+            $('text#lap-1').text('Lap ' + (lap-1));
+        }
+    }
+
+    // reset sorted drivers to GDrivers
+    GDriver.resetDrivers = function(drivers) {
+        if (GDriver.IS_ENABLE) {
+            drivers.forEach(d => {
+                var gd = gDrivers.find(gd => gd.indexKey == d.indexKey);
+                if (gd) {
+                    gd.setDriver(d);
+                }
+                else {
+                    gd = new GDriver(d);
+                    gDrivers.push(gd);
+                }
+            })
         }
     }
 
     // draw circle map
     GDriver.drawMap = function() {
-        //
+        if (GDriver.IS_ENABLE) {
+            // console.log("redraw circle map");
+            $('svg.radar g.car').attr('hidden', 'hidden');
+            gDrivers.forEach(d => {
+                d.setPosition();
+                d.drawCar();
+            });
+        }
     }
 
 
@@ -2623,6 +2764,8 @@ $(function () {
 
         // redraw circle map each sec
         if ($('#app svg.radar').length) {
+            GDriver.IS_ENABLE = true;
+            if (typeof defaultLaptime !== "undefined") GDriver.TOTAL_LAPTIME = defaultLaptime;
             setInterval(GDriver.drawMap, GDriver.STEP_REDRAW);
         }
 

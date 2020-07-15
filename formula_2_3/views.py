@@ -236,7 +236,9 @@ class Formula23View():
     def map(request):
         if request.session.get('user_id', False):
             return render(request, 'pages/timing_map.html', {
-                **Formula23View.getInitParams(request),
-                'drivers_range' : range(1,50)})
+                    **Formula23View.getInitParams(request),
+                    'drivers_range' : range(50, 0, -1),
+                    'default_laptime' : 77340,
+                })
         else:
             return redirect('/user/login')
