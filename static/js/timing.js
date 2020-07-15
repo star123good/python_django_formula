@@ -1148,8 +1148,11 @@ $(function () {
         }
     
         sortedRealDrivers = mergeDrivers;
+
+        // draw circle map drivers
+        
     
-        // console.log("sorted Real Drivers", sortedRealDrivers);
+        console.log("sorted Real Drivers", sortedRealDrivers);
         return sortedRealDrivers;
     }
     
@@ -2248,6 +2251,72 @@ $(function () {
     var slider;
 
 
+    /**
+     *      circle map
+     */
+    // Graph Driver class
+    GDriver = function(driver) {
+        this.driver = driver;
+        this.GAP = null;
+        this.position = null;
+        this.speed = null;
+        this.isNormal = true;
+        this.$element = null;
+        this.label = '';
+        this.class = '';
+        this.id = '';
+        this.x = 0;
+        this.y = -GDriver.CIRCLE_RADIUS[0];
+    };
+
+    // redraw circle map step milliseconds
+    GDriver.STEP_REDRAW = 1000;
+    // min speed
+    GDriver.MIN_SPEED = 0.01;
+    // max speed
+    GDriver.MAX_SPEED = 0.5;
+    // radius of circles
+    GDriver.CIRCLE_RADIUS = [100, 85, 70];
+    // first position
+    GDriver.FIRST_POSITION = 0;
+    // first speed
+    GDriver.FIRST_SPEED = 0;
+    // current LAP
+    GDriver.CURRENT_LAP = 0;
+
+    // create and return graph car
+    GDriver.prototype.createTemplate = function () {
+        // create new graph car
+        this.$element = `<g class="car car-class-${this.class}">
+                            <line x1="0" x2="${this.x}" y1="0" y2="${this.y}"></line>
+                            <circle cx="${this.x}" cy="${this.y}" r="5"></circle>
+                            <text x="${this.x}" y="${this.y}">${this.label}</text>
+                        </g>`;
+    }
+
+    // get position of circle map
+    GDriver.prototype.getPosition = function(index) {
+        //
+    };
+
+    // set position of circle map
+    GDriver.prototype.setPosition = function(index, pos) {
+        //
+    }
+
+    // set current LAP
+    GDriver.setLAP = function(lap) {
+        if (lap > 0) {
+            GDriver.CURRENT_LAP = lap;
+        }
+    }
+
+    // draw circle map
+    GDriver.drawMap = function() {
+        //
+    }
+
+
     $(document).ready(function(){
 
         // rangeslider init - powerange
@@ -2551,6 +2620,11 @@ $(function () {
             slider = $("#range_03").data("ionRangeSlider");
         }
 
+
+        // redraw circle map each sec
+        if ($('#app svg.radar').length) {
+            setInterval(GDriver.drawMap, GDriver.STEP_REDRAW);
+        }
 
     });
 

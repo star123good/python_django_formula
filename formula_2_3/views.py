@@ -69,11 +69,11 @@ class Formula23View():
             current_session_id, current_session_title, last_session_id, current_session_laps, different_time, circuit_title, record_sessions_all = Formula23View.getSessionParams(championship)
             
             return {
-                'championship' : championship, 
-                'game_id' : current_session_id, 
-                'last_game_id' : last_session_id, 
-                'session_laps' : current_session_laps, 
-                'current_session_title' : current_session_title, 
+                'championship' : championship,
+                'game_id' : current_session_id,
+                'last_game_id' : last_session_id,
+                'session_laps' : current_session_laps,
+                'current_session_title' : current_session_title,
                 'difftime' : different_time,
                 'circuit_title' : circuit_title,
                 'user_id' : user_name,
@@ -232,3 +232,11 @@ class Formula23View():
 
         # print(result)
         return HttpResponse(json.dumps(result), content_type="application/json")
+
+    def map(request):
+        if request.session.get('user_id', False):
+            return render(request, 'pages/timing_map.html', {
+                **Formula23View.getInitParams(request),
+                'drivers_range' : range(1,50)})
+        else:
+            return redirect('/user/login')

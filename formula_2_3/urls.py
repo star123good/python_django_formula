@@ -9,4 +9,5 @@ urlpatterns = [
     path('analysis', views.Formula23View.analysis, name='analysis'),
     path('ajax', views.Formula23View.ajax, name='ajax'),
     path('save', views.Formula23View.save, name='save'),
+    path('map', views.Formula23View.map, name='map'),
 ]

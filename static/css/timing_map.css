@@ -1,0 +1,5593 @@
+.ReactVirtualized__Table__headerRow {
+    font-weight: 700;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.ReactVirtualized__Table__row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.ReactVirtualized__Table__headerTruncatedText {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.ReactVirtualized__Table__headerColumn,
+.ReactVirtualized__Table__rowColumn {
+    margin-right: 10px;
+    min-width: 0px;
+}
+.ReactVirtualized__Table__rowColumn {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ReactVirtualized__Table__headerColumn:first-of-type,
+.ReactVirtualized__Table__rowColumn:first-of-type {
+    margin-left: 10px;
+}
+.ReactVirtualized__Table__sortableHeaderColumn {
+    cursor: pointer;
+}
+
+.ReactVirtualized__Table__sortableHeaderIconContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.ReactVirtualized__Table__sortableHeaderIcon {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 24px;
+    flex: 0 0 24px;
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
+}
+
+.fullscreen {
+    background-color: #000;
+    height: 100%;
+}
+a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+a.btn {
+    text-decoration: none !important;
+}
+.slider {
+    width: 100%;
+    height: 24px;
+}
+.slider .thumb {
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    border-radius: 7px;
+    font-size: 0.9em;
+    text-align: center;
+    background-color: #54ffff;
+    color: white;
+    cursor: pointer;
+}
+.slider .track {
+    top: 6px;
+    height: 2px;
+    position: relative;
+    background: #54ffff;
+}
+.slider .track-1 {
+    background: grey;
+}
+span.playback-position {
+    font-size: small;
+    text-align: center;
+}
+.spinner input {
+    text-align: center;
+}
+span.with-tooltip {
+    border-bottom: 1px dotted #54ffff;
+    cursor: help;
+}
+.panel-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.panel-loading svg.loading-spinner {
+    width: 64px;
+    height: 64px;
+}
+.panel-loading svg.loading-spinner #background-circle {
+    visibility: hidden;
+}
+.screen-loading {
+    margin: auto;
+    text-align: center;
+}
+.screen-loading svg.loading-spinner #background-circle {
+    visibility: hidden;
+}
+.content {
+    flex: 1;
+}
+.schedule-list h3 {
+    color: #54ffff;
+    border-bottom: 1px solid #54ffff;
+}
+.service-panel {
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1em;
+}
+.service-panel .card-title {
+    background-color: #090;
+    color: white;
+    border-color: #090;
+    display: flex;
+    justify-content: center;
+}
+.service-panel .card-title .service-name {
+    flex-grow: 1;
+}
+.service-panel .card-body {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-color: #090;
+    border-radius: 0 0 3px 3px;
+    font-size: large;
+    line-height: 1.2;
+    padding: 0.75rem;
+}
+@media (prefers-reduced-motion: reduce) {
+    .service-panel .card-body {
+        transition: none;
+    }
+}
+.service-panel .card-body span {
+    flex: 1;
+}
+.service-panel:hover .card-body {
+    background-color: #060;
+}
+.service-panel.service-panel-upcoming {
+    cursor: auto;
+}
+.service-panel.service-panel-upcoming .card-title {
+    background-color: #cccccc;
+    border-color: #cccccc;
+    color: black;
+}
+.service-panel.service-panel-upcoming .card-body {
+    font-size: x-large;
+    border-color: #cccccc;
+}
+.service-panel.service-panel-upcoming:hover .card-body {
+    background-color: inherit;
+}
+.service-panel.hidden .card-title {
+    background-color: #999999;
+    border-color: #cccccc;
+    color: black;
+}
+.service-panel.hidden .card-body {
+    border-color: #cccccc;
+}
+.service-panel.hidden:hover .card-body {
+    background-color: #555555;
+}
+.service-panel.external .card-title {
+    background-color: #009;
+    border-color: #2090ff;
+    color: white;
+}
+.service-panel.external .card-body {
+    border-color: #2090ff;
+}
+.service-panel.external:hover .card-body {
+    background-color: #006;
+}
+.service-panel.external small {
+    color: #2090ff;
+    float: right;
+    margin-top: 0.5rem;
+}
+.service-panel.external small a {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #2090ff;
+    text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .service-panel.external small a {
+        transition: none;
+    }
+}
+.service-panel.external small a:hover {
+    color: white;
+    text-decoration: underline;
+}
+.service-panel.external .btn-service {
+    border-color: #2090ff;
+    color: #2090ff;
+}
+.service-panel.external .btn-service:not(:disabled):not(.disabled):hover {
+    background-color: #2090ff;
+    color: black;
+}
+.service-countdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+.service-countdown-wrapper .service-panel {
+    align-self: stretch;
+    margin: 5rem;
+}
+.table td,
+.table th {
+    vertical-align: middle;
+}
+.dropdown-menu {
+    transition: opacity 0.15s linear;
+}
+.dropdown-menu h6 .input-group,
+.dropdown-menu h6 > div {
+    margin-top: 0.3rem;
+}
+.dropdown-menu a {
+    text-decoration: none;
+}
+.dropdown-menu .fa {
+    width: 2rem;
+    text-align: center;
+}
+.dropdown-menu .dropdown-item {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+@media (prefers-reduced-motion: reduce) {
+    .dropdown-menu .dropdown-item {
+        transition: none;
+    }
+}
+.dropdown-menu .dropdown-item span {
+    flex-grow: 1;
+}
+.dropdown-menu .dropdown-item > .fa {
+    margin-left: -1rem;
+    flex-grow: 0;
+}
+.navbar-nav.nav-pills {
+    align-items: stretch;
+}
+.navbar-nav.nav-pills .nav-item {
+    flex: 1 1 20%;
+}
+.navbar-nav.nav-pills .nav-link {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: 1px solid #54ffff;
+    text-decoration: none;
+    margin: 0.1rem 0.5rem;
+    padding: 0.125rem 0.5rem;
+    color: #54ffff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+    .navbar-nav.nav-pills .nav-link {
+        transition: none;
+    }
+}
+.navbar-nav.nav-pills .nav-link:hover,
+.navbar-nav.nav-pills .nav-link.active {
+    color: black;
+    background-color: #54ffff;
+}
+.navbar-nav.nav-pills .nav-link .fa {
+    flex: 0 0;
+}
+.navbar-brand {
+    max-width: 50%;
+}
+.navbar-brand img {
+    max-width: 100%;
+}
+.pagination {
+    color: #54ffff;
+    justify-content: center;
+}
+p.pagination {
+    padding: 0.5rem;
+}
+.page-item {
+    text-align: center;
+}
+.page-item .page-link {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: black;
+    color: #54ffff;
+    text-decoration: none;
+    border-color: #54ffff;
+}
+@media (prefers-reduced-motion: reduce) {
+    .page-item .page-link {
+        transition: none;
+    }
+}
+.page-item.disabled .page-link {
+    color: #999999;
+    background-color: #202020;
+    border-color: #999999;
+}
+.page-item.active .page-link,
+.page-item .page-link:hover {
+    color: black;
+    background-color: #54ffff;
+}
+.schedule-list ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+.schedule-list li {
+    font-family: Verdana, monospace;
+}
+.schedule-list li.hidden {
+    color: #999999;
+    font-style: italic;
+}
+.service-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+button svg.loading-spinner {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+.ReactVirtualized__Table__Grid:focus {
+    outline: none;
+}
+.ReactVirtualized__Table__headerColumn,
+.ReactVirtualized__Table__rowColumn {
+    margin-right: 0;
+}
+.ReactVirtualized__Table__row {
+    align-items: flex-start;
+}
+.btn-primary {
+    background-color: black;
+    color: #54ffff;
+    border-color: #54ffff;
+    box-shadow: none !important;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:checked {
+    background-color: #54ffff;
+    color: black;
+    box-shadow: none;
+}
+.btn-primary:disabled,
+.btn-primary.disabled {
+    color: #cccccc;
+    border-color: #cccccc;
+    background-color: black;
+}
+.btn-service {
+    background-color: black;
+    color: #00ff00;
+    border-color: #00ff00;
+    box-shadow: none !important;
+}
+.btn-service:not(:disabled):not(.disabled):hover,
+.btn-service:not(:disabled):not(.disabled):active,
+.btn-service:not(:disabled):not(.disabled):checked {
+    background-color: #00ff00;
+    color: black;
+    box-shadow: none;
+}
+.btn-service:disabled,
+.btn-service.disabled {
+    color: #ddffdd;
+    border-color: #ddffdd;
+}
+a .btn-service {
+    width: 100%;
+}
+.form-control {
+    box-shadow: none !important;
+    border-color: #54ffff !important;
+}
+.btn:disabled,
+.btn.disabled {
+    cursor: not-allowed;
+}
+.clock {
+    text-align: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.flag-status {
+    font-family: Verdana, monospace;
+    text-align: center;
+    padding: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-self: stretch;
+    min-height: 2.5rem;
+}
+.flag-status-green {
+    background-color: #090;
+    color: white;
+}
+.flag-status-yellow,
+.flag-status-fcy,
+.flag-status-sc,
+.flag-status-vsc,
+.flag-status-caution {
+    background-color: #dd0;
+    color: black;
+}
+.flag-status-red {
+    background-color: #900;
+}
+.flag-status-code_60 {
+    background-color: #ff53e3;
+    color: white;
+}
+.flag-status-slow_zone {
+    background-color: #dd0;
+    background: linear-gradient(0deg, #000, #dd0, #000);
+    background-size: 400% 400%;
+}
+.flag-status-code_60_zone {
+    background-color: #ff53e3;
+    background: linear-gradient(0deg, #000, #ff53e3, #000);
+    background-size: 400% 400%;
+}
+.flag-status-none {
+    background-color: black;
+}
+.flag-status.flag-status-fcy,
+.flag-status.flag-status-sc,
+.flag-status.flag-status-vsc,
+.flag-status.flag-status-caution {
+    animation: sc-yellow-anim 0.5s alternate infinite;
+}
+.flag-status.flag-status-red {
+    animation: red-flag-anim 1s step-end alternate infinite;
+}
+.flag-status.flag-status-code_60 {
+    animation: sc-purple-anim 0.5s alternate infinite;
+}
+.flag-status.flag-status-slow_zone,
+.flag-status.flag-status-code_60_zone {
+    animation: slowzone-anim 1s alternate 8;
+}
+@keyframes sc-yellow-anim {
+    from {
+        background-color: #dd0;
+        color: black;
+    }
+    to {
+        background-color: black;
+        color: white;
+    }
+}
+@keyframes red-flag-anim {
+    0% {
+        background-color: #900;
+    }
+    50% {
+        background-color: black;
+    }
+    100% {
+        background-color: #900;
+    }
+}
+@keyframes sc-purple-anim {
+    from {
+        background-color: #ff53e3;
+    }
+    to {
+        background-color: black;
+    }
+}
+@keyframes slowzone-anim {
+    0% {
+        background-position: 50% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+.flag-status-chequered {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAIAAAADnC86AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AYQDhQznimIVAAAACl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUCBieSBKYW1lcyBNdXNjYXR0szPhAAAAPUlEQVRYw+3WsQ0AIAwDQcz+O4cdEgkK7nvrijRJVa1uSdrbvR4FBoPBYDAYfL9MxpN/zY3BYDAYDAZ/BB86dwZMYauqoQAAAABJRU5ErkJggg==);
+    color: transparent;
+    background-repeat: repeat-x;
+    background-size: contain;
+    fill: black;
+}
+.flag-status-white {
+    background-color: white;
+    color: black;
+}
+.help-screen-flags .flag-status {
+    animation-iteration-count: 4;
+}
+.timing-modal.modal {
+    text-align: center;
+}
+.timing-modal .modal-content {
+    background: black;
+    border: 2px solid #54ffff;
+    vertical-align: middle;
+    max-height: 75%;
+    overflow: auto;
+}
+.timing-modal .modal-header {
+    color: #54ffff;
+}
+.timing-modal .modal-header .close {
+    color: #54ffff;
+    text-shadow: none;
+}
+.timing-modal:not(.timing-dialog) .modal-body {
+    vertical-align: middle;
+    color: #54ffff;
+    padding: 20% 4rem;
+    text-align: center;
+}
+.timing-modal.error .modal-content {
+    border-color: red;
+}
+.timing-modal.error .modal-body {
+    color: red;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+svg.loading-spinner {
+    margin-bottom: 2rem;
+    width: 180px;
+    height: 180px;
+}
+svg.loading-spinner .spinner_green {
+    animation: spin 5s linear infinite;
+}
+svg.loading-spinner .spinner_yellow {
+    animation: spin 6s linear infinite;
+}
+svg.loading-spinner .spinner_red {
+    animation: spin 4s linear infinite;
+}
+.help-modal.modal-dialog {
+    max-width: 50%;
+}
+.help-modal.modal-dialog .modal-header {
+    padding-bottom: 0.25rem;
+}
+.help-modal.modal-dialog .modal-content {
+    background: black;
+    border: 1px solid #54ffff;
+    vertical-align: middle;
+}
+.help-modal.modal-dialog .modal-body {
+    vertical-align: middle;
+    color: #54ffff;
+}
+.timing-dialog .modal-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+.columns-selector {
+    overflow-y: auto;
+}
+.timing-column-option {
+    color: #54ffff;
+}
+.timing-column-option.disabled {
+    color: grey;
+    font-style: italic;
+}
+.timing-column-option .form-check-input {
+    position: initial;
+    margin-right: 0.25rem;
+}
+.messages-container > div {
+    overflow-y: auto;
+}
+.messagesTable {
+    font-family: Verdana, monospace;
+    width: 100%;
+}
+.messagesTable .ReactVirtualized__Table__row {
+    border-bottom: 1px solid black;
+}
+.messagesTable .ReactVirtualized__Table__row .ReactVirtualized__Table__rowColumn {
+    padding: 2px;
+    vertical-align: top;
+}
+.messagesTable .ReactVirtualized__Table__row .ReactVirtualized__Table__rowColumn.text {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.time,
+.system,
+.category-system {
+    color: #54ffff;
+}
+.pit.text,
+.pit .text {
+    background-color: #500;
+}
+.out.text,
+.out .text {
+    background-color: #530;
+}
+:nth-of-type(odd).pit.text,
+:nth-of-type(odd).pit .text {
+    background-color: #5c0000;
+}
+:nth-of-type(odd).out.text,
+:nth-of-type(odd).out .text {
+    background-color: #603f00;
+}
+.red.text,
+.red .text {
+    background-color: #900;
+    text-align: center;
+}
+.yellow.text,
+.yellow .text {
+    background-color: #dd0;
+    color: black;
+    text-align: center;
+}
+.green.text,
+.green .text {
+    background-color: #090;
+    text-align: center;
+}
+.code60.text,
+.code60 .text {
+    background-color: #ff53e3;
+    text-align: center;
+}
+.white.text,
+.white .text {
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+.category {
+    text-align: center;
+    color: white;
+    white-space: nowrap;
+}
+.category-track,
+.track .category {
+    color: #dd0;
+    text-align: left;
+}
+.category-racecontrol,
+.category-pits,
+.category-timing,
+.racecontrol .category,
+.pits .category,
+.timing .category {
+    text-align: left;
+}
+.timing-screen {
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "header header" "timing timing" "messages trackdata";
+    grid-template-rows: auto 3fr 0;
+    transition: grid-template-rows 1s;
+}
+.timing-screen.show-messages {
+    grid-template-rows: auto 3fr 1fr;
+}
+@media (max-width: 767.98px) {
+    .timing-screen {
+        grid-template-columns: 1fr;
+        grid-template-areas: "header" "timing" "messages";
+    }
+    .timing-screen .trackdata-container {
+        display: none;
+    }
+}
+.timing-table-container {
+    grid-area: timing;
+    border-bottom: 2px solid #54ffff;
+    overflow: auto;
+}
+.timing-screen-header {
+    grid-area: header;
+    font-family: Verdana, monospace;
+    display: grid;
+    grid-template-areas: "elapsed flag-status remaining controls";
+    grid-template-columns: 1fr 5fr 1fr min-content;
+}
+.timing-screen-header .clock {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.timing-screen-header .clock.elapsed {
+    grid-area: elapsed;
+}
+.timing-screen-header .clock.remaining {
+    grid-area: remaining;
+}
+.timing-screen-header .flag-status {
+    grid-area: flag-status;
+    align-self: center;
+}
+.timing-screen-header .timing-menu {
+    grid-area: controls;
+    flex-wrap: nowrap;
+}
+.timing-screen-header .timing-menu .nav-item > a {
+    padding: 0.5rem;
+}
+.timing-screen-header .timing-menu .nav-item > button {
+    padding: 0.375rem 0.5rem;
+}
+@media (max-width: 767.98px) {
+    .timing-screen-header {
+        grid-template-areas: "flag-status flag-status flag-status" "elapsed remaining controls";
+        grid-template-columns: 1fr 1fr min-content;
+    }
+}
+.messages-container {
+    grid-area: messages;
+    overflow: auto;
+}
+.trackdata-container {
+    grid-area: trackdata;
+    overflow: auto;
+    flex-direction: column;
+}
+.timing-table-container > div.col-sm-12 {
+    overflow-y: auto;
+    padding: 0;
+}
+.timing-table {
+    margin: 0;
+}
+.timing-table td {
+    border-bottom: 1px solid black;
+    line-height: 1;
+    font-family: Verdana, monospace;
+}
+.timing-table-header td,
+.ReactVirtualized__Table__headerRow > div {
+    color: #54ffff;
+    text-transform: uppercase;
+    border-bottom: 2px solid #54ffff;
+    font-family: Play, Verdana, Monospace;
+    font-weight: normal;
+}
+tr.timing-table-footer td {
+    color: #54ffff;
+    text-transform: uppercase;
+    border-top: 2px solid #54ffff !important;
+}
+.tooltip {
+    font-size: medium;
+}
+.tooltip-inner {
+    border: 1px solid #54ffff;
+}
+td.timing-row-position {
+    text-align: right;
+    border-right: 1px solid black;
+    color: #54ffff;
+    width: 2em;
+}
+td.column_Num,
+td.column_Class,
+td.column_PIC,
+td.column_Laps,
+td.column_Pits {
+    text-align: center;
+}
+td.column_Class {
+    white-space: nowrap;
+}
+td.column_Driver,
+td.column_Team,
+td.column_Car {
+    max-width: 15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pb {
+    color: lime;
+}
+.sb,
+td.sb-new {
+    color: #ff53e3;
+}
+.slow {
+    color: red;
+}
+.joker {
+    color: black;
+    background-color: white;
+}
+.old {
+    color: yellow;
+}
+.tyre-shard {
+    color: #ea6517;
+}
+.tyre-hard {
+    color: white;
+}
+.tyre-med {
+    color: yellow;
+}
+.tyre-soft {
+    color: red;
+}
+.tyre-ssoft {
+    color: red;
+}
+.tyre-usoft {
+    color: #ba4daa;
+}
+.tyre-hsoft {
+    color: #efbac5;
+}
+.tyre-inter {
+    color: #3ac82c;
+}
+.tyre-wet {
+    color: #4491d2;
+}
+@keyframes blink {
+    50% {
+        opacity: 0.1;
+    }
+}
+.timing-table.use-animations .ptp-active {
+    animation: blink 0.5s step-end infinite;
+}
+.timing-table.use-animations .highlight-line {
+    animation: blink 0.5s alternate 2;
+}
+tr.car_state_RUN td.column_State {
+    color: lime;
+}
+tr.car_state_PIT td.column_State {
+    color: #dc291e;
+}
+tr.car_state_OUT td.column_State {
+    color: #ff6418;
+}
+tr.car_state_RET td,
+tr.car_state_NS td,
+tr.car_state_STOP td,
+tr.car_state_DNF td {
+    color: grey;
+    font-style: italic;
+}
+.use-backgrounds tr.car_state_PIT,
+.use-backgrounds tr.car_state_FUEL {
+    background-color: #550000;
+}
+.use-backgrounds tbody > tr.car_state_PIT:nth-of-type(odd),
+.use-backgrounds > tbody > tr.car_state_FUEL:nth-of-type(odd) {
+    background-color: #5c0000;
+}
+.use-backgrounds tr.car_state_OUT {
+    background-color: #553300;
+}
+.use-backgrounds tbody > tr.car_state_OUT:nth-of-type(odd) {
+    background-color: #603f00;
+}
+.use-backgrounds tr.car_state_FIN td.column_State {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAIAAAADnC86AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AYQDhQznimIVAAAACl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUCBieSBKYW1lcyBNdXNjYXR0szPhAAAAPUlEQVRYw+3WsQ0AIAwDQcz+O4cdEgkK7nvrijRJVa1uSdrbvR4FBoPBYDAYfL9MxpN/zY3BYDAYDAZ/BB86dwZMYauqoQAAAABJRU5ErkJggg==);
+    background-size: 1.7em;
+    background-repeat: repeat-x;
+    background-position-y: 25%;
+    color: transparent;
+}
+.use-backgrounds .sb-new {
+    background-color: #ff53e3 !important;
+    color: black;
+}
+.use-backgrounds .sb-new .sb {
+    color: black;
+}
+.compact .timing-table {
+    font-size: 0.8rem;
+}
+.compact .timing-table td {
+    padding: 0.5rem 0.25rem;
+    display: none;
+}
+.compact .timing-table td.column_Pos {
+    display: table-cell;
+}
+.compact .timing-table td.column_Num {
+    display: table-cell;
+}
+.compact .timing-table td.column_State {
+    display: table-cell;
+}
+.compact .timing-table td.column_Class {
+    display: table-cell;
+}
+.compact .timing-table td.column_Driver {
+    display: table-cell;
+}
+.compact .timing-table td.column_Laps {
+    display: table-cell;
+}
+.compact .timing-table td.column_Gap {
+    display: table-cell;
+}
+.compact .timing-table td.column_Int {
+    display: table-cell;
+}
+.compact .timing-table td.column_Last {
+    display: table-cell;
+}
+.compact .timing-table td.column_Best {
+    display: table-cell;
+}
+.compact .timing-table td.column_Pits {
+    display: table-cell;
+}
+.trackdata-container {
+    flex: 1;
+    overflow-y: auto;
+}
+.trackdata-key {
+    text-align: right;
+    color: #54ffff;
+    padding: 0;
+    overflow: hidden;
+    height: 1.4em;
+}
+.trackdata-value {
+    min-height: 1.4em;
+    font-family: Verdana, monospace;
+}
+.trackdata-footer {
+    padding: 0.25rem 0;
+}
+.trackdata-footer > div,
+.trackdata-footer > p,
+.trackdata-footer > span {
+    padding: 0.25rem 0;
+    margin: 0 0.5rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.trackdata-footer .btn {
+    background: inherit;
+    padding: 0.25rem 0.5rem;
+}
+.trackdata-footer .btn:hover {
+    background-color: #54ffff;
+}
+.trackdata-footer-float {
+    position: fixed;
+    right: 0;
+    bottom: 2px;
+    background-color: rgba(32, 32, 32, 0.9);
+    margin-right: 10px;
+    padding-right: 5px;
+}
+.trackdata-footer-float .trackdata-footer {
+    margin-bottom: -2px;
+}
+#service-selection-screen {
+    display: grid;
+    grid-template-areas: "header header" "service-list service-list" "recent schedule" "footer footer";
+    grid-auto-columns: 1fr 1fr;
+    grid-auto-rows: auto auto 1fr auto;
+    grid-gap: 0;
+    height: 100%;
+}
+#service-selection-screen .header {
+    grid-area: header;
+}
+#service-selection-screen .header .navbar {
+    padding: 0 0.5rem;
+}
+#service-selection-screen > .service-list {
+    grid-area: service-list;
+}
+#service-selection-screen .footer {
+    grid-area: footer;
+    padding: 0.5rem 1rem;
+}
+#service-selection-screen > .card {
+    margin: 0.5rem;
+    min-height: 0;
+}
+#service-selection-screen > .card > .card-body {
+    overflow-y: auto;
+    min-height: 0;
+    height: 100%;
+    padding: 0.75rem;
+}
+#service-selection-screen > .card > .card-body .service-list {
+    margin: 0 -0.75rem;
+}
+@media (max-width: 1024px) {
+    #service-selection-screen {
+        display: flex;
+        flex-direction: column;
+    }
+    #service-selection-screen .card,
+    #service-selection-screen .card-body {
+        min-height: unset;
+    }
+}
+tr.car_class_p td.column_Class,
+.category-p,
+.car_class_p .category {
+    color: #fff;
+}
+tr.car_class_lmp1 td.column_Class,
+.category-lmp1,
+.car_class_lmp1 .category {
+    color: red;
+}
+tr.car_class_p1 td.column_Class,
+.category-p1,
+.car_class_p1 .category {
+    color: red;
+}
+tr.car_class_dpi td.column_Class,
+.category-dpi,
+.car_class_dpi .category {
+    color: #fff;
+}
+tr.car_class_lmp2 td.column_Class,
+.category-lmp2,
+.car_class_lmp2 .category {
+    color: #7af;
+}
+tr.car_class_p2 td.column_Class,
+.category-p2,
+.car_class_p2 .category {
+    color: #7af;
+}
+tr.car_class_lmp3 td.column_Class,
+.category-lmp3,
+.car_class_lmp3 .category {
+    color: #d0d;
+}
+tr.car_class_p3 td.column_Class,
+.category-p3,
+.car_class_p3 .category {
+    color: #d0d;
+}
+tr.car_class_cn td.column_Class,
+.category-cn,
+.car_class_cn .category {
+    color: #dbb700;
+}
+tr.car_class_cn1 td.column_Class,
+.category-cn1,
+.car_class_cn1 .category {
+    color: #dbb700;
+}
+tr.car_class_mpc td.column_Class,
+.category-mpc,
+.car_class_mpc .category {
+    color: #50c0ff;
+}
+tr.car_class_gtlm td.column_Class,
+.category-gtlm,
+.car_class_gtlm .category {
+    color: red;
+}
+tr.car_class_lmgte td.column_Class,
+.category-lmgte,
+.car_class_lmgte .category {
+    color: #ff4f00;
+}
+tr.car_class_lmgteam td.column_Class,
+.category-lmgteam,
+.car_class_lmgteam .category {
+    color: #ff4f00;
+}
+tr.car_class_lmgtepro td.column_Class,
+.category-lmgtepro,
+.car_class_lmgtepro .category {
+    color: #01ff01;
+}
+tr.car_class_gt td.column_Class,
+.category-gt,
+.car_class_gt .category {
+    color: #ff4f00;
+}
+tr.car_class_gtc td.column_Class,
+.category-gtc,
+.car_class_gtc .category {
+    color: #a0a0a0;
+}
+tr.car_class_gtd td.column_Class,
+.category-gtd,
+.car_class_gtd .category {
+    color: #00dc67;
+}
+tr.car_class_gt3 td.column_Class,
+.category-gt3,
+.car_class_gt3 .category {
+    color: #ff0;
+}
+tr.car_class_gt3p td.column_Class,
+.category-gt3p,
+.car_class_gt3p .category {
+    color: #ccc;
+}
+tr.car_class_gt3g td.column_Class,
+.category-gt3g,
+.car_class_gt3g .category {
+    color: #dbb700;
+}
+tr.car_class_gt4 td.column_Class,
+.category-gt4,
+.car_class_gt4 .category {
+    color: #ff4f00;
+}
+tr.car_class_gs td.column_Class,
+.category-gs,
+.car_class_gs .category {
+    color: #2fabff;
+}
+tr.car_class_tcr td.column_Class,
+.category-tcr,
+.car_class_tcr .category {
+    color: #ff0;
+}
+tr.car_class_gt3-pro td.column_Class,
+.category-gt3-pro,
+.car_class_gt3-pro .category {
+    color: #dbb700;
+}
+tr.car_class_gt3-am td.column_Class,
+.category-gt3-am,
+.car_class_gt3-am .category {
+    color: #ccc;
+}
+tr.car_class_at td.column_Class,
+.category-at,
+.car_class_at .category {
+    color: #ccc;
+}
+tr.car_class_gtx td.column_Class,
+.category-gtx,
+.car_class_gtx .category {
+    color: red;
+}
+tr.car_class_sp2 td.column_Class,
+.category-sp2,
+.car_class_sp2 .category {
+    color: #7af;
+}
+tr.car_class_sp3 td.column_Class,
+.category-sp3,
+.car_class_sp3 .category {
+    color: #f0f;
+}
+tr.car_class_tcx td.column_Class,
+.category-tcx,
+.car_class_tcx .category {
+    color: #f0f;
+}
+tr.car_class_sp4 td.column_Class,
+.category-sp4,
+.car_class_sp4 .category {
+    color: #29d105;
+}
+tr.car_class_sp4t td.column_Class,
+.category-sp4t,
+.car_class_sp4t .category {
+    color: #89d115;
+}
+tr.car_class_sp3t td.column_Class,
+.category-sp3t,
+.car_class_sp3t .category {
+    color: #6e92ee;
+}
+tr.car_class_sp6 td.column_Class,
+.category-sp6,
+.car_class_sp6 .category {
+    color: #77c0fa;
+}
+tr.car_class_sp7 td.column_Class,
+.category-sp7,
+.car_class_sp7 .category {
+    color: lime;
+}
+tr.car_class_sp8 td.column_Class,
+.category-sp8,
+.car_class_sp8 .category {
+    color: #c8c;
+}
+tr.car_class_sp8t td.column_Class,
+.category-sp8t,
+.car_class_sp8t .category {
+    color: #f88;
+}
+tr.car_class_sp9 td.column_Class,
+.category-sp9,
+.car_class_sp9 .category {
+    color: #ff0;
+}
+tr.car_class_sp10 td.column_Class,
+.category-sp10,
+.car_class_sp10 .category {
+    color: #ff4f00;
+}
+tr.car_class_v2t td.column_Class,
+.category-v2t,
+.car_class_v2t .category {
+    color: #fff0a0;
+}
+tr.car_class_v3t td.column_Class,
+.category-v3t,
+.car_class_v3t .category {
+    color: #fd0;
+}
+tr.car_class_v4 td.column_Class,
+.category-v4,
+.car_class_v4 .category {
+    color: #ddd0dd;
+}
+tr.car_class_v5 td.column_Class,
+.category-v5,
+.car_class_v5 .category {
+    color: #f4a4ff;
+}
+tr.car_class_v6 td.column_Class,
+.category-v6,
+.car_class_v6 .category {
+    color: #50c0ff;
+}
+tr.car_class_vt3 td.column_Class,
+.category-vt3,
+.car_class_vt3 .category {
+    color: #ccc;
+}
+tr.car_class_vt2 td.column_Class,
+.category-vt2,
+.car_class_vt2 .category {
+    color: #cb67ec;
+}
+tr.car_class_991 td.column_Class,
+.category-991,
+.car_class_991 .category {
+    color: #01ff01;
+}
+tr.car_class_a2 td.column_Class,
+.category-a2,
+.car_class_a2 .category {
+    color: #ffb8b8;
+}
+tr.car_class_tc td.column_Class,
+.category-tc,
+.car_class_tc .category {
+    color: #c5b6ff;
+}
+tr.car_class_cup-x td.column_Class,
+.category-cup-x,
+.car_class_cup-x .category {
+    color: #fff;
+}
+tr.car_class_klcup5 td.column_Class,
+.category-klcup5,
+.car_class_klcup5 .category {
+    color: #dff;
+}
+tr.car_class_cup3 td.column_Class,
+.category-cup3,
+.car_class_cup3 .category {
+    color: #ffa;
+}
+tr.car_class_app td.column_Class,
+.category-app,
+.car_class_app .category {
+    color: #ff50a4;
+}
+tr.car_class_apa td.column_Class,
+.category-apa,
+.car_class_apa .category {
+    color: #fdff50;
+}
+tr.car_class_aam td.column_Class,
+.category-aam,
+.car_class_aam .category {
+    color: #cb67ec;
+}
+tr.car_class_i td.column_Class,
+.category-i,
+.car_class_i .category {
+    color: #89d115;
+}
+tr.car_class_inv td.column_Class,
+.category-inv,
+.car_class_inv .category {
+    color: #89d115;
+}
+tr.car_class_a td.column_Class,
+.category-a,
+.car_class_a .category {
+    color: #ff0;
+}
+tr.car_class_b td.column_Class,
+.category-b,
+.car_class_b .category {
+    color: #6e92ee;
+}
+tr.car_class_c td.column_Class,
+.category-c,
+.car_class_c .category {
+    color: #f68002;
+}
+tr.car_class_d td.column_Class,
+.category-d,
+.car_class_d .category {
+    color: #cb67ec;
+}
+tr.car_class_e td.column_Class,
+.category-e,
+.car_class_e .category {
+    color: #ff4f00;
+}
+tr.car_class_r td.column_Class,
+.category-r,
+.car_class_r .category {
+    color: #ccc;
+}
+tr.car_class_pro td.column_Class,
+.category-pro,
+.car_class_pro .category {
+    color: #f29b42;
+}
+tr.car_class_proam td.column_Class,
+.category-proam,
+.car_class_proam .category {
+    color: #f0f33c;
+}
+tr.car_class_am td.column_Class,
+.category-am,
+.car_class_am .category {
+    color: #1fcc67;
+}
+tr.car_class_lbcup td.column_Class,
+.category-lbcup,
+.car_class_lbcup .category {
+    color: #1cc3ff;
+}
+tr.car_class_silver td.column_Class,
+.category-silver,
+.car_class_silver .category {
+    color: #ccc;
+}
+tr.car_class_sil td.column_Class,
+.category-sil,
+.car_class_sil .category {
+    color: #ccc;
+}
+tr.car_class_pam td.column_Class,
+.category-pam,
+.car_class_pam .category {
+    color: #ff0;
+}
+tr.car_class_h4 td.column_Class,
+.category-h4,
+.car_class_h4 .category {
+    color: #ffa;
+}
+.strategy-container {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-areas: "car-list stint-list";
+}
+.strategy-container .stint-header {
+    border-right: 1px solid #54ffff;
+    border-bottom: 1px solid #54ffff;
+    color: #54ffff;
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.5rem;
+    height: 1.5rem;
+    width: 100%;
+    position: relative;
+    background-color: black;
+    z-index: 2;
+}
+.strategy-container .stint-headers {
+    white-space: nowrap;
+    position: absolute;
+    overflow: hidden;
+}
+.strategy-container .stint-headers .stint-header {
+    z-index: 1;
+}
+.strategy-container .current-lap {
+    border-right: 1px solid red;
+    height: 100%;
+    position: absolute;
+}
+.strategy-container .highlight-lap {
+    border-right: 1px solid rgba(84, 255, 255, 0.5);
+    height: 100%;
+    position: absolute;
+    left: 250px;
+    z-index: 50;
+}
+.strategy-container .highlight-lap > div {
+    position: absolute;
+    top: -1px;
+    white-space: nowrap;
+    padding: 0 0.5rem;
+    color: #54ffff;
+    background-color: black;
+    border-bottom: 1px solid #54ffff;
+    border-left: 1px solid rgba(84, 255, 255, 0.5);
+}
+.strategy-container .car-list {
+    width: 250px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.strategy-container .car-list .ReactVirtualized__Grid__innerScrollContainer {
+    margin-bottom: 100px;
+}
+.strategy-container .car-list .stint-header {
+    text-align: center;
+}
+.strategy-container .car-list ::-webkit-scrollbar {
+    display: none;
+}
+.strategy-container .car,
+.strategy-container .stint {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    height: 4rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    vertical-align: middle;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+@media (prefers-reduced-motion: reduce) {
+    .strategy-container .car,
+    .strategy-container .stint {
+        transition: none;
+    }
+}
+.strategy-container .car {
+    margin: 0.5rem 1rem;
+    border: 1px solid white;
+    display: grid;
+    grid-template-areas: "num line1" "num line2";
+    grid-template-columns: 1fr minmax(0, 3fr);
+    align-content: center;
+    grid-column-gap: 0.25rem;
+}
+.strategy-container .car .race-num {
+    grid-area: num;
+    transition: color 0.15s ease-in-out;
+    font-size: xx-large;
+    text-align: center;
+}
+.strategy-container .car div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+.strategy-container .car.selected {
+    background-color: #54ffff;
+    color: black;
+}
+.strategy-container .car:hover {
+    background-color: #606060;
+    cursor: pointer;
+}
+.strategy-container .stint {
+    display: inline-block;
+    background-color: #202020;
+    margin: 4px 0;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid black;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    z-index: 5;
+}
+.strategy-container .stint.stripe {
+    background-color: #2d2d2d;
+}
+.strategy-container .stint.in-progress {
+    background-color: #464646;
+    font-style: italic;
+}
+.strategy-container .stint:hover {
+    background-color: #535353;
+}
+.strategy-container .stint.selected {
+    border-color: #54ffff;
+    border-radius: 0;
+}
+.strategy-container .stint:last-child {
+    border-right-width: 0;
+}
+.strategy-container .stint svg {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.strategy-container .stint div {
+    display: flex;
+    justify-content: space-between;
+}
+.strategy-container .stint-container {
+    height: 4rem;
+    margin: 0.5rem 0;
+    white-space: nowrap;
+}
+.strategy-container .stints {
+    flex-grow: 1;
+    overflow: hidden;
+}
+.stint-detail-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0%;
+    margin-left: -15px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+}
+.stint-detail-container .stint-detail {
+    margin: auto;
+    width: 40%;
+    background-color: black;
+    border: 1px solid #54ffff;
+    border-radius: 0.25rem;
+    padding: 15px;
+    text-align: center;
+}
+.strategy-container .class-p.car {
+    border: 1px solid #fff;
+}
+.strategy-container .class-p.car .race-num {
+    color: #fff;
+}
+.strategy-container .class-p.car:hover {
+    background-color: #fff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-p.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-p.stint {
+    background-color: #a6a6a6;
+}
+.strategy-container .class-p.stint.in-progress {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-p.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-p.stripe.stint {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-p.stripe.stint.in-progress {
+    background-color: #bfbfbf;
+}
+.strategy-container .class-p.stripe.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-lmp1.car {
+    border: 1px solid red;
+}
+.strategy-container .class-lmp1.car .race-num {
+    color: red;
+}
+.strategy-container .class-lmp1.car:hover {
+    background-color: red;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lmp1.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lmp1.stint {
+    background-color: #4d0000;
+}
+.strategy-container .class-lmp1.stint.in-progress {
+    background-color: #600;
+}
+.strategy-container .class-lmp1.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-lmp1.stripe.stint {
+    background-color: #600;
+}
+.strategy-container .class-lmp1.stripe.stint.in-progress {
+    background-color: maroon;
+}
+.strategy-container .class-lmp1.stripe.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-p1.car {
+    border: 1px solid red;
+}
+.strategy-container .class-p1.car .race-num {
+    color: red;
+}
+.strategy-container .class-p1.car:hover {
+    background-color: red;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-p1.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-p1.stint {
+    background-color: #4d0000;
+}
+.strategy-container .class-p1.stint.in-progress {
+    background-color: #600;
+}
+.strategy-container .class-p1.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-p1.stripe.stint {
+    background-color: #600;
+}
+.strategy-container .class-p1.stripe.stint.in-progress {
+    background-color: maroon;
+}
+.strategy-container .class-p1.stripe.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-dpi.car {
+    border: 1px solid #fff;
+}
+.strategy-container .class-dpi.car .race-num {
+    color: #fff;
+}
+.strategy-container .class-dpi.car:hover {
+    background-color: #fff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-dpi.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-dpi.stint {
+    background-color: #a6a6a6;
+}
+.strategy-container .class-dpi.stint.in-progress {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-dpi.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-dpi.stripe.stint {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-dpi.stripe.stint.in-progress {
+    background-color: #bfbfbf;
+}
+.strategy-container .class-dpi.stripe.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-lmp2.car {
+    border: 1px solid #7af;
+}
+.strategy-container .class-lmp2.car .race-num {
+    color: #7af;
+}
+.strategy-container .class-lmp2.car:hover {
+    background-color: #7af;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lmp2.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lmp2.stint {
+    background-color: #0049c4;
+}
+.strategy-container .class-lmp2.stint.in-progress {
+    background-color: #0053dd;
+}
+.strategy-container .class-lmp2.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-lmp2.stripe.stint {
+    background-color: #0053dd;
+}
+.strategy-container .class-lmp2.stripe.stint.in-progress {
+    background-color: #005cf7;
+}
+.strategy-container .class-lmp2.stripe.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-p2.car {
+    border: 1px solid #7af;
+}
+.strategy-container .class-p2.car .race-num {
+    color: #7af;
+}
+.strategy-container .class-p2.car:hover {
+    background-color: #7af;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-p2.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-p2.stint {
+    background-color: #0049c4;
+}
+.strategy-container .class-p2.stint.in-progress {
+    background-color: #0053dd;
+}
+.strategy-container .class-p2.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-p2.stripe.stint {
+    background-color: #0053dd;
+}
+.strategy-container .class-p2.stripe.stint.in-progress {
+    background-color: #005cf7;
+}
+.strategy-container .class-p2.stripe.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-lmp3.car {
+    border: 1px solid #d0d;
+}
+.strategy-container .class-lmp3.car .race-num {
+    color: #d0d;
+}
+.strategy-container .class-lmp3.car:hover {
+    background-color: #d0d;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-lmp3.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-lmp3.stint {
+    background-color: #2b002b;
+}
+.strategy-container .class-lmp3.stint.in-progress {
+    background-color: #404;
+}
+.strategy-container .class-lmp3.stint:hover {
+    background-color: #707;
+}
+.strategy-container .class-lmp3.stripe.stint {
+    background-color: #404;
+}
+.strategy-container .class-lmp3.stripe.stint.in-progress {
+    background-color: #5e005e;
+}
+.strategy-container .class-lmp3.stripe.stint:hover {
+    background-color: #707;
+}
+.strategy-container .class-p3.car {
+    border: 1px solid #d0d;
+}
+.strategy-container .class-p3.car .race-num {
+    color: #d0d;
+}
+.strategy-container .class-p3.car:hover {
+    background-color: #d0d;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-p3.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-p3.stint {
+    background-color: #2b002b;
+}
+.strategy-container .class-p3.stint.in-progress {
+    background-color: #404;
+}
+.strategy-container .class-p3.stint:hover {
+    background-color: #707;
+}
+.strategy-container .class-p3.stripe.stint {
+    background-color: #404;
+}
+.strategy-container .class-p3.stripe.stint.in-progress {
+    background-color: #5e005e;
+}
+.strategy-container .class-p3.stripe.stint:hover {
+    background-color: #707;
+}
+.strategy-container .class-cn.car {
+    border: 1px solid #dbb700;
+}
+.strategy-container .class-cn.car .race-num {
+    color: #dbb700;
+}
+.strategy-container .class-cn.car:hover {
+    background-color: #dbb700;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-cn.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-cn.stint {
+    background-color: #292200;
+}
+.strategy-container .class-cn.stint.in-progress {
+    background-color: #423700;
+}
+.strategy-container .class-cn.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-cn.stripe.stint {
+    background-color: #423700;
+}
+.strategy-container .class-cn.stripe.stint.in-progress {
+    background-color: #5c4c00;
+}
+.strategy-container .class-cn.stripe.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-cn1.car {
+    border: 1px solid #dbb700;
+}
+.strategy-container .class-cn1.car .race-num {
+    color: #dbb700;
+}
+.strategy-container .class-cn1.car:hover {
+    background-color: #dbb700;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-cn1.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-cn1.stint {
+    background-color: #292200;
+}
+.strategy-container .class-cn1.stint.in-progress {
+    background-color: #423700;
+}
+.strategy-container .class-cn1.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-cn1.stripe.stint {
+    background-color: #423700;
+}
+.strategy-container .class-cn1.stripe.stint.in-progress {
+    background-color: #5c4c00;
+}
+.strategy-container .class-cn1.stripe.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-mpc.car {
+    border: 1px solid #50c0ff;
+}
+.strategy-container .class-mpc.car .race-num {
+    color: #50c0ff;
+}
+.strategy-container .class-mpc.car:hover {
+    background-color: #50c0ff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-mpc.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-mpc.stint {
+    background-color: #00649d;
+}
+.strategy-container .class-mpc.stint.in-progress {
+    background-color: #0074b6;
+}
+.strategy-container .class-mpc.stint:hover {
+    background-color: #0095e9;
+}
+.strategy-container .class-mpc.stripe.stint {
+    background-color: #0074b6;
+}
+.strategy-container .class-mpc.stripe.stint.in-progress {
+    background-color: #0085d0;
+}
+.strategy-container .class-mpc.stripe.stint:hover {
+    background-color: #0095e9;
+}
+.strategy-container .class-gtlm.car {
+    border: 1px solid red;
+}
+.strategy-container .class-gtlm.car .race-num {
+    color: red;
+}
+.strategy-container .class-gtlm.car:hover {
+    background-color: red;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gtlm.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gtlm.stint {
+    background-color: #4d0000;
+}
+.strategy-container .class-gtlm.stint.in-progress {
+    background-color: #600;
+}
+.strategy-container .class-gtlm.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-gtlm.stripe.stint {
+    background-color: #600;
+}
+.strategy-container .class-gtlm.stripe.stint.in-progress {
+    background-color: maroon;
+}
+.strategy-container .class-gtlm.stripe.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-lmgte.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-lmgte.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-lmgte.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lmgte.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lmgte.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-lmgte.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-lmgte.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-lmgte.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-lmgte.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-lmgte.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-lmgteam.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-lmgteam.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-lmgteam.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lmgteam.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lmgteam.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-lmgteam.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-lmgteam.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-lmgteam.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-lmgteam.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-lmgteam.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-lmgtepro.car {
+    border: 1px solid #01ff01;
+}
+.strategy-container .class-lmgtepro.car .race-num {
+    color: #01ff01;
+}
+.strategy-container .class-lmgtepro.car:hover {
+    background-color: #01ff01;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lmgtepro.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lmgtepro.stint {
+    background-color: #004e00;
+}
+.strategy-container .class-lmgtepro.stint.in-progress {
+    background-color: #006700;
+}
+.strategy-container .class-lmgtepro.stint:hover {
+    background-color: #009a00;
+}
+.strategy-container .class-lmgtepro.stripe.stint {
+    background-color: #006700;
+}
+.strategy-container .class-lmgtepro.stripe.stint.in-progress {
+    background-color: #008100;
+}
+.strategy-container .class-lmgtepro.stripe.stint:hover {
+    background-color: #009a00;
+}
+.strategy-container .class-gt.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-gt.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-gt.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gt.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gt.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-gt.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-gt.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-gt.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-gt.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-gt.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-gtc.car {
+    border: 1px solid #a0a0a0;
+}
+.strategy-container .class-gtc.car .race-num {
+    color: #a0a0a0;
+}
+.strategy-container .class-gtc.car:hover {
+    background-color: #a0a0a0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gtc.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gtc.stint {
+    background-color: #474747;
+}
+.strategy-container .class-gtc.stint.in-progress {
+    background-color: #545454;
+}
+.strategy-container .class-gtc.stint:hover {
+    background-color: #6d6d6d;
+}
+.strategy-container .class-gtc.stripe.stint {
+    background-color: #545454;
+}
+.strategy-container .class-gtc.stripe.stint.in-progress {
+    background-color: #606060;
+}
+.strategy-container .class-gtc.stripe.stint:hover {
+    background-color: #6d6d6d;
+}
+.strategy-container .class-gtd.car {
+    border: 1px solid #00dc67;
+}
+.strategy-container .class-gtd.car .race-num {
+    color: #00dc67;
+}
+.strategy-container .class-gtd.car:hover {
+    background-color: #00dc67;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-gtd.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-gtd.stint {
+    background-color: #002a13;
+}
+.strategy-container .class-gtd.stint.in-progress {
+    background-color: #00431f;
+}
+.strategy-container .class-gtd.stint:hover {
+    background-color: #007637;
+}
+.strategy-container .class-gtd.stripe.stint {
+    background-color: #00431f;
+}
+.strategy-container .class-gtd.stripe.stint.in-progress {
+    background-color: #005d2b;
+}
+.strategy-container .class-gtd.stripe.stint:hover {
+    background-color: #007637;
+}
+.strategy-container .class-gt3.car {
+    border: 1px solid #ff0;
+}
+.strategy-container .class-gt3.car .race-num {
+    color: #ff0;
+}
+.strategy-container .class-gt3.car:hover {
+    background-color: #ff0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gt3.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gt3.stint {
+    background-color: #4d4d00;
+}
+.strategy-container .class-gt3.stint.in-progress {
+    background-color: #660;
+}
+.strategy-container .class-gt3.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-gt3.stripe.stint {
+    background-color: #660;
+}
+.strategy-container .class-gt3.stripe.stint.in-progress {
+    background-color: olive;
+}
+.strategy-container .class-gt3.stripe.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-gt3p.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-gt3p.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-gt3p.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gt3p.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gt3p.stint {
+    background-color: #737373;
+}
+.strategy-container .class-gt3p.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-gt3p.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-gt3p.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-gt3p.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-gt3p.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-gt3g.car {
+    border: 1px solid #dbb700;
+}
+.strategy-container .class-gt3g.car .race-num {
+    color: #dbb700;
+}
+.strategy-container .class-gt3g.car:hover {
+    background-color: #dbb700;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-gt3g.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-gt3g.stint {
+    background-color: #292200;
+}
+.strategy-container .class-gt3g.stint.in-progress {
+    background-color: #423700;
+}
+.strategy-container .class-gt3g.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-gt3g.stripe.stint {
+    background-color: #423700;
+}
+.strategy-container .class-gt3g.stripe.stint.in-progress {
+    background-color: #5c4c00;
+}
+.strategy-container .class-gt3g.stripe.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-gt4.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-gt4.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-gt4.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gt4.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gt4.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-gt4.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-gt4.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-gt4.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-gt4.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-gt4.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-gs.car {
+    border: 1px solid #2fabff;
+}
+.strategy-container .class-gs.car .race-num {
+    color: #2fabff;
+}
+.strategy-container .class-gs.car:hover {
+    background-color: #2fabff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gs.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gs.stint {
+    background-color: #004a7c;
+}
+.strategy-container .class-gs.stint.in-progress {
+    background-color: #005995;
+}
+.strategy-container .class-gs.stint:hover {
+    background-color: #0077c8;
+}
+.strategy-container .class-gs.stripe.stint {
+    background-color: #005995;
+}
+.strategy-container .class-gs.stripe.stint.in-progress {
+    background-color: #0068af;
+}
+.strategy-container .class-gs.stripe.stint:hover {
+    background-color: #0077c8;
+}
+.strategy-container .class-tcr.car {
+    border: 1px solid #ff0;
+}
+.strategy-container .class-tcr.car .race-num {
+    color: #ff0;
+}
+.strategy-container .class-tcr.car:hover {
+    background-color: #ff0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-tcr.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-tcr.stint {
+    background-color: #4d4d00;
+}
+.strategy-container .class-tcr.stint.in-progress {
+    background-color: #660;
+}
+.strategy-container .class-tcr.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-tcr.stripe.stint {
+    background-color: #660;
+}
+.strategy-container .class-tcr.stripe.stint.in-progress {
+    background-color: olive;
+}
+.strategy-container .class-tcr.stripe.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-gt3-pro.car {
+    border: 1px solid #dbb700;
+}
+.strategy-container .class-gt3-pro.car .race-num {
+    color: #dbb700;
+}
+.strategy-container .class-gt3-pro.car:hover {
+    background-color: #dbb700;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-gt3-pro.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-gt3-pro.stint {
+    background-color: #292200;
+}
+.strategy-container .class-gt3-pro.stint.in-progress {
+    background-color: #423700;
+}
+.strategy-container .class-gt3-pro.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-gt3-pro.stripe.stint {
+    background-color: #423700;
+}
+.strategy-container .class-gt3-pro.stripe.stint.in-progress {
+    background-color: #5c4c00;
+}
+.strategy-container .class-gt3-pro.stripe.stint:hover {
+    background-color: #756200;
+}
+.strategy-container .class-gt3-am.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-gt3-am.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-gt3-am.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gt3-am.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gt3-am.stint {
+    background-color: #737373;
+}
+.strategy-container .class-gt3-am.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-gt3-am.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-gt3-am.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-gt3-am.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-gt3-am.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-at.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-at.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-at.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-at.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-at.stint {
+    background-color: #737373;
+}
+.strategy-container .class-at.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-at.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-at.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-at.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-at.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-gtx.car {
+    border: 1px solid red;
+}
+.strategy-container .class-gtx.car .race-num {
+    color: red;
+}
+.strategy-container .class-gtx.car:hover {
+    background-color: red;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-gtx.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-gtx.stint {
+    background-color: #4d0000;
+}
+.strategy-container .class-gtx.stint.in-progress {
+    background-color: #600;
+}
+.strategy-container .class-gtx.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-gtx.stripe.stint {
+    background-color: #600;
+}
+.strategy-container .class-gtx.stripe.stint.in-progress {
+    background-color: maroon;
+}
+.strategy-container .class-gtx.stripe.stint:hover {
+    background-color: #900;
+}
+.strategy-container .class-sp2.car {
+    border: 1px solid #7af;
+}
+.strategy-container .class-sp2.car .race-num {
+    color: #7af;
+}
+.strategy-container .class-sp2.car:hover {
+    background-color: #7af;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp2.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp2.stint {
+    background-color: #0049c4;
+}
+.strategy-container .class-sp2.stint.in-progress {
+    background-color: #0053dd;
+}
+.strategy-container .class-sp2.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-sp2.stripe.stint {
+    background-color: #0053dd;
+}
+.strategy-container .class-sp2.stripe.stint.in-progress {
+    background-color: #005cf7;
+}
+.strategy-container .class-sp2.stripe.stint:hover {
+    background-color: #116aff;
+}
+.strategy-container .class-sp3.car {
+    border: 1px solid #f0f;
+}
+.strategy-container .class-sp3.car .race-num {
+    color: #f0f;
+}
+.strategy-container .class-sp3.car:hover {
+    background-color: #f0f;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp3.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp3.stint {
+    background-color: #4d004d;
+}
+.strategy-container .class-sp3.stint.in-progress {
+    background-color: #606;
+}
+.strategy-container .class-sp3.stint:hover {
+    background-color: #909;
+}
+.strategy-container .class-sp3.stripe.stint {
+    background-color: #606;
+}
+.strategy-container .class-sp3.stripe.stint.in-progress {
+    background-color: purple;
+}
+.strategy-container .class-sp3.stripe.stint:hover {
+    background-color: #909;
+}
+.strategy-container .class-tcx.car {
+    border: 1px solid #f0f;
+}
+.strategy-container .class-tcx.car .race-num {
+    color: #f0f;
+}
+.strategy-container .class-tcx.car:hover {
+    background-color: #f0f;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-tcx.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-tcx.stint {
+    background-color: #4d004d;
+}
+.strategy-container .class-tcx.stint.in-progress {
+    background-color: #606;
+}
+.strategy-container .class-tcx.stint:hover {
+    background-color: #909;
+}
+.strategy-container .class-tcx.stripe.stint {
+    background-color: #606;
+}
+.strategy-container .class-tcx.stripe.stint.in-progress {
+    background-color: purple;
+}
+.strategy-container .class-tcx.stripe.stint:hover {
+    background-color: #909;
+}
+.strategy-container .class-sp4.car {
+    border: 1px solid #29d105;
+}
+.strategy-container .class-sp4.car .race-num {
+    color: #29d105;
+}
+.strategy-container .class-sp4.car:hover {
+    background-color: #29d105;
+    cursor: pointer;
+    color: white;
+}
+.strategy-container .class-sp4.car:hover .race-num {
+    color: white;
+}
+.strategy-container .class-sp4.stint {
+    background-color: #072301;
+}
+.strategy-container .class-sp4.stint.in-progress {
+    background-color: #0c3c01;
+}
+.strategy-container .class-sp4.stint:hover {
+    background-color: #156d03;
+}
+.strategy-container .class-sp4.stripe.stint {
+    background-color: #0c3c01;
+}
+.strategy-container .class-sp4.stripe.stint.in-progress {
+    background-color: #115402;
+}
+.strategy-container .class-sp4.stripe.stint:hover {
+    background-color: #156d03;
+}
+.strategy-container .class-sp4t.car {
+    border: 1px solid #89d115;
+}
+.strategy-container .class-sp4t.car .race-num {
+    color: #89d115;
+}
+.strategy-container .class-sp4t.car:hover {
+    background-color: #89d115;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp4t.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp4t.stint {
+    background-color: #1f2f05;
+}
+.strategy-container .class-sp4t.stint.in-progress {
+    background-color: #2e4607;
+}
+.strategy-container .class-sp4t.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-sp4t.stripe.stint {
+    background-color: #2e4607;
+}
+.strategy-container .class-sp4t.stripe.stint.in-progress {
+    background-color: #3d5d09;
+}
+.strategy-container .class-sp4t.stripe.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-sp3t.car {
+    border: 1px solid #6e92ee;
+}
+.strategy-container .class-sp3t.car .race-num {
+    color: #6e92ee;
+}
+.strategy-container .class-sp3t.car:hover {
+    background-color: #6e92ee;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp3t.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp3t.stint {
+    background-color: #123798;
+}
+.strategy-container .class-sp3t.stint.in-progress {
+    background-color: #1440af;
+}
+.strategy-container .class-sp3t.stint:hover {
+    background-color: #1a50dc;
+}
+.strategy-container .class-sp3t.stripe.stint {
+    background-color: #1440af;
+}
+.strategy-container .class-sp3t.stripe.stint.in-progress {
+    background-color: #1748c5;
+}
+.strategy-container .class-sp3t.stripe.stint:hover {
+    background-color: #1a50dc;
+}
+.strategy-container .class-sp6.car {
+    border: 1px solid #77c0fa;
+}
+.strategy-container .class-sp6.car .race-num {
+    color: #77c0fa;
+}
+.strategy-container .class-sp6.car:hover {
+    background-color: #77c0fa;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp6.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp6.stint {
+    background-color: #0769b8;
+}
+.strategy-container .class-sp6.stint.in-progress {
+    background-color: #0877d0;
+}
+.strategy-container .class-sp6.stint:hover {
+    background-color: #1592f6;
+}
+.strategy-container .class-sp6.stripe.stint {
+    background-color: #0877d0;
+}
+.strategy-container .class-sp6.stripe.stint.in-progress {
+    background-color: #0986e9;
+}
+.strategy-container .class-sp6.stripe.stint:hover {
+    background-color: #1592f6;
+}
+.strategy-container .class-sp7.car {
+    border: 1px solid lime;
+}
+.strategy-container .class-sp7.car .race-num {
+    color: lime;
+}
+.strategy-container .class-sp7.car:hover {
+    background-color: lime;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp7.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp7.stint {
+    background-color: #004d00;
+}
+.strategy-container .class-sp7.stint.in-progress {
+    background-color: #060;
+}
+.strategy-container .class-sp7.stint:hover {
+    background-color: #090;
+}
+.strategy-container .class-sp7.stripe.stint {
+    background-color: #060;
+}
+.strategy-container .class-sp7.stripe.stint.in-progress {
+    background-color: green;
+}
+.strategy-container .class-sp7.stripe.stint:hover {
+    background-color: #090;
+}
+.strategy-container .class-sp8.car {
+    border: 1px solid #c8c;
+}
+.strategy-container .class-sp8.car .race-num {
+    color: #c8c;
+}
+.strategy-container .class-sp8.car:hover {
+    background-color: #c8c;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp8.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp8.stint {
+    background-color: #713071;
+}
+.strategy-container .class-sp8.stint.in-progress {
+    background-color: #833883;
+}
+.strategy-container .class-sp8.stint:hover {
+    background-color: #a747a7;
+}
+.strategy-container .class-sp8.stripe.stint {
+    background-color: #833883;
+}
+.strategy-container .class-sp8.stripe.stint.in-progress {
+    background-color: #954095;
+}
+.strategy-container .class-sp8.stripe.stint:hover {
+    background-color: #a747a7;
+}
+.strategy-container .class-sp8t.car {
+    border: 1px solid #f88;
+}
+.strategy-container .class-sp8t.car .race-num {
+    color: #f88;
+}
+.strategy-container .class-sp8t.car:hover {
+    background-color: #f88;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp8t.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp8t.stint {
+    background-color: #d50000;
+}
+.strategy-container .class-sp8t.stint.in-progress {
+    background-color: #e00;
+}
+.strategy-container .class-sp8t.stint:hover {
+    background-color: #f22;
+}
+.strategy-container .class-sp8t.stripe.stint {
+    background-color: #e00;
+}
+.strategy-container .class-sp8t.stripe.stint.in-progress {
+    background-color: #ff0909;
+}
+.strategy-container .class-sp8t.stripe.stint:hover {
+    background-color: #f22;
+}
+.strategy-container .class-sp9.car {
+    border: 1px solid #ff0;
+}
+.strategy-container .class-sp9.car .race-num {
+    color: #ff0;
+}
+.strategy-container .class-sp9.car:hover {
+    background-color: #ff0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp9.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp9.stint {
+    background-color: #4d4d00;
+}
+.strategy-container .class-sp9.stint.in-progress {
+    background-color: #660;
+}
+.strategy-container .class-sp9.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-sp9.stripe.stint {
+    background-color: #660;
+}
+.strategy-container .class-sp9.stripe.stint.in-progress {
+    background-color: olive;
+}
+.strategy-container .class-sp9.stripe.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-sp10.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-sp10.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-sp10.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sp10.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sp10.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-sp10.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-sp10.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-sp10.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-sp10.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-sp10.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-v2t.car {
+    border: 1px solid #fff0a0;
+}
+.strategy-container .class-v2t.car .race-num {
+    color: #fff0a0;
+}
+.strategy-container .class-v2t.car:hover {
+    background-color: #fff0a0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-v2t.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-v2t.stint {
+    background-color: #edc700;
+}
+.strategy-container .class-v2t.stint.in-progress {
+    background-color: #ffd807;
+}
+.strategy-container .class-v2t.stint:hover {
+    background-color: #ffe03a;
+}
+.strategy-container .class-v2t.stripe.stint {
+    background-color: #ffd807;
+}
+.strategy-container .class-v2t.stripe.stint.in-progress {
+    background-color: #ffdc21;
+}
+.strategy-container .class-v2t.stripe.stint:hover {
+    background-color: #ffe03a;
+}
+.strategy-container .class-v3t.car {
+    border: 1px solid #fd0;
+}
+.strategy-container .class-v3t.car .race-num {
+    color: #fd0;
+}
+.strategy-container .class-v3t.car:hover {
+    background-color: #fd0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-v3t.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-v3t.stint {
+    background-color: #4d4200;
+}
+.strategy-container .class-v3t.stint.in-progress {
+    background-color: #665800;
+}
+.strategy-container .class-v3t.stint:hover {
+    background-color: #998500;
+}
+.strategy-container .class-v3t.stripe.stint {
+    background-color: #665800;
+}
+.strategy-container .class-v3t.stripe.stint.in-progress {
+    background-color: #806f00;
+}
+.strategy-container .class-v3t.stripe.stint:hover {
+    background-color: #998500;
+}
+.strategy-container .class-v4.car {
+    border: 1px solid #ddd0dd;
+}
+.strategy-container .class-v4.car .race-num {
+    color: #ddd0dd;
+}
+.strategy-container .class-v4.car:hover {
+    background-color: #ddd0dd;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-v4.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-v4.stint {
+    background-color: #916991;
+}
+.strategy-container .class-v4.stint.in-progress {
+    background-color: #9d779d;
+}
+.strategy-container .class-v4.stint:hover {
+    background-color: #b295b2;
+}
+.strategy-container .class-v4.stripe.stint {
+    background-color: #9d779d;
+}
+.strategy-container .class-v4.stripe.stint.in-progress {
+    background-color: #a786a7;
+}
+.strategy-container .class-v4.stripe.stint:hover {
+    background-color: #b295b2;
+}
+.strategy-container .class-v5.car {
+    border: 1px solid #f4a4ff;
+}
+.strategy-container .class-v5.car .race-num {
+    color: #f4a4ff;
+}
+.strategy-container .class-v5.car:hover {
+    background-color: #f4a4ff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-v5.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-v5.stint {
+    background-color: #d300f1;
+}
+.strategy-container .class-v5.stint.in-progress {
+    background-color: #e20bff;
+}
+.strategy-container .class-v5.stint:hover {
+    background-color: #e83eff;
+}
+.strategy-container .class-v5.stripe.stint {
+    background-color: #e20bff;
+}
+.strategy-container .class-v5.stripe.stint.in-progress {
+    background-color: #e525ff;
+}
+.strategy-container .class-v5.stripe.stint:hover {
+    background-color: #e83eff;
+}
+.strategy-container .class-v6.car {
+    border: 1px solid #50c0ff;
+}
+.strategy-container .class-v6.car .race-num {
+    color: #50c0ff;
+}
+.strategy-container .class-v6.car:hover {
+    background-color: #50c0ff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-v6.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-v6.stint {
+    background-color: #00649d;
+}
+.strategy-container .class-v6.stint.in-progress {
+    background-color: #0074b6;
+}
+.strategy-container .class-v6.stint:hover {
+    background-color: #0095e9;
+}
+.strategy-container .class-v6.stripe.stint {
+    background-color: #0074b6;
+}
+.strategy-container .class-v6.stripe.stint.in-progress {
+    background-color: #0085d0;
+}
+.strategy-container .class-v6.stripe.stint:hover {
+    background-color: #0095e9;
+}
+.strategy-container .class-vt3.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-vt3.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-vt3.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-vt3.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-vt3.stint {
+    background-color: #737373;
+}
+.strategy-container .class-vt3.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-vt3.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-vt3.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-vt3.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-vt3.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-vt2.car {
+    border: 1px solid #cb67ec;
+}
+.strategy-container .class-vt2.car .race-num {
+    color: #cb67ec;
+}
+.strategy-container .class-vt2.car:hover {
+    background-color: #cb67ec;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-vt2.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-vt2.stint {
+    background-color: #70128f;
+}
+.strategy-container .class-vt2.stint.in-progress {
+    background-color: #8115a5;
+}
+.strategy-container .class-vt2.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-vt2.stripe.stint {
+    background-color: #8115a5;
+}
+.strategy-container .class-vt2.stripe.stint.in-progress {
+    background-color: #9318bc;
+}
+.strategy-container .class-vt2.stripe.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-991.car {
+    border: 1px solid #01ff01;
+}
+.strategy-container .class-991.car .race-num {
+    color: #01ff01;
+}
+.strategy-container .class-991.car:hover {
+    background-color: #01ff01;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-991.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-991.stint {
+    background-color: #004e00;
+}
+.strategy-container .class-991.stint.in-progress {
+    background-color: #006700;
+}
+.strategy-container .class-991.stint:hover {
+    background-color: #009a00;
+}
+.strategy-container .class-991.stripe.stint {
+    background-color: #006700;
+}
+.strategy-container .class-991.stripe.stint.in-progress {
+    background-color: #008100;
+}
+.strategy-container .class-991.stripe.stint:hover {
+    background-color: #009a00;
+}
+.strategy-container .class-a2.car {
+    border: 1px solid #ffb8b8;
+}
+.strategy-container .class-a2.car .race-num {
+    color: #ffb8b8;
+}
+.strategy-container .class-a2.car:hover {
+    background-color: #ffb8b8;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-a2.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-a2.stint {
+    background-color: #ff0606;
+}
+.strategy-container .class-a2.stint.in-progress {
+    background-color: #ff1f1f;
+}
+.strategy-container .class-a2.stint:hover {
+    background-color: #ff5252;
+}
+.strategy-container .class-a2.stripe.stint {
+    background-color: #ff1f1f;
+}
+.strategy-container .class-a2.stripe.stint.in-progress {
+    background-color: #ff3939;
+}
+.strategy-container .class-a2.stripe.stint:hover {
+    background-color: #ff5252;
+}
+.strategy-container .class-tc.car {
+    border: 1px solid #c5b6ff;
+}
+.strategy-container .class-tc.car .race-num {
+    color: #c5b6ff;
+}
+.strategy-container .class-tc.car:hover {
+    background-color: #c5b6ff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-tc.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-tc.stint {
+    background-color: #3704ff;
+}
+.strategy-container .class-tc.stint.in-progress {
+    background-color: #4b1dff;
+}
+.strategy-container .class-tc.stint:hover {
+    background-color: #7450ff;
+}
+.strategy-container .class-tc.stripe.stint {
+    background-color: #4b1dff;
+}
+.strategy-container .class-tc.stripe.stint.in-progress {
+    background-color: #6037ff;
+}
+.strategy-container .class-tc.stripe.stint:hover {
+    background-color: #7450ff;
+}
+.strategy-container .class-cup-x.car {
+    border: 1px solid #fff;
+}
+.strategy-container .class-cup-x.car .race-num {
+    color: #fff;
+}
+.strategy-container .class-cup-x.car:hover {
+    background-color: #fff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-cup-x.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-cup-x.stint {
+    background-color: #a6a6a6;
+}
+.strategy-container .class-cup-x.stint.in-progress {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-cup-x.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-cup-x.stripe.stint {
+    background-color: #b3b3b3;
+}
+.strategy-container .class-cup-x.stripe.stint.in-progress {
+    background-color: #bfbfbf;
+}
+.strategy-container .class-cup-x.stripe.stint:hover {
+    background-color: #ccc;
+}
+.strategy-container .class-klcup5.car {
+    border: 1px solid #dff;
+}
+.strategy-container .class-klcup5.car .race-num {
+    color: #dff;
+}
+.strategy-container .class-klcup5.car:hover {
+    background-color: #dff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-klcup5.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-klcup5.stint {
+    background-color: #2bffff;
+}
+.strategy-container .class-klcup5.stint.in-progress {
+    background-color: #4ff;
+}
+.strategy-container .class-klcup5.stint:hover {
+    background-color: #7ff;
+}
+.strategy-container .class-klcup5.stripe.stint {
+    background-color: #4ff;
+}
+.strategy-container .class-klcup5.stripe.stint.in-progress {
+    background-color: #5effff;
+}
+.strategy-container .class-klcup5.stripe.stint:hover {
+    background-color: #7ff;
+}
+.strategy-container .class-cup3.car {
+    border: 1px solid #ffa;
+}
+.strategy-container .class-cup3.car .race-num {
+    color: #ffa;
+}
+.strategy-container .class-cup3.car:hover {
+    background-color: #ffa;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-cup3.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-cup3.stint {
+    background-color: #f7f700;
+}
+.strategy-container .class-cup3.stint.in-progress {
+    background-color: #ff1;
+}
+.strategy-container .class-cup3.stint:hover {
+    background-color: #ff4;
+}
+.strategy-container .class-cup3.stripe.stint {
+    background-color: #ff1;
+}
+.strategy-container .class-cup3.stripe.stint.in-progress {
+    background-color: #ffff2b;
+}
+.strategy-container .class-cup3.stripe.stint:hover {
+    background-color: #ff4;
+}
+.strategy-container .class-app.car {
+    border: 1px solid #ff50a4;
+}
+.strategy-container .class-app.car .race-num {
+    color: #ff50a4;
+}
+.strategy-container .class-app.car:hover {
+    background-color: #ff50a4;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-app.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-app.stint {
+    background-color: #9d004b;
+}
+.strategy-container .class-app.stint.in-progress {
+    background-color: #b60057;
+}
+.strategy-container .class-app.stint:hover {
+    background-color: #e90070;
+}
+.strategy-container .class-app.stripe.stint {
+    background-color: #b60057;
+}
+.strategy-container .class-app.stripe.stint.in-progress {
+    background-color: #d00064;
+}
+.strategy-container .class-app.stripe.stint:hover {
+    background-color: #e90070;
+}
+.strategy-container .class-apa.car {
+    border: 1px solid #fdff50;
+}
+.strategy-container .class-apa.car .race-num {
+    color: #fdff50;
+}
+.strategy-container .class-apa.car:hover {
+    background-color: #fdff50;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-apa.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-apa.stint {
+    background-color: #9b9d00;
+}
+.strategy-container .class-apa.stint.in-progress {
+    background-color: #b4b600;
+}
+.strategy-container .class-apa.stint:hover {
+    background-color: #e6e900;
+}
+.strategy-container .class-apa.stripe.stint {
+    background-color: #b4b600;
+}
+.strategy-container .class-apa.stripe.stint.in-progress {
+    background-color: #cdd000;
+}
+.strategy-container .class-apa.stripe.stint:hover {
+    background-color: #e6e900;
+}
+.strategy-container .class-aam.car {
+    border: 1px solid #cb67ec;
+}
+.strategy-container .class-aam.car .race-num {
+    color: #cb67ec;
+}
+.strategy-container .class-aam.car:hover {
+    background-color: #cb67ec;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-aam.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-aam.stint {
+    background-color: #70128f;
+}
+.strategy-container .class-aam.stint.in-progress {
+    background-color: #8115a5;
+}
+.strategy-container .class-aam.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-aam.stripe.stint {
+    background-color: #8115a5;
+}
+.strategy-container .class-aam.stripe.stint.in-progress {
+    background-color: #9318bc;
+}
+.strategy-container .class-aam.stripe.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-i.car {
+    border: 1px solid #89d115;
+}
+.strategy-container .class-i.car .race-num {
+    color: #89d115;
+}
+.strategy-container .class-i.car:hover {
+    background-color: #89d115;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-i.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-i.stint {
+    background-color: #1f2f05;
+}
+.strategy-container .class-i.stint.in-progress {
+    background-color: #2e4607;
+}
+.strategy-container .class-i.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-i.stripe.stint {
+    background-color: #2e4607;
+}
+.strategy-container .class-i.stripe.stint.in-progress {
+    background-color: #3d5d09;
+}
+.strategy-container .class-i.stripe.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-inv.car {
+    border: 1px solid #89d115;
+}
+.strategy-container .class-inv.car .race-num {
+    color: #89d115;
+}
+.strategy-container .class-inv.car:hover {
+    background-color: #89d115;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-inv.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-inv.stint {
+    background-color: #1f2f05;
+}
+.strategy-container .class-inv.stint.in-progress {
+    background-color: #2e4607;
+}
+.strategy-container .class-inv.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-inv.stripe.stint {
+    background-color: #2e4607;
+}
+.strategy-container .class-inv.stripe.stint.in-progress {
+    background-color: #3d5d09;
+}
+.strategy-container .class-inv.stripe.stint:hover {
+    background-color: #4c740c;
+}
+.strategy-container .class-a.car {
+    border: 1px solid #ff0;
+}
+.strategy-container .class-a.car .race-num {
+    color: #ff0;
+}
+.strategy-container .class-a.car:hover {
+    background-color: #ff0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-a.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-a.stint {
+    background-color: #4d4d00;
+}
+.strategy-container .class-a.stint.in-progress {
+    background-color: #660;
+}
+.strategy-container .class-a.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-a.stripe.stint {
+    background-color: #660;
+}
+.strategy-container .class-a.stripe.stint.in-progress {
+    background-color: olive;
+}
+.strategy-container .class-a.stripe.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-b.car {
+    border: 1px solid #6e92ee;
+}
+.strategy-container .class-b.car .race-num {
+    color: #6e92ee;
+}
+.strategy-container .class-b.car:hover {
+    background-color: #6e92ee;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-b.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-b.stint {
+    background-color: #123798;
+}
+.strategy-container .class-b.stint.in-progress {
+    background-color: #1440af;
+}
+.strategy-container .class-b.stint:hover {
+    background-color: #1a50dc;
+}
+.strategy-container .class-b.stripe.stint {
+    background-color: #1440af;
+}
+.strategy-container .class-b.stripe.stint.in-progress {
+    background-color: #1748c5;
+}
+.strategy-container .class-b.stripe.stint:hover {
+    background-color: #1a50dc;
+}
+.strategy-container .class-c.car {
+    border: 1px solid #f68002;
+}
+.strategy-container .class-c.car .race-num {
+    color: #f68002;
+}
+.strategy-container .class-c.car:hover {
+    background-color: #f68002;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-c.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-c.stint {
+    background-color: #452401;
+}
+.strategy-container .class-c.stint.in-progress {
+    background-color: #5e3101;
+}
+.strategy-container .class-c.stint:hover {
+    background-color: #914b01;
+}
+.strategy-container .class-c.stripe.stint {
+    background-color: #5e3101;
+}
+.strategy-container .class-c.stripe.stint.in-progress {
+    background-color: #783e01;
+}
+.strategy-container .class-c.stripe.stint:hover {
+    background-color: #914b01;
+}
+.strategy-container .class-d.car {
+    border: 1px solid #cb67ec;
+}
+.strategy-container .class-d.car .race-num {
+    color: #cb67ec;
+}
+.strategy-container .class-d.car:hover {
+    background-color: #cb67ec;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-d.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-d.stint {
+    background-color: #70128f;
+}
+.strategy-container .class-d.stint.in-progress {
+    background-color: #8115a5;
+}
+.strategy-container .class-d.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-d.stripe.stint {
+    background-color: #8115a5;
+}
+.strategy-container .class-d.stripe.stint.in-progress {
+    background-color: #9318bc;
+}
+.strategy-container .class-d.stripe.stint:hover {
+    background-color: #a51ad3;
+}
+.strategy-container .class-e.car {
+    border: 1px solid #ff4f00;
+}
+.strategy-container .class-e.car .race-num {
+    color: #ff4f00;
+}
+.strategy-container .class-e.car:hover {
+    background-color: #ff4f00;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-e.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-e.stint {
+    background-color: #4d1800;
+}
+.strategy-container .class-e.stint.in-progress {
+    background-color: #662000;
+}
+.strategy-container .class-e.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-e.stripe.stint {
+    background-color: #662000;
+}
+.strategy-container .class-e.stripe.stint.in-progress {
+    background-color: #802800;
+}
+.strategy-container .class-e.stripe.stint:hover {
+    background-color: #992f00;
+}
+.strategy-container .class-r.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-r.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-r.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-r.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-r.stint {
+    background-color: #737373;
+}
+.strategy-container .class-r.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-r.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-r.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-r.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-r.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-pro.car {
+    border: 1px solid #f29b42;
+}
+.strategy-container .class-pro.car .race-num {
+    color: #f29b42;
+}
+.strategy-container .class-pro.car:hover {
+    background-color: #f29b42;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-pro.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-pro.stint {
+    background-color: #794108;
+}
+.strategy-container .class-pro.stint.in-progress {
+    background-color: #914e0a;
+}
+.strategy-container .class-pro.stint:hover {
+    background-color: #c1680d;
+}
+.strategy-container .class-pro.stripe.stint {
+    background-color: #914e0a;
+}
+.strategy-container .class-pro.stripe.stint.in-progress {
+    background-color: #a95b0c;
+}
+.strategy-container .class-pro.stripe.stint:hover {
+    background-color: #c1680d;
+}
+.strategy-container .class-proam.car {
+    border: 1px solid #f0f33c;
+}
+.strategy-container .class-proam.car .race-num {
+    color: #f0f33c;
+}
+.strategy-container .class-proam.car:hover {
+    background-color: #f0f33c;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-proam.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-proam.stint {
+    background-color: #737507;
+}
+.strategy-container .class-proam.stint.in-progress {
+    background-color: #8b8d09;
+}
+.strategy-container .class-proam.stint:hover {
+    background-color: #babd0c;
+}
+.strategy-container .class-proam.stripe.stint {
+    background-color: #8b8d09;
+}
+.strategy-container .class-proam.stripe.stint.in-progress {
+    background-color: #a3a50a;
+}
+.strategy-container .class-proam.stripe.stint:hover {
+    background-color: #babd0c;
+}
+.strategy-container .class-am.car {
+    border: 1px solid #1fcc67;
+}
+.strategy-container .class-am.car .race-num {
+    color: #1fcc67;
+}
+.strategy-container .class-am.car:hover {
+    background-color: #1fcc67;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-am.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-am.stint {
+    background-color: #073119;
+}
+.strategy-container .class-am.stint.in-progress {
+    background-color: #0b4724;
+}
+.strategy-container .class-am.stint:hover {
+    background-color: #12733a;
+}
+.strategy-container .class-am.stripe.stint {
+    background-color: #0b4724;
+}
+.strategy-container .class-am.stripe.stint.in-progress {
+    background-color: #0e5d2f;
+}
+.strategy-container .class-am.stripe.stint:hover {
+    background-color: #12733a;
+}
+.strategy-container .class-lbcup.car {
+    border: 1px solid #1cc3ff;
+}
+.strategy-container .class-lbcup.car .race-num {
+    color: #1cc3ff;
+}
+.strategy-container .class-lbcup.car:hover {
+    background-color: #1cc3ff;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-lbcup.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-lbcup.stint {
+    background-color: #004d69;
+}
+.strategy-container .class-lbcup.stint.in-progress {
+    background-color: #006082;
+}
+.strategy-container .class-lbcup.stint:hover {
+    background-color: #0085b5;
+}
+.strategy-container .class-lbcup.stripe.stint {
+    background-color: #006082;
+}
+.strategy-container .class-lbcup.stripe.stint.in-progress {
+    background-color: #00729c;
+}
+.strategy-container .class-lbcup.stripe.stint:hover {
+    background-color: #0085b5;
+}
+.strategy-container .class-silver.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-silver.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-silver.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-silver.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-silver.stint {
+    background-color: #737373;
+}
+.strategy-container .class-silver.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-silver.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-silver.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-silver.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-silver.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-sil.car {
+    border: 1px solid #ccc;
+}
+.strategy-container .class-sil.car .race-num {
+    color: #ccc;
+}
+.strategy-container .class-sil.car:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-sil.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-sil.stint {
+    background-color: #737373;
+}
+.strategy-container .class-sil.stint.in-progress {
+    background-color: gray;
+}
+.strategy-container .class-sil.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-sil.stripe.stint {
+    background-color: gray;
+}
+.strategy-container .class-sil.stripe.stint.in-progress {
+    background-color: #8c8c8c;
+}
+.strategy-container .class-sil.stripe.stint:hover {
+    background-color: #999;
+}
+.strategy-container .class-pam.car {
+    border: 1px solid #ff0;
+}
+.strategy-container .class-pam.car .race-num {
+    color: #ff0;
+}
+.strategy-container .class-pam.car:hover {
+    background-color: #ff0;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-pam.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-pam.stint {
+    background-color: #4d4d00;
+}
+.strategy-container .class-pam.stint.in-progress {
+    background-color: #660;
+}
+.strategy-container .class-pam.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-pam.stripe.stint {
+    background-color: #660;
+}
+.strategy-container .class-pam.stripe.stint.in-progress {
+    background-color: olive;
+}
+.strategy-container .class-pam.stripe.stint:hover {
+    background-color: #990;
+}
+.strategy-container .class-h4.car {
+    border: 1px solid #ffa;
+}
+.strategy-container .class-h4.car .race-num {
+    color: #ffa;
+}
+.strategy-container .class-h4.car:hover {
+    background-color: #ffa;
+    cursor: pointer;
+    color: black;
+}
+.strategy-container .class-h4.car:hover .race-num {
+    color: black;
+}
+.strategy-container .class-h4.stint {
+    background-color: #f7f700;
+}
+.strategy-container .class-h4.stint.in-progress {
+    background-color: #ff1;
+}
+.strategy-container .class-h4.stint:hover {
+    background-color: #ff4;
+}
+.strategy-container .class-h4.stripe.stint {
+    background-color: #ff1;
+}
+.strategy-container .class-h4.stripe.stint.in-progress {
+    background-color: #ffff2b;
+}
+.strategy-container .class-h4.stripe.stint:hover {
+    background-color: #ff4;
+}
+.analysis-screen {
+    display: flex;
+    flex-direction: row;
+}
+.analysis-module-select {
+    flex: 1 1 20%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #54ffff;
+    padding: 1rem;
+    z-index: 200;
+    overflow-y: auto;
+    min-height: 0;
+}
+.analysis-module-select h3 {
+    text-align: center;
+}
+.nav-tabs.flex-column {
+    border: none;
+    margin-right: -1rem;
+    margin-top: 1rem;
+}
+.nav-tabs.flex-column .nav-link {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0.25rem;
+    margin-bottom: 4px;
+    border-right: 0;
+    text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .nav-tabs.flex-column .nav-link {
+        transition: none;
+    }
+}
+.nav-tabs.flex-column .nav-link:hover,
+.nav-tabs.flex-column .nav-link:focus {
+    border-color: #54ffff;
+}
+.nav-tabs.flex-column .nav-link.active:hover {
+    color: black;
+    border-color: #57ffff;
+}
+.analysis-screen-container {
+    flex: 1 1 80%;
+    overflow-y: auto;
+    padding: 0.5rem;
+    display: flex;
+    align-content: center;
+    min-height: 0;
+}
+.analysis-loading {
+    margin: auto;
+    border: 2px solid #54ffff;
+    padding: 10%;
+    border-radius: 0.25rem;
+    color: #54ffff;
+}
+.in_progress {
+    font-style: italic;
+    color: #c0c0c0;
+}
+.analysis-debug {
+    max-height: 40%;
+    overflow-y: auto;
+    border: 1px solid #54ffff;
+    margin: 1rem;
+}
+.analysis-table td {
+    font-family: "Verdana", monospace;
+}
+.analysis-table td.yellow {
+    background-color: inherit;
+    color: #ffff00;
+}
+.analysis-table td.numeric {
+    text-align: right;
+}
+.analysis-table th {
+    color: #54ffff;
+    text-transform: uppercase;
+    font-family: Play, Verdana, Monospace;
+    text-align: right;
+    font-weight: normal;
+}
+.analysis-table th:first-child {
+    border-right: 1px solid #54ffff;
+}
+.analysis-table .timing-table-header td {
+    font-family: Play, Verdana, Monospace;
+}
+.pit-panel {
+    text-align: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+pre {
+    color: white;
+}
+.distance-prediction {
+    font-size: xx-large;
+    text-align: center;
+}
+.distance-prediction small {
+    display: block;
+    color: #c0c0c0;
+}
+svg.radar {
+    width: 100%;
+    height: auto;
+}
+svg.radar .base {
+    stroke: #404040;
+    stroke-width: 1px;
+}
+svg.radar text.base {
+    stroke: none;
+    fill: #d41919;
+}
+svg.radar .lap-marker {
+    stroke-width: 0.25px;
+}
+svg.radar text {
+    fill: white;
+    font-size: 4px;
+}
+svg.radar .car circle {
+    stroke: black;
+    stroke-width: 0.2px;
+    fill: #808080;
+}
+svg.radar .car text {
+    alignment-baseline: central;
+    text-anchor: middle;
+    font-size: 5px;
+}
+svg.radar .car.selected circle {
+    stroke: #ffff00;
+    stroke-width: 0.5px;
+}
+svg.radar .car.selected line {
+    stroke: #ffff00;
+    visibility: visible;
+}
+svg.radar .car line {
+    visibility: hidden;
+    stroke: #606060;
+    stroke-width: 0.5px;
+}
+svg.radar .car:hover {
+    cursor: pointer;
+}
+svg.radar .car:hover line {
+    visibility: visible;
+}
+.form-control.category-p:focus {
+    color: #fff;
+}
+svg .car-class-p circle,
+svg .car-class-p rect,
+svg .car-class-p path {
+    fill: #fff !important;
+}
+svg .car-class-p text {
+    fill: black;
+}
+svg .car-class-p line {
+    stroke: #fff !important;
+}
+.form-control.category-lmp1:focus {
+    color: red;
+}
+svg .car-class-lmp1 circle,
+svg .car-class-lmp1 rect,
+svg .car-class-lmp1 path {
+    fill: red !important;
+}
+svg .car-class-lmp1 text {
+    fill: black;
+}
+svg .car-class-lmp1 line {
+    stroke: red !important;
+}
+.form-control.category-p1:focus {
+    color: red;
+}
+svg .car-class-p1 circle,
+svg .car-class-p1 rect,
+svg .car-class-p1 path {
+    fill: red !important;
+}
+svg .car-class-p1 text {
+    fill: black;
+}
+svg .car-class-p1 line {
+    stroke: red !important;
+}
+.form-control.category-dpi:focus {
+    color: #fff;
+}
+svg .car-class-dpi circle,
+svg .car-class-dpi rect,
+svg .car-class-dpi path {
+    fill: #fff !important;
+}
+svg .car-class-dpi text {
+    fill: black;
+}
+svg .car-class-dpi line {
+    stroke: #fff !important;
+}
+.form-control.category-lmp2:focus {
+    color: #7af;
+}
+svg .car-class-lmp2 circle,
+svg .car-class-lmp2 rect,
+svg .car-class-lmp2 path {
+    fill: #7af !important;
+}
+svg .car-class-lmp2 text {
+    fill: black;
+}
+svg .car-class-lmp2 line {
+    stroke: #7af !important;
+}
+.form-control.category-p2:focus {
+    color: #7af;
+}
+svg .car-class-p2 circle,
+svg .car-class-p2 rect,
+svg .car-class-p2 path {
+    fill: #7af !important;
+}
+svg .car-class-p2 text {
+    fill: black;
+}
+svg .car-class-p2 line {
+    stroke: #7af !important;
+}
+.form-control.category-lmp3:focus {
+    color: #d0d;
+}
+svg .car-class-lmp3 circle,
+svg .car-class-lmp3 rect,
+svg .car-class-lmp3 path {
+    fill: #d0d !important;
+}
+svg .car-class-lmp3 line {
+    stroke: #d0d !important;
+}
+.form-control.category-p3:focus {
+    color: #d0d;
+}
+svg .car-class-p3 circle,
+svg .car-class-p3 rect,
+svg .car-class-p3 path {
+    fill: #d0d !important;
+}
+svg .car-class-p3 line {
+    stroke: #d0d !important;
+}
+.form-control.category-cn:focus {
+    color: #dbb700;
+}
+svg .car-class-cn circle,
+svg .car-class-cn rect,
+svg .car-class-cn path {
+    fill: #dbb700 !important;
+}
+svg .car-class-cn line {
+    stroke: #dbb700 !important;
+}
+.form-control.category-cn1:focus {
+    color: #dbb700;
+}
+svg .car-class-cn1 circle,
+svg .car-class-cn1 rect,
+svg .car-class-cn1 path {
+    fill: #dbb700 !important;
+}
+svg .car-class-cn1 line {
+    stroke: #dbb700 !important;
+}
+.form-control.category-mpc:focus {
+    color: #50c0ff;
+}
+svg .car-class-mpc circle,
+svg .car-class-mpc rect,
+svg .car-class-mpc path {
+    fill: #50c0ff !important;
+}
+svg .car-class-mpc text {
+    fill: black;
+}
+svg .car-class-mpc line {
+    stroke: #50c0ff !important;
+}
+.form-control.category-gtlm:focus {
+    color: red;
+}
+svg .car-class-gtlm circle,
+svg .car-class-gtlm rect,
+svg .car-class-gtlm path {
+    fill: red !important;
+}
+svg .car-class-gtlm text {
+    fill: black;
+}
+svg .car-class-gtlm line {
+    stroke: red !important;
+}
+.form-control.category-lmgte:focus {
+    color: #ff4f00;
+}
+svg .car-class-lmgte circle,
+svg .car-class-lmgte rect,
+svg .car-class-lmgte path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-lmgte text {
+    fill: black;
+}
+svg .car-class-lmgte line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-lmgteam:focus {
+    color: #ff4f00;
+}
+svg .car-class-lmgteam circle,
+svg .car-class-lmgteam rect,
+svg .car-class-lmgteam path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-lmgteam text {
+    fill: black;
+}
+svg .car-class-lmgteam line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-lmgtepro:focus {
+    color: #01ff01;
+}
+svg .car-class-lmgtepro circle,
+svg .car-class-lmgtepro rect,
+svg .car-class-lmgtepro path {
+    fill: #01ff01 !important;
+}
+svg .car-class-lmgtepro text {
+    fill: black;
+}
+svg .car-class-lmgtepro line {
+    stroke: #01ff01 !important;
+}
+.form-control.category-gt:focus {
+    color: #ff4f00;
+}
+svg .car-class-gt circle,
+svg .car-class-gt rect,
+svg .car-class-gt path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-gt text {
+    fill: black;
+}
+svg .car-class-gt line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-gtc:focus {
+    color: #a0a0a0;
+}
+svg .car-class-gtc circle,
+svg .car-class-gtc rect,
+svg .car-class-gtc path {
+    fill: #a0a0a0 !important;
+}
+svg .car-class-gtc text {
+    fill: black;
+}
+svg .car-class-gtc line {
+    stroke: #a0a0a0 !important;
+}
+.form-control.category-gtd:focus {
+    color: #00dc67;
+}
+svg .car-class-gtd circle,
+svg .car-class-gtd rect,
+svg .car-class-gtd path {
+    fill: #00dc67 !important;
+}
+svg .car-class-gtd line {
+    stroke: #00dc67 !important;
+}
+.form-control.category-gt3:focus {
+    color: #ff0;
+}
+svg .car-class-gt3 circle,
+svg .car-class-gt3 rect,
+svg .car-class-gt3 path {
+    fill: #ff0 !important;
+}
+svg .car-class-gt3 text {
+    fill: black;
+}
+svg .car-class-gt3 line {
+    stroke: #ff0 !important;
+}
+.form-control.category-gt3p:focus {
+    color: #ccc;
+}
+svg .car-class-gt3p circle,
+svg .car-class-gt3p rect,
+svg .car-class-gt3p path {
+    fill: #ccc !important;
+}
+svg .car-class-gt3p text {
+    fill: black;
+}
+svg .car-class-gt3p line {
+    stroke: #ccc !important;
+}
+.form-control.category-gt3g:focus {
+    color: #dbb700;
+}
+svg .car-class-gt3g circle,
+svg .car-class-gt3g rect,
+svg .car-class-gt3g path {
+    fill: #dbb700 !important;
+}
+svg .car-class-gt3g line {
+    stroke: #dbb700 !important;
+}
+.form-control.category-gt4:focus {
+    color: #ff4f00;
+}
+svg .car-class-gt4 circle,
+svg .car-class-gt4 rect,
+svg .car-class-gt4 path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-gt4 text {
+    fill: black;
+}
+svg .car-class-gt4 line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-gs:focus {
+    color: #2fabff;
+}
+svg .car-class-gs circle,
+svg .car-class-gs rect,
+svg .car-class-gs path {
+    fill: #2fabff !important;
+}
+svg .car-class-gs text {
+    fill: black;
+}
+svg .car-class-gs line {
+    stroke: #2fabff !important;
+}
+.form-control.category-tcr:focus {
+    color: #ff0;
+}
+svg .car-class-tcr circle,
+svg .car-class-tcr rect,
+svg .car-class-tcr path {
+    fill: #ff0 !important;
+}
+svg .car-class-tcr text {
+    fill: black;
+}
+svg .car-class-tcr line {
+    stroke: #ff0 !important;
+}
+.form-control.category-gt3-pro:focus {
+    color: #dbb700;
+}
+svg .car-class-gt3-pro circle,
+svg .car-class-gt3-pro rect,
+svg .car-class-gt3-pro path {
+    fill: #dbb700 !important;
+}
+svg .car-class-gt3-pro line {
+    stroke: #dbb700 !important;
+}
+.form-control.category-gt3-am:focus {
+    color: #ccc;
+}
+svg .car-class-gt3-am circle,
+svg .car-class-gt3-am rect,
+svg .car-class-gt3-am path {
+    fill: #ccc !important;
+}
+svg .car-class-gt3-am text {
+    fill: black;
+}
+svg .car-class-gt3-am line {
+    stroke: #ccc !important;
+}
+.form-control.category-at:focus {
+    color: #ccc;
+}
+svg .car-class-at circle,
+svg .car-class-at rect,
+svg .car-class-at path {
+    fill: #ccc !important;
+}
+svg .car-class-at text {
+    fill: black;
+}
+svg .car-class-at line {
+    stroke: #ccc !important;
+}
+.form-control.category-gtx:focus {
+    color: red;
+}
+svg .car-class-gtx circle,
+svg .car-class-gtx rect,
+svg .car-class-gtx path {
+    fill: red !important;
+}
+svg .car-class-gtx text {
+    fill: black;
+}
+svg .car-class-gtx line {
+    stroke: red !important;
+}
+.form-control.category-sp2:focus {
+    color: #7af;
+}
+svg .car-class-sp2 circle,
+svg .car-class-sp2 rect,
+svg .car-class-sp2 path {
+    fill: #7af !important;
+}
+svg .car-class-sp2 text {
+    fill: black;
+}
+svg .car-class-sp2 line {
+    stroke: #7af !important;
+}
+.form-control.category-sp3:focus {
+    color: #f0f;
+}
+svg .car-class-sp3 circle,
+svg .car-class-sp3 rect,
+svg .car-class-sp3 path {
+    fill: #f0f !important;
+}
+svg .car-class-sp3 text {
+    fill: black;
+}
+svg .car-class-sp3 line {
+    stroke: #f0f !important;
+}
+.form-control.category-tcx:focus {
+    color: #f0f;
+}
+svg .car-class-tcx circle,
+svg .car-class-tcx rect,
+svg .car-class-tcx path {
+    fill: #f0f !important;
+}
+svg .car-class-tcx text {
+    fill: black;
+}
+svg .car-class-tcx line {
+    stroke: #f0f !important;
+}
+.form-control.category-sp4:focus {
+    color: #29d105;
+}
+svg .car-class-sp4 circle,
+svg .car-class-sp4 rect,
+svg .car-class-sp4 path {
+    fill: #29d105 !important;
+}
+svg .car-class-sp4 line {
+    stroke: #29d105 !important;
+}
+.form-control.category-sp4t:focus {
+    color: #89d115;
+}
+svg .car-class-sp4t circle,
+svg .car-class-sp4t rect,
+svg .car-class-sp4t path {
+    fill: #89d115 !important;
+}
+svg .car-class-sp4t text {
+    fill: black;
+}
+svg .car-class-sp4t line {
+    stroke: #89d115 !important;
+}
+.form-control.category-sp3t:focus {
+    color: #6e92ee;
+}
+svg .car-class-sp3t circle,
+svg .car-class-sp3t rect,
+svg .car-class-sp3t path {
+    fill: #6e92ee !important;
+}
+svg .car-class-sp3t text {
+    fill: black;
+}
+svg .car-class-sp3t line {
+    stroke: #6e92ee !important;
+}
+.form-control.category-sp6:focus {
+    color: #77c0fa;
+}
+svg .car-class-sp6 circle,
+svg .car-class-sp6 rect,
+svg .car-class-sp6 path {
+    fill: #77c0fa !important;
+}
+svg .car-class-sp6 text {
+    fill: black;
+}
+svg .car-class-sp6 line {
+    stroke: #77c0fa !important;
+}
+.form-control.category-sp7:focus {
+    color: lime;
+}
+svg .car-class-sp7 circle,
+svg .car-class-sp7 rect,
+svg .car-class-sp7 path {
+    fill: lime !important;
+}
+svg .car-class-sp7 text {
+    fill: black;
+}
+svg .car-class-sp7 line {
+    stroke: lime !important;
+}
+.form-control.category-sp8:focus {
+    color: #c8c;
+}
+svg .car-class-sp8 circle,
+svg .car-class-sp8 rect,
+svg .car-class-sp8 path {
+    fill: #c8c !important;
+}
+svg .car-class-sp8 text {
+    fill: black;
+}
+svg .car-class-sp8 line {
+    stroke: #c8c !important;
+}
+.form-control.category-sp8t:focus {
+    color: #f88;
+}
+svg .car-class-sp8t circle,
+svg .car-class-sp8t rect,
+svg .car-class-sp8t path {
+    fill: #f88 !important;
+}
+svg .car-class-sp8t text {
+    fill: black;
+}
+svg .car-class-sp8t line {
+    stroke: #f88 !important;
+}
+.form-control.category-sp9:focus {
+    color: #ff0;
+}
+svg .car-class-sp9 circle,
+svg .car-class-sp9 rect,
+svg .car-class-sp9 path {
+    fill: #ff0 !important;
+}
+svg .car-class-sp9 text {
+    fill: black;
+}
+svg .car-class-sp9 line {
+    stroke: #ff0 !important;
+}
+.form-control.category-sp10:focus {
+    color: #ff4f00;
+}
+svg .car-class-sp10 circle,
+svg .car-class-sp10 rect,
+svg .car-class-sp10 path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-sp10 text {
+    fill: black;
+}
+svg .car-class-sp10 line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-v2t:focus {
+    color: #fff0a0;
+}
+svg .car-class-v2t circle,
+svg .car-class-v2t rect,
+svg .car-class-v2t path {
+    fill: #fff0a0 !important;
+}
+svg .car-class-v2t text {
+    fill: black;
+}
+svg .car-class-v2t line {
+    stroke: #fff0a0 !important;
+}
+.form-control.category-v3t:focus {
+    color: #fd0;
+}
+svg .car-class-v3t circle,
+svg .car-class-v3t rect,
+svg .car-class-v3t path {
+    fill: #fd0 !important;
+}
+svg .car-class-v3t text {
+    fill: black;
+}
+svg .car-class-v3t line {
+    stroke: #fd0 !important;
+}
+.form-control.category-v4:focus {
+    color: #ddd0dd;
+}
+svg .car-class-v4 circle,
+svg .car-class-v4 rect,
+svg .car-class-v4 path {
+    fill: #ddd0dd !important;
+}
+svg .car-class-v4 text {
+    fill: black;
+}
+svg .car-class-v4 line {
+    stroke: #ddd0dd !important;
+}
+.form-control.category-v5:focus {
+    color: #f4a4ff;
+}
+svg .car-class-v5 circle,
+svg .car-class-v5 rect,
+svg .car-class-v5 path {
+    fill: #f4a4ff !important;
+}
+svg .car-class-v5 text {
+    fill: black;
+}
+svg .car-class-v5 line {
+    stroke: #f4a4ff !important;
+}
+.form-control.category-v6:focus {
+    color: #50c0ff;
+}
+svg .car-class-v6 circle,
+svg .car-class-v6 rect,
+svg .car-class-v6 path {
+    fill: #50c0ff !important;
+}
+svg .car-class-v6 text {
+    fill: black;
+}
+svg .car-class-v6 line {
+    stroke: #50c0ff !important;
+}
+.form-control.category-vt3:focus {
+    color: #ccc;
+}
+svg .car-class-vt3 circle,
+svg .car-class-vt3 rect,
+svg .car-class-vt3 path {
+    fill: #ccc !important;
+}
+svg .car-class-vt3 text {
+    fill: black;
+}
+svg .car-class-vt3 line {
+    stroke: #ccc !important;
+}
+.form-control.category-vt2:focus {
+    color: #cb67ec;
+}
+svg .car-class-vt2 circle,
+svg .car-class-vt2 rect,
+svg .car-class-vt2 path {
+    fill: #cb67ec !important;
+}
+svg .car-class-vt2 text {
+    fill: black;
+}
+svg .car-class-vt2 line {
+    stroke: #cb67ec !important;
+}
+.form-control.category-991:focus {
+    color: #01ff01;
+}
+svg .car-class-991 circle,
+svg .car-class-991 rect,
+svg .car-class-991 path {
+    fill: #01ff01 !important;
+}
+svg .car-class-991 text {
+    fill: black;
+}
+svg .car-class-991 line {
+    stroke: #01ff01 !important;
+}
+.form-control.category-a2:focus {
+    color: #ffb8b8;
+}
+svg .car-class-a2 circle,
+svg .car-class-a2 rect,
+svg .car-class-a2 path {
+    fill: #ffb8b8 !important;
+}
+svg .car-class-a2 text {
+    fill: black;
+}
+svg .car-class-a2 line {
+    stroke: #ffb8b8 !important;
+}
+.form-control.category-tc:focus {
+    color: #c5b6ff;
+}
+svg .car-class-tc circle,
+svg .car-class-tc rect,
+svg .car-class-tc path {
+    fill: #c5b6ff !important;
+}
+svg .car-class-tc text {
+    fill: black;
+}
+svg .car-class-tc line {
+    stroke: #c5b6ff !important;
+}
+.form-control.category-cup-x:focus {
+    color: #fff;
+}
+svg .car-class-cup-x circle,
+svg .car-class-cup-x rect,
+svg .car-class-cup-x path {
+    fill: #fff !important;
+}
+svg .car-class-cup-x text {
+    fill: black;
+}
+svg .car-class-cup-x line {
+    stroke: #fff !important;
+}
+.form-control.category-klcup5:focus {
+    color: #dff;
+}
+svg .car-class-klcup5 circle,
+svg .car-class-klcup5 rect,
+svg .car-class-klcup5 path {
+    fill: #dff !important;
+}
+svg .car-class-klcup5 text {
+    fill: black;
+}
+svg .car-class-klcup5 line {
+    stroke: #dff !important;
+}
+.form-control.category-cup3:focus {
+    color: #ffa;
+}
+svg .car-class-cup3 circle,
+svg .car-class-cup3 rect,
+svg .car-class-cup3 path {
+    fill: #ffa !important;
+}
+svg .car-class-cup3 text {
+    fill: black;
+}
+svg .car-class-cup3 line {
+    stroke: #ffa !important;
+}
+.form-control.category-app:focus {
+    color: #ff50a4;
+}
+svg .car-class-app circle,
+svg .car-class-app rect,
+svg .car-class-app path {
+    fill: #ff50a4 !important;
+}
+svg .car-class-app text {
+    fill: black;
+}
+svg .car-class-app line {
+    stroke: #ff50a4 !important;
+}
+.form-control.category-apa:focus {
+    color: #fdff50;
+}
+svg .car-class-apa circle,
+svg .car-class-apa rect,
+svg .car-class-apa path {
+    fill: #fdff50 !important;
+}
+svg .car-class-apa text {
+    fill: black;
+}
+svg .car-class-apa line {
+    stroke: #fdff50 !important;
+}
+.form-control.category-aam:focus {
+    color: #cb67ec;
+}
+svg .car-class-aam circle,
+svg .car-class-aam rect,
+svg .car-class-aam path {
+    fill: #cb67ec !important;
+}
+svg .car-class-aam text {
+    fill: black;
+}
+svg .car-class-aam line {
+    stroke: #cb67ec !important;
+}
+.form-control.category-i:focus {
+    color: #89d115;
+}
+svg .car-class-i circle,
+svg .car-class-i rect,
+svg .car-class-i path {
+    fill: #89d115 !important;
+}
+svg .car-class-i text {
+    fill: black;
+}
+svg .car-class-i line {
+    stroke: #89d115 !important;
+}
+.form-control.category-inv:focus {
+    color: #89d115;
+}
+svg .car-class-inv circle,
+svg .car-class-inv rect,
+svg .car-class-inv path {
+    fill: #89d115 !important;
+}
+svg .car-class-inv text {
+    fill: black;
+}
+svg .car-class-inv line {
+    stroke: #89d115 !important;
+}
+.form-control.category-a:focus {
+    color: #ff0;
+}
+svg .car-class-a circle,
+svg .car-class-a rect,
+svg .car-class-a path {
+    fill: #ff0 !important;
+}
+svg .car-class-a text {
+    fill: black;
+}
+svg .car-class-a line {
+    stroke: #ff0 !important;
+}
+.form-control.category-b:focus {
+    color: #6e92ee;
+}
+svg .car-class-b circle,
+svg .car-class-b rect,
+svg .car-class-b path {
+    fill: #6e92ee !important;
+}
+svg .car-class-b text {
+    fill: black;
+}
+svg .car-class-b line {
+    stroke: #6e92ee !important;
+}
+.form-control.category-c:focus {
+    color: #f68002;
+}
+svg .car-class-c circle,
+svg .car-class-c rect,
+svg .car-class-c path {
+    fill: #f68002 !important;
+}
+svg .car-class-c text {
+    fill: black;
+}
+svg .car-class-c line {
+    stroke: #f68002 !important;
+}
+.form-control.category-d:focus {
+    color: #cb67ec;
+}
+svg .car-class-d circle,
+svg .car-class-d rect,
+svg .car-class-d path {
+    fill: #cb67ec !important;
+}
+svg .car-class-d text {
+    fill: black;
+}
+svg .car-class-d line {
+    stroke: #cb67ec !important;
+}
+.form-control.category-e:focus {
+    color: #ff4f00;
+}
+svg .car-class-e circle,
+svg .car-class-e rect,
+svg .car-class-e path {
+    fill: #ff4f00 !important;
+}
+svg .car-class-e text {
+    fill: black;
+}
+svg .car-class-e line {
+    stroke: #ff4f00 !important;
+}
+.form-control.category-r:focus {
+    color: #ccc;
+}
+svg .car-class-r circle,
+svg .car-class-r rect,
+svg .car-class-r path {
+    fill: #ccc !important;
+}
+svg .car-class-r text {
+    fill: black;
+}
+svg .car-class-r line {
+    stroke: #ccc !important;
+}
+.form-control.category-pro:focus {
+    color: #f29b42;
+}
+svg .car-class-pro circle,
+svg .car-class-pro rect,
+svg .car-class-pro path {
+    fill: #f29b42 !important;
+}
+svg .car-class-pro text {
+    fill: black;
+}
+svg .car-class-pro line {
+    stroke: #f29b42 !important;
+}
+.form-control.category-proam:focus {
+    color: #f0f33c;
+}
+svg .car-class-proam circle,
+svg .car-class-proam rect,
+svg .car-class-proam path {
+    fill: #f0f33c !important;
+}
+svg .car-class-proam text {
+    fill: black;
+}
+svg .car-class-proam line {
+    stroke: #f0f33c !important;
+}
+.form-control.category-am:focus {
+    color: #1fcc67;
+}
+svg .car-class-am circle,
+svg .car-class-am rect,
+svg .car-class-am path {
+    fill: #1fcc67 !important;
+}
+svg .car-class-am text {
+    fill: black;
+}
+svg .car-class-am line {
+    stroke: #1fcc67 !important;
+}
+.form-control.category-lbcup:focus {
+    color: #1cc3ff;
+}
+svg .car-class-lbcup circle,
+svg .car-class-lbcup rect,
+svg .car-class-lbcup path {
+    fill: #1cc3ff !important;
+}
+svg .car-class-lbcup text {
+    fill: black;
+}
+svg .car-class-lbcup line {
+    stroke: #1cc3ff !important;
+}
+.form-control.category-silver:focus {
+    color: #ccc;
+}
+svg .car-class-silver circle,
+svg .car-class-silver rect,
+svg .car-class-silver path {
+    fill: #ccc !important;
+}
+svg .car-class-silver text {
+    fill: black;
+}
+svg .car-class-silver line {
+    stroke: #ccc !important;
+}
+.form-control.category-sil:focus {
+    color: #ccc;
+}
+svg .car-class-sil circle,
+svg .car-class-sil rect,
+svg .car-class-sil path {
+    fill: #ccc !important;
+}
+svg .car-class-sil text {
+    fill: black;
+}
+svg .car-class-sil line {
+    stroke: #ccc !important;
+}
+.form-control.category-pam:focus {
+    color: #ff0;
+}
+svg .car-class-pam circle,
+svg .car-class-pam rect,
+svg .car-class-pam path {
+    fill: #ff0 !important;
+}
+svg .car-class-pam text {
+    fill: black;
+}
+svg .car-class-pam line {
+    stroke: #ff0 !important;
+}
+.form-control.category-h4:focus {
+    color: #ffa;
+}
+svg .car-class-h4 circle,
+svg .car-class-h4 rect,
+svg .car-class-h4 path {
+    fill: #ffa !important;
+}
+svg .car-class-h4 text {
+    fill: black;
+}
+svg .car-class-h4 line {
+    stroke: #ffa !important;
+}
+.analysis-help-button {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    z-index: 1010;
+}
+.flag-history-chart {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAIAAAADnC86AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AYQDhQznimIVAAAACl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUCBieSBKYW1lcyBNdXNjYXR0szPhAAAAPUlEQVRYw+3WsQ0AIAwDQcz+O4cdEgkK7nvrijRJVa1uSdrbvR4FBoPBYDAYfL9MxpN/zY3BYDAYDAZ/BB86dwZMYauqoQAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+}
+.flag-history-chart svg {
+    height: 3rem;
+    width: 100%;
+}
+.flag-history-chart rect {
+    fill: black;
+    stroke: black;
+    stroke-width: 4px;
+}
+.flag-history-chart rect:hover {
+    stroke: #54ffff;
+}
+.flag-history-chart .flag-history-details {
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 2px solid black;
+}
+.flag-history-chart .flag-history-details span {
+    padding: 0.5rem;
+}
+svg .flag-status-red {
+    fill: #900;
+    stroke: #900;
+}
+svg .flag-status-code_60 {
+    fill: #ff53e3;
+    stroke: #ff53e3;
+}
+svg .flag-status-yellow,
+svg .flag-status-fcy,
+svg .flag-status-sc,
+svg .flag-status-vsc,
+svg .flag-status-caution {
+    fill: #dd0;
+    stroke: #dd0;
+}
+svg .flag-status-green {
+    fill: #090;
+    stroke: #090;
+}
+svg .flag-status-chequered {
+    fill: transparent;
+}
+svg .flag-status-code_60_zone {
+    fill: url(#code_60_zone);
+    stroke: url(#code_60_zone);
+}
+svg .flag-status-slow_zone {
+    fill: url(#slow_zone);
+    stroke: url(#slow_zone);
+}
+svg path.flag-status-code_60_zone {
+    stroke: #ff53e3;
+}
+svg path.flag-status-slow_zone {
+    stroke: #dd0;
+}
+svg .recharts-cartesian-axis-tick tspan,
+svg .recharts-label-list tspan {
+    fill: #54ffff;
+}
+svg .recharts-cartesian-axis-tick line,
+svg .recharts-label-list line {
+    stroke: #54ffff;
+}
+svg .recharts-cartesian-axis-line {
+    stroke: #54ffff;
+}
+svg .recharts-tooltip-cursor {
+    fill: #202020;
+}
+.recharts-default-tooltip {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    color: #54ffff;
+    padding: 1rem;
+    border: 1px solid #54ffff;
+}
+.recharts-default-tooltip li {
+    color: #54ffff !important;
+}
+tr.car_class_p td.column_Class,
+.category-p,
+.car_class_p .category {
+    color: #fff;
+}
+tr.car_class_lmp1 td.column_Class,
+.category-lmp1,
+.car_class_lmp1 .category {
+    color: red;
+}
+tr.car_class_p1 td.column_Class,
+.category-p1,
+.car_class_p1 .category {
+    color: red;
+}
+tr.car_class_dpi td.column_Class,
+.category-dpi,
+.car_class_dpi .category {
+    color: #fff;
+}
+tr.car_class_lmp2 td.column_Class,
+.category-lmp2,
+.car_class_lmp2 .category {
+    color: #7af;
+}
+tr.car_class_p2 td.column_Class,
+.category-p2,
+.car_class_p2 .category {
+    color: #7af;
+}
+tr.car_class_lmp3 td.column_Class,
+.category-lmp3,
+.car_class_lmp3 .category {
+    color: #d0d;
+}
+tr.car_class_p3 td.column_Class,
+.category-p3,
+.car_class_p3 .category {
+    color: #d0d;
+}
+tr.car_class_cn td.column_Class,
+.category-cn,
+.car_class_cn .category {
+    color: #dbb700;
+}
+tr.car_class_cn1 td.column_Class,
+.category-cn1,
+.car_class_cn1 .category {
+    color: #dbb700;
+}
+tr.car_class_mpc td.column_Class,
+.category-mpc,
+.car_class_mpc .category {
+    color: #50c0ff;
+}
+tr.car_class_gtlm td.column_Class,
+.category-gtlm,
+.car_class_gtlm .category {
+    color: red;
+}
+tr.car_class_lmgte td.column_Class,
+.category-lmgte,
+.car_class_lmgte .category {
+    color: #ff4f00;
+}
+tr.car_class_lmgteam td.column_Class,
+.category-lmgteam,
+.car_class_lmgteam .category {
+    color: #ff4f00;
+}
+tr.car_class_lmgtepro td.column_Class,
+.category-lmgtepro,
+.car_class_lmgtepro .category {
+    color: #01ff01;
+}
+tr.car_class_gt td.column_Class,
+.category-gt,
+.car_class_gt .category {
+    color: #ff4f00;
+}
+tr.car_class_gtc td.column_Class,
+.category-gtc,
+.car_class_gtc .category {
+    color: #a0a0a0;
+}
+tr.car_class_gtd td.column_Class,
+.category-gtd,
+.car_class_gtd .category {
+    color: #00dc67;
+}
+tr.car_class_gt3 td.column_Class,
+.category-gt3,
+.car_class_gt3 .category {
+    color: #ff0;
+}
+tr.car_class_gt3p td.column_Class,
+.category-gt3p,
+.car_class_gt3p .category {
+    color: #ccc;
+}
+tr.car_class_gt3g td.column_Class,
+.category-gt3g,
+.car_class_gt3g .category {
+    color: #dbb700;
+}
+tr.car_class_gt4 td.column_Class,
+.category-gt4,
+.car_class_gt4 .category {
+    color: #ff4f00;
+}
+tr.car_class_gs td.column_Class,
+.category-gs,
+.car_class_gs .category {
+    color: #2fabff;
+}
+tr.car_class_tcr td.column_Class,
+.category-tcr,
+.car_class_tcr .category {
+    color: #ff0;
+}
+tr.car_class_gt3-pro td.column_Class,
+.category-gt3-pro,
+.car_class_gt3-pro .category {
+    color: #dbb700;
+}
+tr.car_class_gt3-am td.column_Class,
+.category-gt3-am,
+.car_class_gt3-am .category {
+    color: #ccc;
+}
+tr.car_class_at td.column_Class,
+.category-at,
+.car_class_at .category {
+    color: #ccc;
+}
+tr.car_class_gtx td.column_Class,
+.category-gtx,
+.car_class_gtx .category {
+    color: red;
+}
+tr.car_class_sp2 td.column_Class,
+.category-sp2,
+.car_class_sp2 .category {
+    color: #7af;
+}
+tr.car_class_sp3 td.column_Class,
+.category-sp3,
+.car_class_sp3 .category {
+    color: #f0f;
+}
+tr.car_class_tcx td.column_Class,
+.category-tcx,
+.car_class_tcx .category {
+    color: #f0f;
+}
+tr.car_class_sp4 td.column_Class,
+.category-sp4,
+.car_class_sp4 .category {
+    color: #29d105;
+}
+tr.car_class_sp4t td.column_Class,
+.category-sp4t,
+.car_class_sp4t .category {
+    color: #89d115;
+}
+tr.car_class_sp3t td.column_Class,
+.category-sp3t,
+.car_class_sp3t .category {
+    color: #6e92ee;
+}
+tr.car_class_sp6 td.column_Class,
+.category-sp6,
+.car_class_sp6 .category {
+    color: #77c0fa;
+}
+tr.car_class_sp7 td.column_Class,
+.category-sp7,
+.car_class_sp7 .category {
+    color: lime;
+}
+tr.car_class_sp8 td.column_Class,
+.category-sp8,
+.car_class_sp8 .category {
+    color: #c8c;
+}
+tr.car_class_sp8t td.column_Class,
+.category-sp8t,
+.car_class_sp8t .category {
+    color: #f88;
+}
+tr.car_class_sp9 td.column_Class,
+.category-sp9,
+.car_class_sp9 .category {
+    color: #ff0;
+}
+tr.car_class_sp10 td.column_Class,
+.category-sp10,
+.car_class_sp10 .category {
+    color: #ff4f00;
+}
+tr.car_class_v2t td.column_Class,
+.category-v2t,
+.car_class_v2t .category {
+    color: #fff0a0;
+}
+tr.car_class_v3t td.column_Class,
+.category-v3t,
+.car_class_v3t .category {
+    color: #fd0;
+}
+tr.car_class_v4 td.column_Class,
+.category-v4,
+.car_class_v4 .category {
+    color: #ddd0dd;
+}
+tr.car_class_v5 td.column_Class,
+.category-v5,
+.car_class_v5 .category {
+    color: #f4a4ff;
+}
+tr.car_class_v6 td.column_Class,
+.category-v6,
+.car_class_v6 .category {
+    color: #50c0ff;
+}
+tr.car_class_vt3 td.column_Class,
+.category-vt3,
+.car_class_vt3 .category {
+    color: #ccc;
+}
+tr.car_class_vt2 td.column_Class,
+.category-vt2,
+.car_class_vt2 .category {
+    color: #cb67ec;
+}
+tr.car_class_991 td.column_Class,
+.category-991,
+.car_class_991 .category {
+    color: #01ff01;
+}
+tr.car_class_a2 td.column_Class,
+.category-a2,
+.car_class_a2 .category {
+    color: #ffb8b8;
+}
+tr.car_class_tc td.column_Class,
+.category-tc,
+.car_class_tc .category {
+    color: #c5b6ff;
+}
+tr.car_class_cup-x td.column_Class,
+.category-cup-x,
+.car_class_cup-x .category {
+    color: #fff;
+}
+tr.car_class_klcup5 td.column_Class,
+.category-klcup5,
+.car_class_klcup5 .category {
+    color: #dff;
+}
+tr.car_class_cup3 td.column_Class,
+.category-cup3,
+.car_class_cup3 .category {
+    color: #ffa;
+}
+tr.car_class_app td.column_Class,
+.category-app,
+.car_class_app .category {
+    color: #ff50a4;
+}
+tr.car_class_apa td.column_Class,
+.category-apa,
+.car_class_apa .category {
+    color: #fdff50;
+}
+tr.car_class_aam td.column_Class,
+.category-aam,
+.car_class_aam .category {
+    color: #cb67ec;
+}
+tr.car_class_i td.column_Class,
+.category-i,
+.car_class_i .category {
+    color: #89d115;
+}
+tr.car_class_inv td.column_Class,
+.category-inv,
+.car_class_inv .category {
+    color: #89d115;
+}
+tr.car_class_a td.column_Class,
+.category-a,
+.car_class_a .category {
+    color: #ff0;
+}
+tr.car_class_b td.column_Class,
+.category-b,
+.car_class_b .category {
+    color: #6e92ee;
+}
+tr.car_class_c td.column_Class,
+.category-c,
+.car_class_c .category {
+    color: #f68002;
+}
+tr.car_class_d td.column_Class,
+.category-d,
+.car_class_d .category {
+    color: #cb67ec;
+}
+tr.car_class_e td.column_Class,
+.category-e,
+.car_class_e .category {
+    color: #ff4f00;
+}
+tr.car_class_r td.column_Class,
+.category-r,
+.car_class_r .category {
+    color: #ccc;
+}
+tr.car_class_pro td.column_Class,
+.category-pro,
+.car_class_pro .category {
+    color: #f29b42;
+}
+tr.car_class_proam td.column_Class,
+.category-proam,
+.car_class_proam .category {
+    color: #f0f33c;
+}
+tr.car_class_am td.column_Class,
+.category-am,
+.car_class_am .category {
+    color: #1fcc67;
+}
+tr.car_class_lbcup td.column_Class,
+.category-lbcup,
+.car_class_lbcup .category {
+    color: #1cc3ff;
+}
+tr.car_class_silver td.column_Class,
+.category-silver,
+.car_class_silver .category {
+    color: #ccc;
+}
+tr.car_class_sil td.column_Class,
+.category-sil,
+.car_class_sil .category {
+    color: #ccc;
+}
+tr.car_class_pam td.column_Class,
+.category-pam,
+.car_class_pam .category {
+    color: #ff0;
+}
+tr.car_class_h4 td.column_Class,
+.category-h4,
+.car_class_h4 .category {
+    color: #ffa;
+}
+.json-inspector,
+.json-inspector__selection {
+    background-color: white;
+    width: 90%;
+    min-height: 400px;
+    font: 14px/1.4 Consolas, monospace;
+}
+.json-inspector__leaf {
+    padding-left: 10px;
+}
+.json-inspector__line {
+    display: block;
+    position: relative;
+    cursor: default;
+}
+.json-inspector__line:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -200px;
+    right: -50px;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+.json-inspector__line:hover:after {
+    background: rgba(0, 0, 0, 0.06);
+}
+.json-inspector__leaf_composite > .json-inspector__line {
+    cursor: pointer;
+}
+.json-inspector__radio,
+.json-inspector__flatpath {
+    display: none;
+}
+.json-inspector__value {
+    margin-left: 5px;
+}
+.json-inspector__search {
+    min-width: 300px;
+    margin: 0 10px 10px 0;
+    padding: 2px;
+}
+.json-inspector__key {
+    color: #505050;
+}
+.json-inspector__value_helper,
+.json-inspector__value_null,
+.json-inspector__not-found {
+    color: #b0b0b0;
+}
+.json-inspector__value_string {
+    color: #798953;
+}
+.json-inspector__value_boolean {
+    color: #75b5aa;
+}
+.json-inspector__value_number {
+    color: #d28445;
+}
+.json-inspector__hl {
+    background: #ff0;
+    box-shadow: 0 -1px 0 2px #ff0;
+    border-radius: 2px;
+}
+.json-inspector__show-original {
+    display: inline-block;
+    padding: 0 6px;
+    color: #666;
+    cursor: pointer;
+}
+.json-inspector__show-original:hover {
+    color: #111;
+}
+.json-inspector__show-original:before {
+    content: "⥂";
+}
+.json-inspector__show-original:hover:after {
+    content: " expand";
+}
+
+/*# sourceMappingURL=style.7d898fac81a46a7e53aa.js.map*/

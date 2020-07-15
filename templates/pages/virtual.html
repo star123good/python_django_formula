@@ -234,107 +234,107 @@ Formula - VIRTUAL
                     <div class="col-12">
                         <!--   Start of Ranking Scoreboard -->
                         <div class="card ">
-                                <div class="card-body" style="padding-top: 10px; padding-bottom: 10px;">
-                                    <h4 class="mb-2 text-uppercase"><i class="mdi mdi-clipboard-text-outline float-right text-muted"></i> Live Ranking Scoreboard</h4>
-                            
-                                    {% verbatim %}
+                            <div class="card-body" style="padding-top: 10px; padding-bottom: 10px;">
+                                <h4 class="mb-2 text-uppercase"><i class="mdi mdi-clipboard-text-outline float-right text-muted"></i> Live Ranking Scoreboard</h4>
+                        
+                                {% verbatim %}
 
-                                    <div ng-switch="feed.Session1" class="table-rep-plugin">
-                                        <!-- RACE -->
-                                        <div class="table-wrapper" ng-cloak="" ng-switch-when="Race">
-                                            <!-- <div class="btn-toolbar mb-3">
-                                                <div class="btn-group focus-btn-group">
-                                                    <button class="btn btn-primary" id="btn-table-focus"><span class="mdi mdi-crosshairs-gps"></span> Focus</button>
-                                                </div>
-                                                <div class="btn-group dropdown-btn-group ml-auto">
-                                                    <button class="btn btn-primary" id="btn-display-all">Display all</button>
-                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Display <span class="caret"></span>
-                                                    </button>
-                                                        <ul class="dropdown-menu dropdown-menu-animated">
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-1" id="toggle-tech-companies-1-col-1" value="tech-companies-1-col-1" checked> <label for="toggle-tech-companies-1-col-1">Position</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-2" id="toggle-tech-companies-1-col-2" value="tech-companies-1-col-2" checked> <label for="toggle-tech-companies-1-col-2">Racing Number</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-3" id="toggle-tech-companies-1-col-3" value="tech-companies-1-col-3" checked> <label for="toggle-tech-companies-1-col-3">NAME</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-4" id="toggle-tech-companies-1-col-4" value="tech-companies-1-col-4" checked> <label for="toggle-tech-companies-1-col-4">GAP</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-5" id="toggle-tech-companies-1-col-5" value="tech-companies-1-col-5" checked> <label for="toggle-tech-companies-1-col-5">INTERVAL</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-6" id="toggle-tech-companies-1-col-6" value="tech-companies-1-col-6" checked> <label for="toggle-tech-companies-1-col-6">BEST</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-7" id="toggle-tech-companies-1-col-7" value="tech-companies-1-col-7" checked> <label for="toggle-tech-companies-1-col-7">Sector 1</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-8" id="toggle-tech-companies-1-col-8" value="tech-companies-1-col-8" checked> <label for="toggle-tech-companies-1-col-8">Sector 2</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-9" id="toggle-tech-companies-1-col-9" value="tech-companies-1-col-9" checked> <label for="toggle-tech-companies-1-col-9">Sector 3</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-10" id="toggle-tech-companies-1-col-10" value="tech-companies-1-col-10" checked> <label for="toggle-tech-companies-1-col-10">Lap Time</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-11" id="toggle-tech-companies-1-col-11" value="tech-companies-1-col-11" checked> <label for="toggle-tech-companies-1-col-11">LAP</label></li>
-                                                            <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-12" id="toggle-tech-companies-1-col-12" value="tech-companies-1-col-12" checked> <label for="toggle-tech-companies-1-col-12">PIT</label></li>
-                                                        </ul>
-                                                </div>
-                                            </div> -->
-
-                                            <div class="table-responsive mb-0" id="main-panel-table" data-pattern="priority-columns">
-                                                <table class="table table-striped mb-0 table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" id="table-board" aria-hidden="true">
-                                                    <thead class="text-center">
-                                                        <tr>
-                                                            <th class="hidden"></th>
-                                                            <th class="position" value="tech-companies-1-col-1">P</th>
-                                                            <th class="car-number" value="tech-companies-1-col-2">NO</th>
-                                                            <th class="driver-full-name" value="tech-companies-1-col-3">NAME</th>
-                                                            <th class="gap" value="tech-companies-1-col-4">GAP</th>
-                                                            <th class="interval" value="tech-companies-1-col-5">INT</th>
-                                                            <th class="best-lap" value="tech-companies-1-col-10">TIME</th>
-                                                            <th class="sector1-time" value="tech-companies-1-col-7">S1</th>
-                                                            <th class="sector2-time" value="tech-companies-1-col-8">S2</th>
-                                                            <th class="sector3-time" value="tech-companies-1-col-9">S3</th>
-                                                            <th class="best" value="tech-companies-1-col-6">BEST</th>
-                                                            <th class="lap" value="tech-companies-1-col-11">LAP</th>
-                                                            <th class="pit" value="tech-companies-1-col-12">PIT</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr 
-                                                            ng-repeat="line in sortedRealDrivers track by $index" 
-                                                            ng-if="line.number" 
-                                                            class="{{line.colorValue}} {{(line.isReal)?'':'is-virtual'}} {{(line.hasFocusClass)?'focused':'unfocused'}}"
-                                                            id="tr-{{line.indexKey}}"
-                                                        >
-                                                            <td class="text-center">
-                                                                <div class="checkbox">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck{{line.indexKey}}" data-parsley-multiple="groups" data-parsley-mincheck="2" data-driver-name="{{line.name}}" >
-                                                                        <label class="custom-control-label" for="customCheck{{line.indexKey}}"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="position text-center" ng-bind="line.pos"></td>
-                                                            <td class="car-number text-center" ng-bind="line.number"></td>
-                                                            <td class="driver-full-name" ng-bind="line.name"></td>
-                                                            <td class="gap text-center" ng-bind="line.GAP"></td>
-                                                            <td class="interval text-center" ng-bind="line.INT"></td>
-                                                            <td class="best-lap text-center" ng-bind="(line.isReal)?line.LAPTIME:null" ng-style="{color:(line.color)}"></td>
-                                                            <td class="sector1-time text-center" ng-bind="(line.isReal)?line.S1:null" ng-style="{color:(line.color1)}"></td>
-                                                            <td class="sector2-time text-center" ng-bind="(line.isReal)?line.S2:null" ng-style="{color:(line.color2)}"></td>
-                                                            <td class="sector3-time text-center" ng-bind="(line.isReal)?line.S3:null" ng-style="{color:(line.color3)}"></td>
-                                                            <td class="best text-center" ng-bind="(line.isReal)?line.BEST:null"></td>
-                                                            <td class="lap text-center" ng-bind="(line.isReal)?line.LAP:null"></td>
-                                                            <td class="pit text-center" ng-bind="(line.isReal)?line.PIT:null"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                <div ng-switch="feed.Session1" class="table-rep-plugin">
+                                    <!-- RACE -->
+                                    <div class="table-wrapper" ng-cloak="" ng-switch-when="Race">
+                                        <!-- <div class="btn-toolbar mb-3">
+                                            <div class="btn-group focus-btn-group">
+                                                <button class="btn btn-primary" id="btn-table-focus"><span class="mdi mdi-crosshairs-gps"></span> Focus</button>
                                             </div>
-                                        </div>
-                            
-                                        <!-- LOADER -->
-                                        <div class="loader" ng-switch-default="" aria-hidden="true">
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="bar"></div>
-                                            <div class="fallback">Loading...</div>
+                                            <div class="btn-group dropdown-btn-group ml-auto">
+                                                <button class="btn btn-primary" id="btn-display-all">Display all</button>
+                                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Display <span class="caret"></span>
+                                                </button>
+                                                    <ul class="dropdown-menu dropdown-menu-animated">
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-1" id="toggle-tech-companies-1-col-1" value="tech-companies-1-col-1" checked> <label for="toggle-tech-companies-1-col-1">Position</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-2" id="toggle-tech-companies-1-col-2" value="tech-companies-1-col-2" checked> <label for="toggle-tech-companies-1-col-2">Racing Number</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-3" id="toggle-tech-companies-1-col-3" value="tech-companies-1-col-3" checked> <label for="toggle-tech-companies-1-col-3">NAME</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-4" id="toggle-tech-companies-1-col-4" value="tech-companies-1-col-4" checked> <label for="toggle-tech-companies-1-col-4">GAP</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-5" id="toggle-tech-companies-1-col-5" value="tech-companies-1-col-5" checked> <label for="toggle-tech-companies-1-col-5">INTERVAL</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-6" id="toggle-tech-companies-1-col-6" value="tech-companies-1-col-6" checked> <label for="toggle-tech-companies-1-col-6">BEST</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-7" id="toggle-tech-companies-1-col-7" value="tech-companies-1-col-7" checked> <label for="toggle-tech-companies-1-col-7">Sector 1</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-8" id="toggle-tech-companies-1-col-8" value="tech-companies-1-col-8" checked> <label for="toggle-tech-companies-1-col-8">Sector 2</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-9" id="toggle-tech-companies-1-col-9" value="tech-companies-1-col-9" checked> <label for="toggle-tech-companies-1-col-9">Sector 3</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-10" id="toggle-tech-companies-1-col-10" value="tech-companies-1-col-10" checked> <label for="toggle-tech-companies-1-col-10">Lap Time</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-11" id="toggle-tech-companies-1-col-11" value="tech-companies-1-col-11" checked> <label for="toggle-tech-companies-1-col-11">LAP</label></li>
+                                                        <li class="dropdown-item checkbox-row"><input type="checkbox" name="toggle-tech-companies-1-col-12" id="toggle-tech-companies-1-col-12" value="tech-companies-1-col-12" checked> <label for="toggle-tech-companies-1-col-12">PIT</label></li>
+                                                    </ul>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="table-responsive mb-0" id="main-panel-table" data-pattern="priority-columns">
+                                            <table class="table table-striped mb-0 table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" id="table-board" aria-hidden="true">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th class="hidden"></th>
+                                                        <th class="position" value="tech-companies-1-col-1">P</th>
+                                                        <th class="car-number" value="tech-companies-1-col-2">NO</th>
+                                                        <th class="driver-full-name" value="tech-companies-1-col-3">NAME</th>
+                                                        <th class="gap" value="tech-companies-1-col-4">GAP</th>
+                                                        <th class="interval" value="tech-companies-1-col-5">INT</th>
+                                                        <th class="best-lap" value="tech-companies-1-col-10">TIME</th>
+                                                        <th class="sector1-time" value="tech-companies-1-col-7">S1</th>
+                                                        <th class="sector2-time" value="tech-companies-1-col-8">S2</th>
+                                                        <th class="sector3-time" value="tech-companies-1-col-9">S3</th>
+                                                        <th class="best" value="tech-companies-1-col-6">BEST</th>
+                                                        <th class="lap" value="tech-companies-1-col-11">LAP</th>
+                                                        <th class="pit" value="tech-companies-1-col-12">PIT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr 
+                                                        ng-repeat="line in sortedRealDrivers track by $index" 
+                                                        ng-if="line.number" 
+                                                        class="{{line.colorValue}} {{(line.isReal)?'':'is-virtual'}} {{(line.hasFocusClass)?'focused':'unfocused'}}"
+                                                        id="tr-{{line.indexKey}}"
+                                                    >
+                                                        <td class="text-center">
+                                                            <div class="checkbox">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck{{line.indexKey}}" data-parsley-multiple="groups" data-parsley-mincheck="2" data-driver-name="{{line.name}}" >
+                                                                    <label class="custom-control-label" for="customCheck{{line.indexKey}}"></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="position text-center" ng-bind="line.pos"></td>
+                                                        <td class="car-number text-center" ng-bind="line.number"></td>
+                                                        <td class="driver-full-name" ng-bind="line.name"></td>
+                                                        <td class="gap text-center" ng-bind="line.GAP"></td>
+                                                        <td class="interval text-center" ng-bind="line.INT"></td>
+                                                        <td class="best-lap text-center" ng-bind="(line.isReal)?line.LAPTIME:null" ng-style="{color:(line.color)}"></td>
+                                                        <td class="sector1-time text-center" ng-bind="(line.isReal)?line.S1:null" ng-style="{color:(line.color1)}"></td>
+                                                        <td class="sector2-time text-center" ng-bind="(line.isReal)?line.S2:null" ng-style="{color:(line.color2)}"></td>
+                                                        <td class="sector3-time text-center" ng-bind="(line.isReal)?line.S3:null" ng-style="{color:(line.color3)}"></td>
+                                                        <td class="best text-center" ng-bind="(line.isReal)?line.BEST:null"></td>
+                                                        <td class="lap text-center" ng-bind="(line.isReal)?line.LAP:null"></td>
+                                                        <td class="pit text-center" ng-bind="(line.isReal)?line.PIT:null"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-
-                                    {% endverbatim %}
-                            
+                        
+                                    <!-- LOADER -->
+                                    <div class="loader" ng-switch-default="" aria-hidden="true">
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="fallback">Loading...</div>
+                                    </div>
                                 </div>
+
+                                {% endverbatim %}
+                        
                             </div>
-                            <!--   End of Ranking Scoreboard -->
-                            <!-- end card-->
+                        </div>
+                        <!--   End of Ranking Scoreboard -->
+                        <!-- end card-->
                     </div> <!-- end col-->
 
                 </div> <!-- end row -->
