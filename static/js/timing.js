@@ -2314,7 +2314,8 @@ $(function () {
         if (this.driver.indexKey.slice(0, 8) == 'virtual-') {
             // virtual driver
             this.class = 'pam';
-            this.label = this.driver.indexKey.replace('GHOST_', '').slice(8,10);
+            // this.label = this.driver.indexKey.replace('GHOST_', '').slice(8,10);
+            this.label = this.driver.number;
         }
         else {
             // real driver
