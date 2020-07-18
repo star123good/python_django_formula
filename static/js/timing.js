@@ -2323,11 +2323,12 @@ $(function () {
             this.label = this.driver.number;
         }
 
-        this.setDriver();
+        this.setDriver(this.driver);
     };
 
     // set driver
-    GDriver.prototype.setDriver = function() {
+    GDriver.prototype.setDriver = function(driver) {
+        this.driver = driver;
         // GAP
         let gapFloat = parseFloat(this.driver.GAP);
         if (isNaN(gapFloat)) gapFloat = 0;
@@ -2338,6 +2339,7 @@ $(function () {
         this.LAP = lap;
         // pos = id
         this.id = parseInt(this.driver.pos);
+        console.log(this.id, this.label, this.driver.LAP, this.LAP, this.GAP);
 
         this.setPosition();
     };
