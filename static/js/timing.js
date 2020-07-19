@@ -2348,6 +2348,15 @@ $(function () {
     GDriver.prototype.drawCar = function () {
         this.$element = $('svg.radar g#car-id-'+this.id);
         if (this.$element.length) {
+            let className = '';
+            if (this.id == 1) {
+                // first driver set different color
+                className = 'car car-class-inv';
+            }
+            else {
+                className = 'car car-class-'+this.class;
+            }
+
             // caculate x, y
             let circle, r;
             if (this.LAP == GDriver.CURRENT_LAP) circle = 0;
@@ -2358,7 +2367,7 @@ $(function () {
             this.y = - r * Math.cos(this.position);
 
             // draw
-            this.$element.attr('class', 'car car-class-'+this.class);
+            this.$element.attr('class', className);
             this.$element.removeAttr('hidden');
             this.$element.find('line').attr('x2', this.x);
             this.$element.find('line').attr('y2', this.y);
