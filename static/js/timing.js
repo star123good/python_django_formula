@@ -2627,7 +2627,7 @@ $(function () {
         
         
         // virtual driver add
-        $(document).on("click", "#btn-add", function(){
+        $(document).on("click", "#btn-add, #btn-add-2", function(){
             let selectRealDrivers = $("#select-driver").val();
             const gapToAdd = $("#input-gap-add").val();
             const virtualDriverName = $("#input-drvier-name").val();
@@ -2653,8 +2653,16 @@ $(function () {
             else{
                 // add virtaul driver
                 selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
-                if (selectRealDriverIds.length == 1) virtualDriverNames = [virtualDriverName];
-                else virtualDriverNames = selectRealDriverIds.map((s, i) => virtualDriverName + i);
+
+                if ($(this).attr('id') == "btn-add") {
+                    if (selectRealDriverIds.length == 1) virtualDriverNames = [virtualDriverName];
+                    else virtualDriverNames = selectRealDriverIds.map((s, i) => virtualDriverName + i);
+                }
+                else {
+                    let realNames = selectRealDrivers.map(s => ""+s.replace(/[0-9]+ : /i, "").trim()+"_");
+                    if (selectRealDriverIds.length == 1) virtualDriverNames = [realNames[0]+virtualDriverName];
+                    else virtualDriverNames = selectRealDriverIds.map((s, i) => realNames[i] + virtualDriverName);
+                }
 
                 addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
             }
