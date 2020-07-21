@@ -2659,9 +2659,9 @@ $(function () {
                     else virtualDriverNames = selectRealDriverIds.map((s, i) => virtualDriverName + i);
                 }
                 else {
-                    let realNames = selectRealDrivers.map(s => ""+s.replace(/[0-9]+ : /i, "").trim()+"_");
-                    if (selectRealDriverIds.length == 1) virtualDriverNames = [realNames[0]+virtualDriverName];
-                    else virtualDriverNames = selectRealDriverIds.map((s, i) => realNames[i] + virtualDriverName);
+                    let realNames = selectRealDrivers.map(s => "_"+s.replace(/[0-9]+ : /i, "").trim()+"");
+                    if (selectRealDriverIds.length == 1) virtualDriverNames = [virtualDriverName + realNames[0]];
+                    else virtualDriverNames = selectRealDriverIds.map((s, i) => virtualDriverName + realNames[i]);
                 }
 
                 addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
