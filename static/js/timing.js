@@ -883,6 +883,21 @@ $(function () {
         return currentLists;
     }
 
+    function getSelectedRealDriverKeys() {
+        let selectedDriverKeys = [];
+        $("#table-board input[type=checkbox]").each(function(index){
+            if(this.checked){
+                let selectedName = $(this).attr("id").substring(16);
+                driverLines.forEach((driver, index) => {
+                    if (driver.GetDriverName(false) === selectedName) {
+                        selectedDriverKeys.push("" + index + " : " + selectedName);
+                    }
+                });
+            }
+        });
+        return selectedDriverKeys;
+    }
+
     function addVirtualDriver(selectRealDriverIds, gapToAdd, virtualDriverNames, selectColor){
         if (!selectRealDriverIds.length || selectRealDriverIds.length != virtualDriverNames.length) {
             warningAlert("You must select & input corect numbers of Drivers.");
@@ -2313,7 +2328,24 @@ $(function () {
         this.indexKey = this.driver.indexKey;
         if (this.driver.indexKey.slice(0, 8) == 'virtual-') {
             // virtual driver
-            this.class = 'pam';
+            if (this.driver.colorValue.indexOf("bg-success") >= 0) {
+                this.class = 'p3';
+            }
+            else if (this.driver.colorValue.indexOf("bg-dark") >= 0) {
+                this.class = 'p2';
+            }
+            else if (this.driver.colorValue.indexOf("bg-warning") >= 0) {
+                this.class = 'p1';
+            }
+            else if (this.driver.colorValue.indexOf("bg-info") >= 0) {
+                this.class = 'lmp3';
+            }
+            else if (this.driver.colorValue.indexOf("bg-primary") >= 0) {
+                this.class = 'lmp2';
+            }
+            else if (this.driver.colorValue.indexOf("bg-danger") >= 0) {
+                this.class = 'lmp1';
+            }
             // this.label = this.driver.indexKey.replace('GHOST_', '').slice(8,10);
             this.label = this.driver.number;
         }
@@ -2339,7 +2371,7 @@ $(function () {
         this.LAP = lap;
         // pos = id
         this.id = parseInt(this.driver.pos);
-        console.log(this.id, this.label, this.driver.LAP, this.LAP, this.GAP);
+        // console.log(this.id, this.label, this.driver.LAP, this.LAP, this.GAP);
 
         this.setPosition();
     };
@@ -2596,13 +2628,18 @@ $(function () {
         
         // virtual driver add
         $(document).on("click", "#btn-add", function(){
-            const selectRealDrivers = $("#select-driver").val();
+            let selectRealDrivers = $("#select-driver").val();
             const gapToAdd = $("#input-gap-add").val();
             const virtualDriverName = $("#input-drvier-name").val();
             const selectColor = $("#select-color").val();
+            let virtualDriverNames = [];
 
             if(!selectRealDrivers || !selectRealDrivers.length){
-                warningAlert("You must select a real driver to follow.");
+                selectRealDrivers = getSelectedRealDriverKeys();
+            }
+
+            if (!selectRealDrivers.length) {
+                warningAlert("You must select real drivers to follow.");
             }
             else if(!gapToAdd){
                 warningAlert("You must input the value of GAP to add.");
@@ -2615,10 +2652,9 @@ $(function () {
             }
             else{
                 // add virtaul driver
-                let selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
-                let virtualDriverNames;
-                if (selectRealDrivers.length == 1) virtualDriverNames = [virtualDriverName];
-                else virtualDriverNames = selectRealDrivers.map((s, i) => virtualDriverName + i);
+                selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
+                if (selectRealDriverIds.length == 1) virtualDriverNames = [virtualDriverName];
+                else virtualDriverNames = selectRealDriverIds.map((s, i) => virtualDriverName + i);
 
                 addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);
             }
@@ -2630,21 +2666,27 @@ $(function () {
             // const gapAddConstant = 1;
             // $("#input-gap-add").val(gapAddConstant).change();
             const gapToAdd = $("#input-gap-add").val();
-            const selectRealDrivers = $("#select-driver").val();
-            
+            let selectRealDrivers = $("#select-driver").val();
+            let virtualDriverNames = [];
+
             if(!selectRealDrivers || !selectRealDrivers.length){
-                warningAlert("You must select a real driver to follow.");
+                selectRealDrivers = getSelectedRealDriverKeys();
+            }
+
+            if (!selectRealDrivers.length) {
+                warningAlert("You must select real drivers to follow.");
             }
             else if(!gapToAdd){
                 warningAlert("You must input the value of GAP to add.");
             }
             else{
-                let selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
+                selectRealDriverIds = selectRealDrivers.map(s => parseInt(s));
+                virtualDriverNames = selectRealDrivers.map(s => "GHOST_"+s.replace(/[0-9]+ : /i, "").trim()+"");
+
                 randomIndex = Math.floor(Math.random() * ($("#select-color option").length - 1)) + 1;
                 let selectColor = $("#select-color option:eq("+randomIndex+")").val();
                 $("#select-color").val(selectColor);
 
-                let virtualDriverNames = selectRealDrivers.map(s => "GHOST_"+s.replace(/[0-9]+ : /i, "").trim()+"");
                 $("#input-drvier-name").val(virtualDriverNames[0]).change();
 
                 addVirtualDriver(selectRealDriverIds, parseFloat(gapToAdd), virtualDriverNames, selectColor);

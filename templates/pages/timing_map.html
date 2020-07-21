@@ -192,24 +192,19 @@ Formula - Circle Map
                                     <div class="btn-toolbar">
                                         <form class="form col-12 mr-auto" role="form" id="form-virtual">
                                             <div class="row mb-3">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group h-100">
-                                                        <label class="sr-only" for="select-driver">Driver</label>
-                                                        <select class="custom-select is-valid h-100" id="select-driver" required  multiple>
-                                                            <option selected disabled>Driver</option>
-                                                            <option ng-repeat="line in lines track by $index" ng-if="line.Number">{{line.Driver.RacingNumber + " : " + line.GetDriverName(false)}}</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-sm-12">
+                                                <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="input-drvier-name">Ghost</label>
                                                         <input type="text" class="form-control is-valid" id="input-drvier-name" placeholder="Ghost" required>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="input-gap-add">Time</label>
                                                         <input type="text" class="form-control is-valid" id="input-gap-add" placeholder="Time" required >
                                                     </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="select-color">Color</label>
                                                         <select class="custom-select is-valid" id="select-color" required>

@@ -4091,32 +4091,32 @@ svg .car-class-p line {
     stroke: #fff !important;
 }
 .form-control.category-lmp1:focus {
-    color: red;
+    color: #fa5c7c;
 }
 svg .car-class-lmp1 circle,
 svg .car-class-lmp1 rect,
 svg .car-class-lmp1 path {
-    fill: red !important;
+    fill: #fa5c7c !important;
 }
 svg .car-class-lmp1 text {
-    fill: black;
+    fill: white;
 }
 svg .car-class-lmp1 line {
-    stroke: red !important;
+    stroke: #fa5c7c !important;
 }
 .form-control.category-p1:focus {
-    color: red;
+    color: #ffbc00;
 }
 svg .car-class-p1 circle,
 svg .car-class-p1 rect,
 svg .car-class-p1 path {
-    fill: red !important;
+    fill: #ffbc00 !important;
 }
 svg .car-class-p1 text {
-    fill: black;
+    fill: white;
 }
 svg .car-class-p1 line {
-    stroke: red !important;
+    stroke: #ffbc00 !important;
 }
 .form-control.category-dpi:focus {
     color: #fff;
@@ -4133,54 +4133,60 @@ svg .car-class-dpi line {
     stroke: #fff !important;
 }
 .form-control.category-lmp2:focus {
-    color: #7af;
+    color: #727cf5;
 }
 svg .car-class-lmp2 circle,
 svg .car-class-lmp2 rect,
 svg .car-class-lmp2 path {
-    fill: #7af !important;
+    fill: #727cf5 !important;
 }
 svg .car-class-lmp2 text {
-    fill: black;
+    fill: white;
 }
 svg .car-class-lmp2 line {
-    stroke: #7af !important;
+    stroke: #727cf5 !important;
 }
 .form-control.category-p2:focus {
-    color: #7af;
+    color: #313a46;
 }
 svg .car-class-p2 circle,
 svg .car-class-p2 rect,
 svg .car-class-p2 path {
-    fill: #7af !important;
+    fill: #313a46 !important;
 }
 svg .car-class-p2 text {
-    fill: black;
+    fill: white;
 }
 svg .car-class-p2 line {
-    stroke: #7af !important;
+    stroke: #313a46 !important;
 }
 .form-control.category-lmp3:focus {
-    color: #d0d;
+    color: #39afd1;
 }
 svg .car-class-lmp3 circle,
 svg .car-class-lmp3 rect,
 svg .car-class-lmp3 path {
-    fill: #d0d !important;
+    fill: #39afd1 !important;
+}
+svg .car-class-lmp3 text {
+    fill: white;
 }
 svg .car-class-lmp3 line {
-    stroke: #d0d !important;
+    stroke: #39afd1 !important;
 }
 .form-control.category-p3:focus {
-    color: #d0d;
+    color: #0acf97;
 }
 svg .car-class-p3 circle,
 svg .car-class-p3 rect,
 svg .car-class-p3 path {
-    fill: #d0d !important;
+    fill: #0acf97 !important;
+}
+svg .car-class-p3 text {
+    fill: white;
 }
 svg .car-class-p3 line {
-    stroke: #d0d !important;
+    stroke: #0acf97 !important;
 }
 .form-control.category-cn:focus {
     color: #dbb700;
