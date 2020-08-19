@@ -1,2 +1,4 @@
 env
-guide.txt
+*.txt
+*.md
+templates
