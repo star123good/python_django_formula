@@ -2510,6 +2510,227 @@ $(function () {
     }
 
 
+    /**
+     * Custom Apex Chart Class
+     * enabled types : ["line", "bar"]
+     */
+    var CustomApexChart = function(element, type, options={}) {
+        this.element = document.querySelector(element);
+        this.isEnabled = (this.element) ? true : false;
+        this.type = type;
+        this.chart = null;
+        this.setDefaultOptions();
+        this.setOptions(options);
+    };
+
+    // set default options by type
+    CustomApexChart.prototype.setDefaultOptions = function() {
+        this.options = {};
+
+        if (this.type == "line") {
+            // line chart
+            this.options = {
+                chart:
+                {
+                    height: 380,
+                    type: "line",
+                    zoom:
+                    {
+                        enabled: false
+                    },
+                    toolbar:
+                    {
+                        show: false
+                    }
+                },
+                colors: ["#727cf5", "#0acf97"],
+                dataLabels:
+                {
+                    enabled: true
+                },
+                stroke:
+                {
+                    width: [3, 3],
+                    curve: "smooth"
+                },
+                series: [
+                {
+                    name: "High - 2018",
+                    data: [28, 29, 33, 36, 32, 32, 33]
+                },
+                {
+                    name: "Low - 2018",
+                    data: [12, 11, 14, 18, 17, 13, 13]
+                }],
+                title:
+                {
+                    text: "laptime",
+                    align: "left"
+                },
+                grid:
+                {
+                    row:
+                    {
+                        colors: ["transparent", "transparent"],
+                        opacity: .2
+                    },
+                    borderColor: "#f1f3fa"
+                },
+                markers:
+                {
+                    style: "inverted",
+                    size: 6
+                },
+                xaxis:
+                {
+                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+                    title:
+                    {
+                        text: "Month"
+                    }
+                },
+                yaxis:
+                {
+                    title:
+                    {
+                        text: "Temperature"
+                    },
+                    min: 5,
+                    max: 40
+                },
+                legend:
+                {
+                    position: "top",
+                    horizontalAlign: "right",
+                    floating: true,
+                    offsetY: -25,
+                    offsetX: -5
+                },
+                responsive: [
+                {
+                    breakpoint: 600,
+                    options:
+                    {
+                        chart:
+                        {
+                            toolbar:
+                            {
+                                show: false
+                            }
+                        },
+                        legend:
+                        {
+                            show: false
+                        }
+                    }
+                }]
+            };
+            return true;
+        }
+        else if (this.type == "bar") {
+            // bar chart
+            this.options = {
+                chart:
+                {
+                    height: 396,
+                    type: "bar",
+                    toolbar:
+                    {
+                        show: false
+                    }
+                },
+                plotOptions:
+                {
+                    bar:
+                    {
+                        horizontal: false,
+                        endingShape: "rounded",
+                        columnWidth: "55%"
+                    }
+                },
+                dataLabels:
+                {
+                    enabled: false
+                },
+                stroke:
+                {
+                    show: true,
+                    width: 2,
+                    colors: ["transparent"]
+                },
+                colors: ["#727cf5", "#0acf97", "#fa5c7c"],
+                series: [
+                {
+                    name: "Net Profit",
+                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                },
+                {
+                    name: "Revenue",
+                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                },
+                {
+                    name: "Free Cash Flow",
+                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                }],
+                xaxis:
+                {
+                    categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"]
+                },
+                legend:
+                {
+                    offsetY: -10
+                },
+                yaxis:
+                {
+                    title:
+                    {
+                        text: "$ (thousands)"
+                    }
+                },
+                fill:
+                {
+                    opacity: 1
+                },
+                grid:
+                {
+                    row:
+                    {
+                        colors: ["transparent", "transparent"],
+                        opacity: .2
+                    },
+                    borderColor: "#f1f3fa"
+                },
+                tooltip:
+                {
+                    y:
+                    {
+                        formatter: function (o)
+                        {
+                            return "$ " + o + " thousands"
+                        }
+                    }
+                }
+            };
+            return true;
+        }
+
+        return false;
+    };
+
+    // set options by options
+    CustomApexChart.prototype.setOptions = function(options={}) { 
+        this.options = {
+            ...options,
+            ...this.options
+        };
+    };
+
+    // chart render
+    CustomApexChart.prototype.render = function() {
+        (chart = new ApexCharts(document.querySelector("#apex_line2_chart"), options)).render();
+    };
+
+
     $(document).ready(function(){
 
         // rangeslider init - powerange
@@ -2838,6 +3059,20 @@ $(function () {
             if (typeof defaultLaptime !== "undefined") GDriver.TOTAL_LAPTIME = defaultLaptime;
             setInterval(GDriver.drawMap, GDriver.STEP_REDRAW);
         }
+
+
+
+        
+
+        // var options = ;
+
+        (chart = new ApexCharts(document.querySelector("#basic-column-sector1"), options)).render();
+        (chart = new ApexCharts(document.querySelector("#basic-column-sector2"), options)).render();
+        (chart = new ApexCharts(document.querySelector("#basic-column-sector3"), options)).render();
+
+        // options = ;
+
+        (chart = new ApexCharts(document.querySelector("#apex_line2_chart"), options)).render();
 
     });
 

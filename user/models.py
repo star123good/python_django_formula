@@ -13,6 +13,7 @@ class Team(models.Model):
     team_id = models.IntegerField()
     team_name = models.CharField(max_length=255)
     team_logo = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
 
 # user model
 class User(models.Model):
@@ -29,6 +30,7 @@ class User(models.Model):
     privilege = models.CharField(max_length=4, choices=PRIVILEGE_CHOICES, default='ALL')
     is_admin = models.SmallIntegerField(default=0)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
 # circuit model
 class Circuit(models.Model):

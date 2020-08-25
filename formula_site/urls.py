@@ -44,6 +44,10 @@ def redirect_view_map(request):
     response = redirect('/formula_2_3/map')
     return response
 
+def redirect_view_chart(request):
+    response = redirect('/formula_2_3/chart')
+    return response
+
 def redirect_view_admin(request):
     response = redirect('/user/admin')
     return response
@@ -64,6 +68,7 @@ urlpatterns = [
     path('virtual', redirect_view_virtual),
     path('camera', redirect_view),
     path('map', redirect_view_map),
+    path('chart', redirect_view_chart),
     path('pit', redirect_view),
     path('analysis', redirect_view_analysis),
     path('adminer', redirect_view_admin),

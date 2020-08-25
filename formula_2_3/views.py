@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.db.models import Q
 import json
 
-from user.models import User, Player, Session
+from user.models import User, Player, Session, Team
 from . import ajax, models
 
 
@@ -65,7 +65,24 @@ class Formula23View():
             user_id = request.session.get('user_id', 0)
             championship, user_name, privilege, formula_logo, team_logo, is_adminer = Formula23View.getUserParams(user_id)
 
-            # players = Player.objects.all()
+            # teams and players
+            teams = Team.objects.filter(championship=championship, is_active=True).order_by('team_id')
+            players = Player.objects.filter(team_id__in=[t.id for t in teams], is_enable=True).order_by('team_id', 'number')
+            all_teams = []
+            for t in teams:
+                tt = {
+                    'id':t.id, 'team_id':t.team_id, 'name':t.team_name, 
+                    'short_name':t.team_name.split()[0], 'players':[]
+                }
+                for p in players:
+                    if p.team_id == t.id:
+                        tt['players'].append({
+                            'id':p.id, 'number':p.number, 'name':p.name, 
+                            'short_name':p.name.split('.')[1][:3]
+                        })
+                all_teams.append(tt)
+            # print(all_teams)
+
             current_session_id, current_session_title, last_session_id, current_session_laps, different_time, circuit_title, record_sessions_all = Formula23View.getSessionParams(championship)
             
             return {
@@ -82,6 +99,7 @@ class Formula23View():
                 'formula_logo' : formula_logo,
                 'team_logo' : team_logo,
                 'sessions_all' : record_sessions_all,
+                'teams' : all_teams,
             }
         except ObjectDoesNotExist:
             pass
@@ -112,6 +130,13 @@ class Formula23View():
     def analysis(request):
         if request.session.get('user_id', False):
             return render(request, 'pages/analysis.html', Formula23View.getInitParams(request))
+        else:
+            return redirect('/user/login')
+
+    # chart page
+    def chart(request):
+        if request.session.get('user_id', False):
+            return render(request, 'pages/chart.html', Formula23View.getInitParams(request))
         else:
             return redirect('/user/login')
 
