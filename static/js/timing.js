@@ -1512,10 +1512,10 @@ $(function () {
 
                 // console.log('gameLapsValues is ', gameLapsValues, 'gameAllData is ', gameAllData);
 
-                if(xAxisValue == "LAP"){
+                if(xAxisTitle == "LAP"){
                     gameLaps = gameLapsValues;
                 }
-                else if(xAxisValue == "TIME"){
+                else if(xAxisTitle == "TIME"){
                     gameLaps = gameTimesValues;
                 }
 
@@ -1526,7 +1526,7 @@ $(function () {
                             name : driver.GetDriverName(false),
                             data : (gameAllData[driver.Driver.RacingNumber])?
                                 gameAllData[driver.Driver.RacingNumber].map(g => {
-                                    if(g[yAxisValue] && !isNaN(g[yAxisValue])) return g[yAxisValue];
+                                    if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
                                     else return 0;
                                 })
                                 :
@@ -1556,10 +1556,10 @@ $(function () {
         }
         else{
             // not reload data
-            if(xAxisValue == "LAP"){
+            if(xAxisTitle == "LAP"){
                 gameLaps = gameLapsValues;
             }
-            else if(xAxisValue == "TIME"){
+            else if(xAxisTitle == "TIME"){
                 gameLaps = gameTimesValues;
             }
 
@@ -1570,7 +1570,7 @@ $(function () {
                         name : driver.GetDriverName(false),
                         data : (gameAllData[driver.Driver.RacingNumber])?
                             gameAllData[driver.Driver.RacingNumber].map(g => {
-                                if(g[yAxisValue] && !isNaN(g[yAxisValue])) return g[yAxisValue];
+                                if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
                                 else return 0;
                             })
                             :
@@ -2030,8 +2030,8 @@ $(function () {
 
 
     var checkedChartDrivers;
-    var xAxisValue;
-    var yAxisValue;
+    var xAxisTitle;
+    var yAxisTitle;
     var yAxisMin;
     var yAxisMax;
     var chartRendered;
@@ -2048,8 +2048,8 @@ $(function () {
         var yTitle = 'TIME';
         var xTitle = 'LAP / TIME';
 
-        if($("#select-xAxis").length) xAxisValue = $("#select-xAxis").val();
-        if($("#select-yAxis").length) yAxisValue = $("#select-yAxis").val();
+        if($("#select-xAxis").length) xAxisTitle = $("#select-xAxis").val();
+        if($("#select-yAxis").length) yAxisTitle = $("#select-yAxis").val();
         if($(".check-chart-driver").length){
             checkedChartDrivers = [];
             $(".check-chart-driver").each(function(){
@@ -2059,7 +2059,7 @@ $(function () {
 
         if(flagYAXISOnly){
             // after get datas from database score
-            xTitle = xAxisValue;
+            xTitle = xAxisTitle;
             xAxis = gameLaps;
             if(checkedChartDrivers.length && gameData.length){
                 let tempDriver;
@@ -2106,7 +2106,7 @@ $(function () {
         else{
             getDatas(function(){
                 // after get datas from database score
-                xTitle = xAxisValue;
+                xTitle = xAxisTitle;
                 xAxis = gameLaps;
                 if(checkedChartDrivers.length && gameData.length){
                     let tempDriver;
@@ -2519,8 +2519,24 @@ $(function () {
         this.isEnabled = (this.element) ? true : false;
         this.type = type;
         this.chart = null;
+        this.isRendered = false;
+        this.series = {};
+        this.xAxis = [];
+        this.data = {};
+        this.yAxisMin = 0;
+        this.yAxisMax = 100;
         this.setDefaultOptions();
         this.setOptions(options);
+    };
+
+    // get random color
+    CustomApexChart.getRandomColor = function() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     };
 
     // set default options by type
@@ -2532,7 +2548,7 @@ $(function () {
             this.options = {
                 chart:
                 {
-                    height: 380,
+                    height: 300,
                     type: "line",
                     zoom:
                     {
@@ -2543,35 +2559,27 @@ $(function () {
                         show: false
                     }
                 },
-                colors: ["#727cf5", "#0acf97"],
+                colors: [],
                 dataLabels:
                 {
                     enabled: true
                 },
                 stroke:
                 {
-                    width: [3, 3],
+                    width: 3,
                     curve: "smooth"
                 },
-                series: [
-                {
-                    name: "High - 2018",
-                    data: [28, 29, 33, 36, 32, 32, 33]
-                },
-                {
-                    name: "Low - 2018",
-                    data: [12, 11, 14, 18, 17, 13, 13]
-                }],
+                series: [],
                 title:
                 {
-                    text: "laptime",
+                    text: "",
                     align: "left"
                 },
                 grid:
                 {
                     row:
                     {
-                        colors: ["transparent", "transparent"],
+                        colors: [],
                         opacity: .2
                     },
                     borderColor: "#f1f3fa"
@@ -2583,20 +2591,20 @@ $(function () {
                 },
                 xaxis:
                 {
-                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+                    categories: [],
                     title:
                     {
-                        text: "Month"
+                        text: ""
                     }
                 },
                 yaxis:
                 {
                     title:
                     {
-                        text: "Temperature"
+                        text: ""
                     },
-                    min: 5,
-                    max: 40
+                    min: this.yAxisMin,
+                    max: this.yAxisMax
                 },
                 legend:
                 {
@@ -2632,7 +2640,7 @@ $(function () {
             this.options = {
                 chart:
                 {
-                    height: 396,
+                    height: 300,
                     type: "bar",
                     toolbar:
                     {
@@ -2658,23 +2666,11 @@ $(function () {
                     width: 2,
                     colors: ["transparent"]
                 },
-                colors: ["#727cf5", "#0acf97", "#fa5c7c"],
-                series: [
-                {
-                    name: "Net Profit",
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-                },
-                {
-                    name: "Revenue",
-                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-                },
-                {
-                    name: "Free Cash Flow",
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-                }],
+                colors: [],
+                series: [],
                 xaxis:
                 {
-                    categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"]
+                    categories: []
                 },
                 legend:
                 {
@@ -2684,8 +2680,10 @@ $(function () {
                 {
                     title:
                     {
-                        text: "$ (thousands)"
-                    }
+                        text: ""
+                    },
+                    min: this.yAxisMin,
+                    max: this.yAxisMax
                 },
                 fill:
                 {
@@ -2695,20 +2693,10 @@ $(function () {
                 {
                     row:
                     {
-                        colors: ["transparent", "transparent"],
+                        colors: [],
                         opacity: .2
                     },
                     borderColor: "#f1f3fa"
-                },
-                tooltip:
-                {
-                    y:
-                    {
-                        formatter: function (o)
-                        {
-                            return "$ " + o + " thousands"
-                        }
-                    }
                 }
             };
             return true;
@@ -2718,16 +2706,170 @@ $(function () {
     };
 
     // set options by options
+    // parameters : ["title", "height", "xAxisTitle", "yAxisTitle", "yAxisMin", "yAxisMax"]
     CustomApexChart.prototype.setOptions = function(options={}) { 
-        this.options = {
-            ...options,
-            ...this.options
+        if ("title" in options) {
+            this.options['title'] = {...this.options['title'], 'text' : options['title']};
+            delete options["title"];
+        }
+        if ("height" in options) {
+            this.options['chart'] = {...this.options['chart'], 'height' : options['height']};
+            delete options["height"];
+        }
+        if ("xAxisTitle" in options) {
+            this.options['xaxis'] = {...this.options['xaxis'], 'title' : {'text' : options['xAxisTitle']}};
+            delete options["xAxisTitle"];
+        }
+        if ("yAxisTitle" in options) {
+            this.options['yaxis'] = {...this.options['yaxis'], 'title' : {'text' : options['yAxisTitle']}};
+            delete options["yAxisTitle"];
+        }
+        if ("yAxisMin" in options) {
+            this.yAxisMin = options['yAxisMin'];
+            this.reloadData();
+            delete options["yAxisMin"];
+        }
+        if ("yAxisMax" in options) {
+            this.yAxisMax = options['yAxisMax'];
+            this.reloadData();
+            delete options["yAxisMax"];
+        }
+
+        this.options['yaxis'] = {
+            ...this.options['yaxis'], 
+            'min' : this.yAxisMin, 
+            'max' : this.yAxisMax
         };
+        this.options = {
+            ...this.options,
+            ...options
+        };
+        console.log("[CustomApexChart set options]", this.options);
+
+        if (this.isRendered) {
+            this.chart.updateOptions(this.options);
+        }
     };
+
+    // set series
+    CustomApexChart.prototype.setSeries = function(series) {
+        // update series
+        for (let key in series) {
+            let value = {'name' : series[key]};
+            if (key in this.series) {
+                // update series
+                value = {...this.series[key], value};
+            }
+            else {
+                // create new series
+                value['color'] = CustomApexChart.getRandomColor();
+                value['gridColor'] = "transparent";
+            }
+            this.series[key] = value;
+        }
+
+        // update options
+        let colors = [], seriesData = [], grid = [];
+        for (let key in this.series) {
+            let value = this.series[key];
+            colors.push(value['color']);
+            seriesData.push({'name' : value['name'], 'data' : []});
+            grid.push(value['gridColor']);
+        }
+        this.setOptions({
+            colors : colors,
+            series : seriesData,
+            grid : {
+                row : {
+                    colors : grid,
+                    opacity: this.options['grid']['row']['opacity'] || .2
+                },
+                borderColor: this.options['grid']['borderColor'] || "#f1f3fa"
+            },
+        });
+    };
+
+    // set xAxis
+    CustomApexChart.prototype.setXAxis = function(xAxis) {
+        // update xAxis
+        if (Array.isArray(xAxis)) {
+            // replace
+            this.xAxis = xAxis;
+        }
+        else {
+            // add
+            this.xAxis.push(xAxis);
+        }
+
+        // update options
+        this.setOptions({
+            xaxis : {
+                categories : this.xAxis,
+                title : this.options['xaxis']['title']
+            }
+        });
+    };
+
+    // set data
+    CustomApexChart.prototype.setData = function(data) {
+        // update data
+        for (let key in data) {
+            let value = data[key];
+            if (key in this.series) {
+                this.data[key] = value;
+            }
+        }
+
+        // update series data
+        let seriesData = [];
+        for (let key in this.series) {
+            seriesData.push({
+                name : this.series[key]['name'],
+                data : this.data[key] || []
+            });
+        }
+        this.reloadData(true);
+        this.setOptions({
+            series : seriesData
+        });
+        if (this.isRendered) {
+            this.chart.updateSeries(seriesData);
+        }
+    };
+
+    // reaload data
+    // calculate yMin & yMax from data
+    CustomApexChart.prototype.reloadData = function(force=false) {
+        let tempMin = 1e10, tempMax = -1e10, step = 10;
+        for (let key in this.series) {
+            if (key in this.data) {
+                this.data[key].forEach(val => {
+                    if (tempMin > val) tempMin = val;
+                    if (tempMax < val) tempMax = val;
+                });
+            }
+        }
+        if (force || (!force && this.yAxisMin > tempMin)) {
+            this.yAxisMin = tempMin;
+            this.yAxisMin = parseInt((this.yAxisMin) / step) * step;
+        }
+        if (force || (!force && this.yAxisMax < tempMax)) {
+            this.yAxisMax = tempMax;
+            this.yAxisMax = parseInt((this.yAxisMax - 1) / step + 1) * step;
+        }
+        if (this.yAxisMax < this.yAxisMin) {
+            this.yAxisMax = this.yAxisMin + step;
+        }
+        // console.log("[CustomApexChart reaload data]", tempMin, tempMax, this.yAxisMin, this.yAxisMax);
+    };
+
 
     // chart render
     CustomApexChart.prototype.render = function() {
-        (chart = new ApexCharts(document.querySelector("#apex_line2_chart"), options)).render();
+        if (!this.isEnabled || this.isRendered) return false;
+        this.chart = new ApexCharts(this.element, this.options);
+        this.chart.render();
+        this.isRendered = true;
     };
 
 
@@ -3061,18 +3203,49 @@ $(function () {
         }
 
 
+        // charts for chart page
+        var chartSector1 = new CustomApexChart("#basic-column-sector1", "bar");
+        var chartSector2 = new CustomApexChart("#basic-column-sector2", "bar");
+        var chartSector3 = new CustomApexChart("#basic-column-sector3", "bar");
+        var chartLaptime = new CustomApexChart("#apex_line2_chart", "line");
 
-        
+        chartSector1.setOptions({
+            'height' : 385,
+            'xAxisTitle' : 'LAP',
+            'yAxisTitle' : 'sector1',
+        });
+        chartSector2.setOptions({
+            'height' : 385,
+            'xAxisTitle' : 'LAP',
+            'yAxisTitle' : 'sector2',
+        });
+        chartSector3.setOptions({
+            'height' : 385,
+            'xAxisTitle' : 'LAP',
+            'yAxisTitle' : 'sector3',
+        });
+        chartLaptime.setOptions({
+            'title' : 'laptime(seconds)/lap',
+            'height' : 396,
+            'xAxisTitle' : 'LAP',
+            'yAxisTitle' : 'Laptime',
+        });
 
-        // var options = ;
+        chartLaptime.setSeries({
+            '3' : '3.ZHO',
+            '5' : '5.ARM',
+        });
 
-        (chart = new ApexCharts(document.querySelector("#basic-column-sector1"), options)).render();
-        (chart = new ApexCharts(document.querySelector("#basic-column-sector2"), options)).render();
-        (chart = new ApexCharts(document.querySelector("#basic-column-sector3"), options)).render();
+        chartSector1.render();
+        chartSector2.render();
+        chartSector3.render();
+        chartLaptime.render();
 
-        // options = ;
-
-        (chart = new ApexCharts(document.querySelector("#apex_line2_chart"), options)).render();
+        chartLaptime.setXAxis(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]);
+        chartLaptime.setData({
+            '3' : [28, 29, 33, 36, 32, 32, 33],
+            '5' : [12, 11, 14, 18, 17, 13, 13],
+        });
 
     });
 
