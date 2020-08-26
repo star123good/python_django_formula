@@ -2735,6 +2735,7 @@ $(function () {
             delete options["yAxisMax"];
         }
 
+        if (Array.isArray(this.options['yaxis']) && this.options['yaxis'].length) this.options['yaxis'] = this.options['yaxis'][0];
         this.options['yaxis'] = {
             ...this.options['yaxis'], 
             'min' : this.yAxisMin, 
@@ -2744,7 +2745,7 @@ $(function () {
             ...this.options,
             ...options
         };
-        console.log("[CustomApexChart set options]", this.options);
+        // console.log("[CustomApexChart set options]", this.options);
 
         if (this.isRendered) {
             this.chart.updateOptions(this.options);
@@ -3231,21 +3232,46 @@ $(function () {
             'yAxisTitle' : 'Laptime',
         });
 
-        chartLaptime.setSeries({
-            '3' : '3.ZHO',
-            '5' : '5.ARM',
-        });
 
         chartSector1.render();
         chartSector2.render();
         chartSector3.render();
         chartLaptime.render();
 
-        chartLaptime.setXAxis(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]);
-        chartLaptime.setData({
+        var currentSeries = {
+            '3' : 'UNI-3.ZHO',
+            '5' : 'ART-5.ARM',
+        };
+        var currentXAxis = [1, 2, 3, 4, 5, 6, 7];
+        var currentData = {
+            '3' : [28, 29, 31, 25, 30, 36, 39],
+            '5' : [13, 8, 16, 19, 11, 15, 19],
+        };
+        var currentSector1Data = {
+            '3' : [28, 41, 36, 34, 30, 30, 28],
+            '5' : [12, 10, 19, 25, 22, 23, 20],
+        };
+        var currentSector2Data = {
             '3' : [28, 29, 33, 36, 32, 32, 33],
-            '5' : [12, 11, 14, 18, 17, 13, 13],
-        });
+            '5' : [9, 11, 14, 18, 17, 13, 13],
+        };
+        var currentSector3Data = {
+            '3' : [121, 119, 99, 110, 121, 125, 100],
+            '5' : [103, 116, 96, 118, 107, 93, 83],
+        };
+
+        chartSector1.setSeries(currentSeries);
+        chartSector1.setXAxis(currentXAxis);
+        chartSector1.setData(currentSector1Data);
+        chartSector2.setSeries(currentSeries);
+        chartSector2.setXAxis(currentXAxis);
+        chartSector2.setData(currentSector2Data);
+        chartSector3.setSeries(currentSeries);
+        chartSector3.setXAxis(currentXAxis);
+        chartSector3.setData(currentSector3Data);
+        chartLaptime.setSeries(currentSeries);
+        chartLaptime.setXAxis(currentXAxis);
+        chartLaptime.setData(currentData);
 
     });
 
