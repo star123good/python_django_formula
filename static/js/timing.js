@@ -1427,178 +1427,6 @@ $(function () {
     }
 
 
-
-    var gameAllData;
-    var gameTimesValues;
-    var gameLapsValues;
-    var gameData;
-    var gameLaps;
-    var logLastGameId;
-
-    function getRandomColor(){
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    // get datas from database
-    function getDatas(callback){
-        gameData = [];
-        gameLaps = [];
-        yAxisMin = 100000;
-        yAxisMax = 0;
-
-        if(!logLastGameId || logLastGameId != lastGameId){
-            // reload data
-            ajax_send_force({session_id : lastGameId}, 'analysis', 'get data of analysis', function(result){
-                gameAllData = [];
-                gameTimesValues = [];
-                gameLapsValues = [];
-                let data = {};
-                let countGameLaps = 0;
-
-                try{
-                    // data = JSON.parse(result);
-                    data = result;
-                }
-                catch(ex){
-                }
-
-                console.log(data);
-                
-                if(data && data.data && data.data.length > 0){
-                    if(data.game && data.game.title){
-                        $("#analysis-graph-title").text(data.game.title);
-                    }
-
-                    data.data.forEach(d => {
-                        if(d.laps != undefined && d.RacingNumber && d.laps >= 0 && d.RacingNumber > 0){
-                            if(countGameLaps < d.laps) countGameLaps = d.laps;
-                            let flagChange = true;
-                            if(d.laps > 0 && gameTimesValues[d.laps-1] && gameTimesValues[d.laps-1] > d.created_at) flagChange = false;
-                            if(gameTimesValues[d.laps+1] && gameTimesValues[d.laps+1] < d.created_at) flagChange = false;
-                            if(flagChange) gameTimesValues[d.laps] = d.created_at;
-                            gameLapsValues[d.laps] = d.laps;
-                            if(!gameAllData[d.RacingNumber]) gameAllData[d.RacingNumber] = [];
-                            gameAllData[d.RacingNumber][d.laps] = {
-                                'LAP' : parseTime(d.lastValue).getTime()/1000,
-                                'BEST' : parseTime(d.bestValue).getTime()/1000,
-                                'S1' : parseInt(d.sector1),
-                                'S2' : parseInt(d.sector2),
-                                'S3' : parseInt(d.sector3)
-                            };
-                        }
-                    });
-
-                    if(gameAllData.length > 0){
-                        logLastGameId = lastGameId;
-                        gameAllData = gameAllData.map(g => {
-                            gameLapsValues.forEach(i => {
-                                if(!g[i]) g[i] = {
-                                    'LAP' : 0,
-                                    'BEST' : 0,
-                                    'S1' : 0,
-                                    'S2' : 0,
-                                    'S3' : 0
-                                };
-                            });
-                            return g;
-                        });
-                    }
-                }
-
-                // console.log('gameLapsValues is ', gameLapsValues, 'gameAllData is ', gameAllData);
-
-                if(xAxisTitle == "LAP"){
-                    gameLaps = gameLapsValues;
-                }
-                else if(xAxisTitle == "TIME"){
-                    gameLaps = gameTimesValues;
-                }
-
-                driverLines.forEach(driver => {
-                    if(driver && driver.Number){
-                        gameData.push({
-                            number : driver.Driver.RacingNumber,
-                            name : driver.GetDriverName(false),
-                            data : (gameAllData[driver.Driver.RacingNumber])?
-                                gameAllData[driver.Driver.RacingNumber].map(g => {
-                                    if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
-                                    else return 0;
-                                })
-                                :
-                                [],
-                            color : getRandomColor()
-                        });
-                    }
-                });
-                // console.log("gameLaps is ", gameLaps, "gameData is ", gameData);
-
-                gameData.forEach(g => {
-                    g.data.forEach(val => {
-                        if(yAxisMin > val) yAxisMin = val;
-                        if(yAxisMax < val) yAxisMax = val;
-                    });
-                });
-
-                if(slider){
-                    slider.update({
-                        from: yAxisMin,
-                        to: yAxisMax
-                    });
-                }
-
-                callback();
-            });
-        }
-        else{
-            // not reload data
-            if(xAxisTitle == "LAP"){
-                gameLaps = gameLapsValues;
-            }
-            else if(xAxisTitle == "TIME"){
-                gameLaps = gameTimesValues;
-            }
-
-            driverLines.forEach(driver => {
-                if(driver && driver.Number){
-                    gameData.push({
-                        number : driver.Driver.RacingNumber,
-                        name : driver.GetDriverName(false),
-                        data : (gameAllData[driver.Driver.RacingNumber])?
-                            gameAllData[driver.Driver.RacingNumber].map(g => {
-                                if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
-                                else return 0;
-                            })
-                            :
-                            [],
-                        color : getRandomColor()
-                    });
-                }
-            });
-
-            gameData.forEach(g => {
-                g.data.forEach(val => {
-                    if(yAxisMin > val) yAxisMin = val;
-                    if(yAxisMax < val) yAxisMax = val;
-                });
-            });
-
-            if(slider){
-                slider.update({
-                    from: yAxisMin,
-                    to: yAxisMax
-                });
-            }
-
-            callback();
-        }
-    }
-
-
     var timingScope;
     var weatherScope;
     var timingrootScope;
@@ -1630,7 +1458,10 @@ $(function () {
                     jConveyorTickerTest();
 
                     // analysis
-                    chartRender();
+                    chartRenderAnalysis();
+
+                    // chart page
+                    chartRenderCharts();
 
                 });
             });
@@ -2029,247 +1860,6 @@ $(function () {
     }
 
 
-    var checkedChartDrivers;
-    var xAxisTitle;
-    var yAxisTitle;
-    var yAxisMin;
-    var yAxisMax;
-    var chartRendered;
-    var chart;
-
-    // virtual page - chart
-    function chartRender(flagYAXISOnly=false){
-        if(!document.getElementById("apex_line1")) return ;
-
-        var title = 'RACE CHART';
-        var data = [];
-        var colors = [];
-        var xAxis = [];
-        var yTitle = 'TIME';
-        var xTitle = 'LAP / TIME';
-
-        if($("#select-xAxis").length) xAxisTitle = $("#select-xAxis").val();
-        if($("#select-yAxis").length) yAxisTitle = $("#select-yAxis").val();
-        if($(".check-chart-driver").length){
-            checkedChartDrivers = [];
-            $(".check-chart-driver").each(function(){
-                if($(this).prop("checked")) checkedChartDrivers.push(parseInt($(this).attr('id').replace("customCheck", "")));
-            });
-        }
-
-        if(flagYAXISOnly){
-            // after get datas from database score
-            xTitle = xAxisTitle;
-            xAxis = gameLaps;
-            if(checkedChartDrivers.length && gameData.length){
-                let tempDriver;
-                checkedChartDrivers.forEach(driverId => {
-                    tempDriver = gameData.find(driver => parseInt(driver.number) === parseInt(driverId));
-                    if(tempDriver){
-                        data.push({
-                            name : tempDriver.name,
-                            data : tempDriver.data
-                        });
-                        colors.push(tempDriver.color);
-                    }
-                });
-            }
-            if(!colors.length){
-                data = [{
-                    name : '',
-                    data : []
-                }];
-                colors = [getRandomColor()];
-            }
-            // console.log(gameData, data, xAxis, colors);
-
-            if(chart && chartRendered){// update
-                chart.updateOptions({
-                    xaxis: {
-                        categories: xAxis,
-                        title: {
-                            text: xTitle
-                        }
-                    },
-                    yaxis: {
-                        min: (yAxisMin&&yAxisMin<yAxisMax)?parseInt((yAxisMin)/10)*10:0,
-                        max: (yAxisMax)?parseInt((yAxisMax)/10)*10:150,
-                        title: {
-                            text: yTitle,
-                        },
-                    },
-                    colors: colors
-                });
-                chart.updateSeries(data);
-            }
-        }
-        else{
-            getDatas(function(){
-                // after get datas from database score
-                xTitle = xAxisTitle;
-                xAxis = gameLaps;
-                if(checkedChartDrivers.length && gameData.length){
-                    let tempDriver;
-                    checkedChartDrivers.forEach(driverId => {
-                        tempDriver = gameData.find(driver => parseInt(driver.number) === parseInt(driverId));
-                        if(tempDriver){
-                            data.push({
-                                name : tempDriver.name,
-                                data : tempDriver.data
-                            });
-                            colors.push(tempDriver.color);
-                        }
-                    });
-                }
-                if(!colors.length){
-                    data = [{
-                        name : '',
-                        data : []
-                    }];
-                    colors = [getRandomColor()];
-                }
-                // console.log(gameData, data, xAxis, colors);
-        
-                if(chart && chartRendered){// update
-                    chart.updateOptions({
-                        xaxis: {
-                            categories: xAxis,
-                            title: {
-                                text: xTitle
-                            }
-                        },
-                        yaxis: {
-                            min: (yAxisMin&&yAxisMin<yAxisMax)?parseInt((yAxisMin)/10)*10:0,
-                            max: (yAxisMax)?parseInt((yAxisMax)/10)*10:150,
-                            title: {
-                                text: yTitle,
-                            },
-                        },
-                        colors: colors
-                    });
-                    chart.updateSeries(data);
-                } 
-                else{// render
-                    var options = {
-                        chart: {
-                            height: 374,
-                            type: 'line',
-                            shadow: {
-                                enabled: false,
-                                color: '#bbb',
-                                top: 3,
-                                left: 2,
-                                blur: 3,
-                                opacity: 1
-                            },
-                            zoom: {
-                                enabled: false
-                            },
-                            toolbar: {
-                                show: false
-                            }
-                        },
-                        colors: colors,
-                        stroke: {
-                            width: [3, 3],
-                            curve: 'smooth'
-                        },
-                        series: data,
-                        xaxis: {
-                            type: 'number',
-                            categories: xAxis,
-                            title: {
-                                text: xTitle
-                            }
-                        },
-                        title: {
-                            text: title,
-                            align: 'left',
-                            style: {
-                                fontSize: "16px",
-                                color: '#666'
-                            }
-                        },
-                        fill: {
-                            type: 'gradient',
-                            gradient: {
-                                shade: 'dark',
-                                gradientToColors: ['#43cea2'],
-                                shadeIntensity: 1,
-                                type: 'horizontal',
-                                opacityFrom: 1,
-                                opacityTo: 1,
-                                stops: [0, 100, 100, 100]
-                            },
-                        },
-                        markers: {
-                            size: 4,
-                            opacity: 0.9,
-                            colors: ["#ffbc00"],
-                            strokeColor: "#fff",
-                            strokeWidth: 2,
-                            style: 'inverted', // full, hollow, inverted
-                            hover: {
-                                size: 7,
-                            }
-                        },
-                        yaxis: {
-                            min: (yAxisMin&&yAxisMin<yAxisMax)?parseInt((yAxisMin-10)/10)*10:0,
-                            max: (yAxisMax)?parseInt((yAxisMax+10)/10)*10:150,
-                            title: {
-                                text: yTitle,
-                            },
-                        },
-                        legend: {
-                            position: 'top',
-                            horizontalAlign: 'right',
-                            floating: true,
-                            offsetY: -25,
-                            offsetX: -5
-                        },
-                        grid: {
-                            row: {
-                                colors: ['transparent', 'transparent'], // takes an array which will be repeated on columns
-                                opacity: 0.2
-                            },
-                            borderColor: '#185a9d'
-                        },
-                        tooltip: {
-                            theme: "dark",      
-                        },
-                        responsive: [{
-                            breakpoint: 600,
-                            options: {
-                                chart: {
-                                    toolbar: {
-                                        show: false
-                                    }
-                                },
-                                legend: {
-                                    show: false
-                                },
-                            }
-                        }]
-                    }
-                    
-                    if(document.querySelector("#apex_line1")){
-                        chart = new ApexCharts(
-                            document.querySelector("#apex_line1"),
-                            options
-                        );
-                    
-                        chartRendered = true;
-                        chart.render();
-                    }
-                }
-            });
-        }
-    }
-
-
-    var slider;
-
-
     /**
      *      circle map
      */
@@ -2525,6 +2115,7 @@ $(function () {
         this.data = {};
         this.yAxisMin = 0;
         this.yAxisMax = 100;
+        this.xAxisTitle = "";
         this.setDefaultOptions();
         this.setOptions(options);
     };
@@ -2729,6 +2320,7 @@ $(function () {
     CustomApexChart.prototype.setOptions = function(options={}) { 
         if ("title" in options) {
             this.options['title'] = {...this.options['title'], 'text' : options['title']};
+            this.xAxisTitle = options['title'];
             delete options["title"];
         }
         if ("height" in options) {
@@ -2764,7 +2356,7 @@ $(function () {
             ...this.options,
             ...options
         };
-        // console.log("[CustomApexChart set options]", this.options);
+        console.log("[CustomApexChart set options]", this.options);
 
         if (this.isRendered) {
             this.chart.updateOptions(this.options);
@@ -2789,16 +2381,14 @@ $(function () {
         }
 
         // update options
-        let colors = [], seriesData = [], grid = [];
+        let colors = [], seriesData = [], grid = [], seriesDataOptions = {};
         for (let key in this.series) {
             let value = this.series[key];
             colors.push(value['color']);
             seriesData.push({'name' : value['name'], 'data' : []});
             grid.push(value['gridColor']);
         }
-        this.setOptions({
-            colors : colors,
-            series : seriesData,
+        seriesDataOptions = {
             grid : {
                 row : {
                     colors : grid,
@@ -2806,7 +2396,11 @@ $(function () {
                 },
                 borderColor: this.options['grid']['borderColor'] || "#f1f3fa"
             },
-        });
+        };
+        if (colors.length) seriesDataOptions['colors'] = colors;
+        if (seriesData.length) seriesDataOptions['series'] = seriesData;
+        console.log("[CustomApexChart set Series]", seriesDataOptions);
+        this.setOptions(seriesDataOptions);
     };
 
     // set xAxis
@@ -2853,6 +2447,7 @@ $(function () {
             series : seriesData
         });
         if (this.isRendered) {
+            // console.log("[CustomApexChart set Data]", seriesData);
             this.chart.updateSeries(seriesData);
         }
     };
@@ -2883,7 +2478,6 @@ $(function () {
         // console.log("[CustomApexChart reaload data]", tempMin, tempMax, this.yAxisMin, this.yAxisMax);
     };
 
-
     // chart render
     CustomApexChart.prototype.render = function() {
         if (!this.isEnabled || this.isRendered) return false;
@@ -2891,6 +2485,378 @@ $(function () {
         this.chart.render();
         this.isRendered = true;
     };
+
+
+    var gameAllData;
+    var gameTimesValues;
+    var gameLapsValues;
+    var gameData;
+    var gameLaps;
+    var logLastGameId;
+
+    // get datas from database
+    function getDatas(callback){
+        if (!chartAnalysis || !chartAnalysis.isEnabled) return;
+
+        gameData = [];
+        gameLaps = [];
+
+        var xAxisTitle = chartAnalysis.xAxisTitle;
+
+        if(!logLastGameId || logLastGameId != lastGameId){
+            // reload data
+            ajax_send_force({session_id : lastGameId}, 'analysis', 'get data of analysis', function(result){
+                gameAllData = [];
+                gameTimesValues = [];
+                gameLapsValues = [];
+                let data = {};
+                let countGameLaps = 0;
+
+                try{
+                    // data = JSON.parse(result);
+                    data = result;
+                }
+                catch(ex){
+                }
+
+                console.log(data);
+                
+                if(data && data.data && data.data.length > 0){
+                    if(data.game && data.game.title && $("#analysis-graph-title").length){
+                        $("#analysis-graph-title").text(data.game.title);
+                    }
+
+                    data.data.forEach(d => {
+                        if(d.laps != undefined && d.RacingNumber && d.laps >= 0 && d.RacingNumber > 0){
+                            if(countGameLaps < d.laps) countGameLaps = d.laps;
+                            let flagChange = true;
+                            if(d.laps > 0 && gameTimesValues[d.laps-1] && gameTimesValues[d.laps-1] > d.created_at) flagChange = false;
+                            if(gameTimesValues[d.laps+1] && gameTimesValues[d.laps+1] < d.created_at) flagChange = false;
+                            if(flagChange) gameTimesValues[d.laps] = d.created_at;
+                            gameLapsValues[d.laps] = d.laps;
+                            if(!gameAllData[d.RacingNumber]) gameAllData[d.RacingNumber] = [];
+                            gameAllData[d.RacingNumber][d.laps] = {
+                                'LAP' : parseTime(d.lastValue).getTime()/1000,
+                                'BEST' : parseTime(d.bestValue).getTime()/1000,
+                                'S1' : parseInt(d.sector1),
+                                'S2' : parseInt(d.sector2),
+                                'S3' : parseInt(d.sector3)
+                            };
+                        }
+                    });
+
+                    if(gameAllData.length > 0){
+                        logLastGameId = lastGameId;
+                        gameAllData = gameAllData.map(g => {
+                            gameLapsValues.forEach(i => {
+                                if(!g[i]) g[i] = {
+                                    'LAP' : 0,
+                                    'BEST' : 0,
+                                    'S1' : 0,
+                                    'S2' : 0,
+                                    'S3' : 0
+                                };
+                            });
+                            return g;
+                        });
+                    }
+                }
+
+                console.log('gameLapsValues is ', gameLapsValues, 'gameAllData is ', gameAllData);
+
+                if(xAxisTitle == "LAP"){
+                    gameLaps = gameLapsValues;
+                }
+                else if(xAxisTitle == "TIME"){
+                    gameLaps = gameTimesValues;
+                }
+
+                driverLines.forEach(driver => {
+                    if(driver && driver.Number){
+                        gameData.push({
+                            number : driver.Driver.RacingNumber,
+                            name : driver.GetDriverName(false),
+                            data : (gameAllData[driver.Driver.RacingNumber])?
+                                gameAllData[driver.Driver.RacingNumber].map(g => {
+                                    if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
+                                    else return 0;
+                                })
+                                :
+                                [],
+                        });
+                    }
+                });
+                console.log("gameLaps is ", gameLaps, "gameData is ", gameData);
+
+                callback();
+            });
+        }
+        else {
+            // not reload data
+            if(xAxisTitle == "LAP"){
+                gameLaps = gameLapsValues;
+            }
+            else if(xAxisTitle == "TIME"){
+                gameLaps = gameTimesValues;
+            }
+
+            driverLines.forEach(driver => {
+                if(driver && driver.Number){
+                    gameData.push({
+                        number : driver.Driver.RacingNumber,
+                        name : driver.GetDriverName(false),
+                        data : (gameAllData[driver.Driver.RacingNumber])?
+                            gameAllData[driver.Driver.RacingNumber].map(g => {
+                                if(g[yAxisTitle] && !isNaN(g[yAxisTitle])) return g[yAxisTitle];
+                                else return 0;
+                            })
+                            :
+                            [],
+                    });
+                }
+            });
+
+            callback();
+        }
+    }
+
+
+    var checkedChartDrivers = [];
+    var chartAnalysis = null;
+
+    var slider = null;
+
+    // analysis page - chart
+    function chartRenderAnalysis(flagYAXISOnly=false){
+        if(!document.getElementById("apex_line1")) return ;
+
+        if (!chartAnalysis) {
+            // create chart analysis
+            var options = {
+                chart: {
+                    shadow: {
+                        enabled: false,
+                        color: '#bbb',
+                        top: 3,
+                        left: 2,
+                        blur: 3,
+                        opacity: 1
+                    },
+                },
+                xaxis: {
+                    type: 'number',
+                },
+                title: {
+                    style: {
+                        fontSize: "16px",
+                        color: '#666'
+                    }
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'dark',
+                        gradientToColors: ['#43cea2'],
+                        shadeIntensity: 1,
+                        type: 'horizontal',
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100, 100, 100]
+                    },
+                },
+                markers: {
+                    size: 4,
+                    opacity: 0.9,
+                    colors: ["#ffbc00"],
+                    strokeColor: "#fff",
+                    strokeWidth: 2,
+                    style: 'inverted', // full, hollow, inverted
+                    hover: {
+                        size: 7,
+                    }
+                },
+                tooltip: {
+                    theme: "dark",      
+                },
+            }
+            
+            chartAnalysis = new CustomApexChart("#apex_line1", "line");
+            chartAnalysis.setOptions(options);
+            chartAnalysis.setOptions({
+                'title' : 'RACE CHART',
+                'height' : 396,
+                'xAxisTitle' : 'LAP / TIME',
+                'yAxisTitle' : 'TIME',
+            });
+            chartAnalysis.render();
+        }
+
+        var xAxis = [];
+        var series = {};
+        var data = {};
+
+        if($("#select-xAxis").length) xAxisTitle = $("#select-xAxis").val();
+        if($("#select-yAxis").length) yAxisTitle = $("#select-yAxis").val();
+        chartAnalysis.setOptions({
+            'xAxisTitle' : xAxisTitle,
+            'yAxisTitle' : yAxisTitle,
+        });
+        if($(".check-chart-driver").length){
+            checkedChartDrivers = [];
+            $(".check-chart-driver").each(function(){
+                if($(this).prop("checked")) checkedChartDrivers.push(parseInt($(this).attr('id').replace("customCheck", "")));
+            });
+        }
+        else return;
+
+        if(flagYAXISOnly){
+            // after get datas from database score
+            xAxis = gameLaps;
+            if(checkedChartDrivers.length && gameData.length){
+                let tempDriver;
+                checkedChartDrivers.forEach(driverId => {
+                    tempDriver = gameData.find(driver => parseInt(driver.number) === parseInt(driverId));
+                    if(tempDriver){
+                        series[tempDriver.number] = tempDriver.name;
+                        data[tempDriver.number] = tempDriver.data;
+                    }
+                });
+            }
+            console.log(gameData, data, xAxis, series);
+
+            if(chartAnalysis && chartAnalysis.isRendered){
+                // update
+                chartAnalysis.setSeries(series);
+                chartAnalysis.setXAxis(xAxis);
+                chartAnalysis.setData(data);
+
+                if(slider){
+                    slider.update({
+                        from: chartAnalysis.yAxisMax,
+                        to: chartAnalysis.yAxisMax
+                    });
+                }
+            }
+        }
+        else {
+            getDatas(function(){
+                // after get datas from database score
+                xAxis = gameLaps;
+                if(checkedChartDrivers.length && gameData.length){
+                    let tempDriver;
+                    checkedChartDrivers.forEach(driverId => {
+                        tempDriver = gameData.find(driver => parseInt(driver.number) === parseInt(driverId));
+                        if(tempDriver){
+                            series[tempDriver.number] = tempDriver.name;
+                            data[tempDriver.number] = tempDriver.data;
+                        }
+                    });
+                }
+                console.log(gameData, data, xAxis, series);
+        
+                if(chartAnalysis && chartAnalysis.isRendered){
+                    // update
+                    chartAnalysis.setSeries(series);
+                    chartAnalysis.setXAxis(xAxis);
+                    chartAnalysis.setData(data);
+
+                    if(slider){
+                        slider.update({
+                            from: chartAnalysis.yAxisMax,
+                            to: chartAnalysis.yAxisMax
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+
+    var chartLaptime = null, 
+        chartSector1 = null, 
+        chartSector2 = null, 
+        chartSector3 = null;
+
+    // chart page - charts render
+    function chartRenderCharts() {
+        if(!document.getElementById("apex_line2_chart")) return ;
+
+        // create charts for chart page
+        if (!chartLaptime) {
+            chartLaptime = new CustomApexChart("#apex_line2_chart", "line");
+            chartLaptime.setOptions({
+                'title' : 'laptime(seconds)/lap',
+                'height' : 396,
+                'xAxisTitle' : 'LAP',
+                'yAxisTitle' : 'Laptime',
+            });
+            chartLaptime.render();
+        }
+        if (!chartSector1) {
+            chartSector1 = new CustomApexChart("#basic-column-sector1", "bar");
+            chartSector1.setOptions({
+                'height' : 385,
+                'xAxisTitle' : 'LAP',
+                'yAxisTitle' : 'sector1',
+            });
+            chartSector1.render();
+        }
+        if (!chartSector2) {
+            chartSector2 = new CustomApexChart("#basic-column-sector2", "bar");
+            chartSector2.setOptions({
+                'height' : 385,
+                'xAxisTitle' : 'LAP',
+                'yAxisTitle' : 'sector2',
+            });
+            chartSector2.render();
+        }
+        if (!chartSector3) {
+            chartSector3 = new CustomApexChart("#basic-column-sector3", "bar");
+            chartSector3.setOptions({
+                'height' : 385,
+                'xAxisTitle' : 'LAP',
+                'yAxisTitle' : 'sector3',
+            });
+            chartSector3.render();
+        }
+
+
+
+        var currentSeries = {
+            '3' : 'UNI-3.ZHO',
+            '5' : 'ART-5.ARM',
+        };
+        var currentXAxis = [1, 2, 3, 4, 5, 6, 7];
+        var currentData = {
+            '3' : [28, 29, 31, 25, 30, 36, 39],
+            '5' : [13, 8, 16, 19, 11, 15, 19],
+        };
+        var currentSector1Data = {
+            '3' : [28, 41, 36, 34, 30, 30, 28],
+            '5' : [12, 10, 19, 25, 22, 23, 20],
+        };
+        var currentSector2Data = {
+            '3' : [28, 29, 33, 36, 32, 32, 33],
+            '5' : [9, 11, 14, 18, 17, 13, 13],
+        };
+        var currentSector3Data = {
+            '3' : [121, 119, 99, 110, 121, 125, 100],
+            '5' : [103, 116, 96, 118, 107, 93, 83],
+        };
+
+        // chartSector1.setSeries(currentSeries);
+        // chartSector1.setXAxis(currentXAxis);
+        // chartSector1.setData(currentSector1Data);
+        // chartSector2.setSeries(currentSeries);
+        // chartSector2.setXAxis(currentXAxis);
+        // chartSector2.setData(currentSector2Data);
+        // chartSector3.setSeries(currentSeries);
+        // chartSector3.setXAxis(currentXAxis);
+        // chartSector3.setData(currentSector3Data);
+        // chartLaptime.setSeries(currentSeries);
+        // chartLaptime.setXAxis(currentXAxis);
+        // chartLaptime.setData(currentData);
+    }
 
 
     $(document).ready(function(){
@@ -2946,7 +2912,7 @@ $(function () {
                     // chart render
                     lastGameId = game_id;
                     logLastGameId = 0;
-                    chartRender();
+                    chartRenderAnalysis();
                 }
                 else{
                     // others page
@@ -3183,13 +3149,13 @@ $(function () {
         // chart - analysis
         // select xAxis
         $(document).on("change", "#select-xAxis, #select-yAxis, .check-chart-driver", function(){
-            chartRender();
+            chartRenderAnalysis();
         });
 
         // chart refresh
         $(document).on("click", "#btn-analysis-gragh-refresh", function(){
             logLastGameId = 0;
-            chartRender();
+            chartRenderAnalysis();
         });
 
         
@@ -3206,7 +3172,7 @@ $(function () {
                 onChange: function(value){
                     yAxisMax = value.to;
                     yAxisMin = value.from;
-                    chartRender(true);
+                    chartRenderAnalysis(true);
                 }
             });
 
@@ -3223,74 +3189,11 @@ $(function () {
         }
 
 
-        // charts for chart page
-        var chartSector1 = new CustomApexChart("#basic-column-sector1", "bar");
-        var chartSector2 = new CustomApexChart("#basic-column-sector2", "bar");
-        var chartSector3 = new CustomApexChart("#basic-column-sector3", "bar");
-        var chartLaptime = new CustomApexChart("#apex_line2_chart", "line");
+        // analysis page - charts render
+        chartRenderAnalysis();
 
-        chartSector1.setOptions({
-            'height' : 385,
-            'xAxisTitle' : 'LAP',
-            'yAxisTitle' : 'sector1',
-        });
-        chartSector2.setOptions({
-            'height' : 385,
-            'xAxisTitle' : 'LAP',
-            'yAxisTitle' : 'sector2',
-        });
-        chartSector3.setOptions({
-            'height' : 385,
-            'xAxisTitle' : 'LAP',
-            'yAxisTitle' : 'sector3',
-        });
-        chartLaptime.setOptions({
-            'title' : 'laptime(seconds)/lap',
-            'height' : 396,
-            'xAxisTitle' : 'LAP',
-            'yAxisTitle' : 'Laptime',
-        });
-
-
-        chartSector1.render();
-        chartSector2.render();
-        chartSector3.render();
-        chartLaptime.render();
-
-        var currentSeries = {
-            '3' : 'UNI-3.ZHO',
-            '5' : 'ART-5.ARM',
-        };
-        var currentXAxis = [1, 2, 3, 4, 5, 6, 7];
-        var currentData = {
-            '3' : [28, 29, 31, 25, 30, 36, 39],
-            '5' : [13, 8, 16, 19, 11, 15, 19],
-        };
-        var currentSector1Data = {
-            '3' : [28, 41, 36, 34, 30, 30, 28],
-            '5' : [12, 10, 19, 25, 22, 23, 20],
-        };
-        var currentSector2Data = {
-            '3' : [28, 29, 33, 36, 32, 32, 33],
-            '5' : [9, 11, 14, 18, 17, 13, 13],
-        };
-        var currentSector3Data = {
-            '3' : [121, 119, 99, 110, 121, 125, 100],
-            '5' : [103, 116, 96, 118, 107, 93, 83],
-        };
-
-        chartSector1.setSeries(currentSeries);
-        chartSector1.setXAxis(currentXAxis);
-        chartSector1.setData(currentSector1Data);
-        chartSector2.setSeries(currentSeries);
-        chartSector2.setXAxis(currentXAxis);
-        chartSector2.setData(currentSector2Data);
-        chartSector3.setSeries(currentSeries);
-        chartSector3.setXAxis(currentXAxis);
-        chartSector3.setData(currentSector3Data);
-        chartLaptime.setSeries(currentSeries);
-        chartLaptime.setXAxis(currentXAxis);
-        chartLaptime.setData(currentData);
+        // chart page - charts render
+        chartRenderCharts();
 
     });
 
