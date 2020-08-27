@@ -3158,6 +3158,9 @@ $(function () {
             chartRenderAnalysis();
         });
 
+        // analysis page - charts render
+        chartRenderAnalysis();
+
         
         if($("#range_03").length){
             // create
@@ -3189,8 +3192,11 @@ $(function () {
         }
 
 
-        // analysis page - charts render
-        chartRenderAnalysis();
+        // chart page
+        // chart refresh
+        $(document).on("click", "#btn-chart-gragh-refresh, .check-chart-driver", function(){
+            chartRenderCharts();
+        });
 
         // chart page - charts render
         chartRenderCharts();
