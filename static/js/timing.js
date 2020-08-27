@@ -2529,14 +2529,33 @@ $(function () {
         this.setOptions(options);
     };
 
+    // random color list
+    CustomApexChart.COLOR_LIST_COUNT = 100;
+    CustomApexChart.COLOR_LIST = [];
+
     // get random color
-    CustomApexChart.getRandomColor = function() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+    CustomApexChart.prototype.getRandomColor = function(isStatic=true) {
+        if (isStatic) {
+            // generate color list
+            if (CustomApexChart.COLOR_LIST.length == 0) {
+                for (let i = 0; i < CustomApexChart.COLOR_LIST_COUNT; i ++) {
+                    CustomApexChart.COLOR_LIST.push(this.getRandomColor(false));
+                }
+            }
+
+            // get color from list
+            let index = Object.keys(this.series).length % CustomApexChart.COLOR_LIST.length;
+            return CustomApexChart.COLOR_LIST[index];
         }
-        return color;
+        else {
+            // generate random color
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
     };
 
     // set default options by type
@@ -2763,7 +2782,7 @@ $(function () {
             }
             else {
                 // create new series
-                value['color'] = CustomApexChart.getRandomColor();
+                value['color'] = this.getRandomColor();
                 value['gridColor'] = "transparent";
             }
             this.series[key] = value;
