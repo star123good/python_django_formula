@@ -2456,12 +2456,18 @@ $(function () {
         // update options
         let colors = [], seriesData = [], grid = [], seriesDataOptions = {};
         for (let key in this.series) {
+            if (!(key in series)) {
+                delete this.series[key];
+                continue;
+            }
             let value = this.series[key];
             colors.push(value['color']);
             seriesData.push({'name' : value['name'], 'data' : []});
             grid.push(value['gridColor']);
         }
         seriesDataOptions = {
+            colors : colors,
+            series : seriesData,
             grid : {
                 row : {
                     colors : grid,
@@ -2470,8 +2476,6 @@ $(function () {
                 borderColor: this.options['grid']['borderColor'] || "#f1f3fa"
             },
         };
-        if (colors.length) seriesDataOptions['colors'] = colors;
-        if (seriesData.length) seriesDataOptions['series'] = seriesData;
         // console.log("[CustomApexChart set Series]", seriesDataOptions);
         this.setOptions(seriesDataOptions);
     };
@@ -2867,7 +2871,7 @@ $(function () {
 
     // get datas for charts from localstorage
     function getDatasCharts(callback) {
-        if (!savedLocalStorageData || !CustomApexChart.IS_ENABLE || !checkedChartDrivers.length) return;
+        if (!savedLocalStorageData || !CustomApexChart.IS_ENABLE || !checkedChartDrivers) return;
 
         gameChartsLapsValues = [];
         gameChartsData = {};
