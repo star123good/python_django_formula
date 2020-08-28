@@ -202,7 +202,7 @@ $(function () {
     function processData(data, flagForce = false) {
         if(!flagCurrent && !flagForce) return ;
 
-        console.log("processData", data);// console log
+        console.log("[processData]", data);// console log
 
         ajax_send(data, 'processData');
 
@@ -1015,7 +1015,7 @@ $(function () {
     }
 
     function getTableData(realDrivers, virtualDrivers){
-        console.log("get table data", realDrivers, virtualDrivers, timingScope.feed.Session);
+        console.log("[getTableData] get table data", realDrivers, virtualDrivers, timingScope.feed.Session);
     
         let index = 0;
         let findPos, findGAP, temp, tempNames;
@@ -1165,13 +1165,19 @@ $(function () {
         }
     
         sortedRealDrivers = mergeDrivers;
+        console.log("[getTableData] sorted Real Drivers", sortedRealDrivers);
 
         // draw circle map drivers
         if (GDriver.IS_ENABLE) {
             GDriver.resetDrivers(sortedRealDrivers);
         }
+
+        // render charts
+        if (CustomApexChart.IS_ENABLE) {
+            chartRenderAnalysis();
+            chartRenderCharts();
+        }
         
-        console.log("sorted Real Drivers", sortedRealDrivers);
         return sortedRealDrivers;
     }
     
@@ -1302,6 +1308,7 @@ $(function () {
             return 0;
         };
     };
+
     Timer.prototype.start = function(){
         this.startTime = this.timeToInt(timeStart);
         this.endTime = this.timeToInt(timeEnd);
@@ -1309,6 +1316,7 @@ $(function () {
         this.stopped = false;
         this.run();
     };
+
     Timer.prototype.play = function(){
         if(this.currentTime){
             this.stopped = false;
@@ -1321,10 +1329,12 @@ $(function () {
         $("#slider-player, #spinner-replay").removeAttr("hidden");
         $("#btn-replay .spinner-title").text("Replaying...");
     };
+
     Timer.prototype.pause = function(){
         this.stopped = true;
         $("#spinner-replay").attr("hidden", "hidden");
     };
+
     Timer.prototype.stop = function(){
         this.currentTime = this.startTime;
         this.setSliderBarValue(this.sliderBar, this.intToPercent(this.currentTime));
@@ -1332,12 +1342,15 @@ $(function () {
         $("#spinner-replay").attr("hidden", "hidden");
         clearDrivers();
     };
+
     Timer.prototype.reset = function(percent){
         this.currentTime = this.percentToInt(percent);
     };
+
     Timer.prototype.setSliderBar = function(initSlider){
         this.sliderBar = initSlider;
     };
+
     // set slider bar value via current time
     Timer.prototype.setSliderBarValue =function(sliderInstance, newValue) {
         if(newValue < parseInt(sliderInstance.options.min) || newValue > parseInt(sliderInstance.options.max)) return ;
@@ -1363,6 +1376,7 @@ $(function () {
         // sliderInstance.options.callback();
         if (changed) sliderInstance.changeEvent();
     };
+
     // About timeline
     // get data via current time
     Timer.prototype.getDataByCurrentTime = function(nowTime){
@@ -2106,7 +2120,11 @@ $(function () {
      */
     var CustomApexChart = function(element, type, options={}) {
         this.element = document.querySelector(element);
-        this.isEnabled = (this.element) ? true : false;
+        if (this.element) {
+            this.isEnabled = true;
+            CustomApexChart.IS_ENABLE = true;
+        }
+        else this.isEnabled = false;
         this.type = type;
         this.chart = null;
         this.isRendered = false;
@@ -2120,6 +2138,8 @@ $(function () {
         this.setOptions(options);
     };
 
+    // is enalbed
+    CustomApexChart.IS_ENABLE = false;
     // random color list
     CustomApexChart.COLOR_LIST_COUNT = 100;
     CustomApexChart.COLOR_LIST = [];
@@ -2622,6 +2642,17 @@ $(function () {
 
 
     var checkedChartDrivers = [];
+
+    // checked charts drivers
+    function getCheckedChartDrivers() {
+        checkedChartDrivers = [];
+        if($(".check-chart-driver").length){
+            $(".check-chart-driver").each(function(){
+                if($(this).prop("checked")) checkedChartDrivers.push(parseInt($(this).attr('id').replace("customCheck", "")));
+            });
+        }
+        return checkedChartDrivers;
+    }
     var chartAnalysis = null;
 
     var slider = null;
@@ -2691,6 +2722,8 @@ $(function () {
             chartAnalysis.render();
         }
 
+        if (!getCheckedChartDrivers().length) return;
+
         var xAxis = [];
         var series = {};
         var data = {};
@@ -2701,13 +2734,6 @@ $(function () {
             'xAxisTitle' : xAxisTitle,
             'yAxisTitle' : yAxisTitle,
         });
-        if($(".check-chart-driver").length){
-            checkedChartDrivers = [];
-            $(".check-chart-driver").each(function(){
-                if($(this).prop("checked")) checkedChartDrivers.push(parseInt($(this).attr('id').replace("customCheck", "")));
-            });
-        }
-        else return;
 
         if(flagYAXISOnly){
             // after get datas from database score
@@ -2776,6 +2802,7 @@ $(function () {
         chartSector1 = null, 
         chartSector2 = null, 
         chartSector3 = null;
+    var isCheckedDrivers = false;
 
     // chart page - charts render
     function chartRenderCharts() {
@@ -2820,42 +2847,79 @@ $(function () {
             chartSector3.render();
         }
 
+        chartPageCheckDrivers();
+
+        if (!getCheckedChartDrivers().length) return;
+
+        var currentSeries = {};
+        var currentXAxis = [];
+        var currentData = {},
+            currentSector1Data = {},
+            currentSector2Data = {},
+            currentSector3Data = {};
+
+        checkedChartDrivers.forEach(driverId => {
+            // chart series name
+            currentSeries[driverId] = "";
+            if ($("#customCheck"+driverId).length) currentSeries[driverId] = $("#customCheck"+driverId).attr('data-title');
+
+            // chart series data
+        });
 
 
-        var currentSeries = {
-            '3' : 'UNI-3.ZHO',
-            '5' : 'ART-5.ARM',
-        };
-        var currentXAxis = [1, 2, 3, 4, 5, 6, 7];
-        var currentData = {
+        currentXAxis = [1, 2, 3, 4, 5, 6, 7];
+        currentData = {
             '3' : [28, 29, 31, 25, 30, 36, 39],
             '5' : [13, 8, 16, 19, 11, 15, 19],
         };
-        var currentSector1Data = {
+        currentSector1Data = {
             '3' : [28, 41, 36, 34, 30, 30, 28],
             '5' : [12, 10, 19, 25, 22, 23, 20],
         };
-        var currentSector2Data = {
+        currentSector2Data = {
             '3' : [28, 29, 33, 36, 32, 32, 33],
             '5' : [9, 11, 14, 18, 17, 13, 13],
         };
-        var currentSector3Data = {
+        currentSector3Data = {
             '3' : [121, 119, 99, 110, 121, 125, 100],
             '5' : [103, 116, 96, 118, 107, 93, 83],
         };
 
-        // chartSector1.setSeries(currentSeries);
-        // chartSector1.setXAxis(currentXAxis);
-        // chartSector1.setData(currentSector1Data);
-        // chartSector2.setSeries(currentSeries);
-        // chartSector2.setXAxis(currentXAxis);
-        // chartSector2.setData(currentSector2Data);
-        // chartSector3.setSeries(currentSeries);
-        // chartSector3.setXAxis(currentXAxis);
-        // chartSector3.setData(currentSector3Data);
-        // chartLaptime.setSeries(currentSeries);
-        // chartLaptime.setXAxis(currentXAxis);
-        // chartLaptime.setData(currentData);
+        if (chartLaptime) {
+            chartLaptime.setSeries(currentSeries);
+            chartLaptime.setXAxis(currentXAxis);
+            chartLaptime.setData(currentData);
+        }
+        if (chartSector1) {
+            chartSector1.setSeries(currentSeries);
+            chartSector1.setXAxis(currentXAxis);
+            chartSector1.setData(currentSector1Data);
+        }
+        if (chartSector2) {
+            chartSector2.setSeries(currentSeries);
+            chartSector2.setXAxis(currentXAxis);
+            chartSector2.setData(currentSector2Data);
+        }
+        if (chartSector3) {
+            chartSector3.setSeries(currentSeries);
+            chartSector3.setXAxis(currentXAxis);
+            chartSector3.setData(currentSector3Data);
+        }
+    }
+
+    // chart page - check drivers
+    function chartPageCheckDrivers() {
+        if(!$(".check-chart-driver").length || isCheckedDrivers) return ;
+
+        if (sortedRealDrivers.length) {
+            $(".check-chart-driver").each(function() {
+                let elmNumber = $(this).attr('id').replace('customCheck', '');
+                if (sortedRealDrivers.find(function (d) { return d && d.number == elmNumber; })) {
+                    $(this).removeAttr('disabled');
+                }
+            });
+            isCheckedDrivers = true;
+        }
     }
 
 
@@ -3150,6 +3214,8 @@ $(function () {
         // select xAxis
         $(document).on("change", "#select-xAxis, #select-yAxis, .check-chart-driver", function(){
             chartRenderAnalysis();
+            // chart page refresh
+            chartRenderCharts();
         });
 
         // chart refresh
@@ -3161,6 +3227,8 @@ $(function () {
         // analysis page - charts render
         chartRenderAnalysis();
 
+        // chart page - charts render
+        chartRenderCharts();
         
         if($("#range_03").length){
             // create
@@ -3191,15 +3259,6 @@ $(function () {
             setInterval(GDriver.drawMap, GDriver.STEP_REDRAW);
         }
 
-
-        // chart page
-        // chart refresh
-        $(document).on("click", "#btn-chart-gragh-refresh, .check-chart-driver", function(){
-            chartRenderCharts();
-        });
-
-        // chart page - charts render
-        chartRenderCharts();
 
     });
 
