@@ -136,6 +136,8 @@ $(function () {
     var virtualDrivers = [];
     var sortedRealDrivers = [];
 
+    var flagSavingLocalStorage = true;
+
     function get_ISODate(){
         sentTime = new Date();
         sentTime = sentTime.toISOString();
@@ -207,6 +209,10 @@ $(function () {
         ajax_send(data, 'processData');
 
         var st;
+        if (data.racedetailsfeed) {
+            var csf = data.racedetailsfeed;
+            lt.client.racedetailsfeed(csf[0], csf[1]);
+        }
         if (data.data) {
             var d = data.data;
             st = d[0];
@@ -256,10 +262,6 @@ $(function () {
             //            timefeed.epoc = tt[0];
             //            timefeed.running = tt[1];
             //            timefeed.remaining = parseTime(tt[2]);
-        }
-        if (data.racedetailsfeed) {
-            var csf = data.racedetailsfeed;
-            lt.client.racedetailsfeed(csf[0], csf[1]);
         }
 
         bestSorted = getBestSortedDrivers();
@@ -698,6 +700,7 @@ $(function () {
             timingScope.sortedRealDrivers = sortedRealDrivers;
 
             if (timingScope) timingScope.$apply();
+            
             ajax_send(feed, 'datafeed', 'datafeed: ' + sentTime + ',' + driverLines.length);
         }
         catch (ex) { console.error('outer', ex.message); }
@@ -1037,7 +1040,6 @@ $(function () {
         // realDrivers.forEach(d => positionString += d.GetDriverName(true) + ":" + d.DriverPosition.Value + "/" + getGAPFromRealDriver(d) + ", ");
         // console.log(positionString);
         
-    
         realDrivers.forEach((realDriver) => {
             let flagHasFocusClass = false;
             let realDriverName = realDriver.GetDriverName(false);
@@ -1111,8 +1113,6 @@ $(function () {
             });
         });
         // console.log(mergeDrivers);
-    
-    
         
         index = 0;
         sortDrivers = mergeDrivers.map((driver) => {
@@ -1167,6 +1167,11 @@ $(function () {
         sortedRealDrivers = mergeDrivers;
         console.log("[getTableData] sorted Real Drivers", sortedRealDrivers);
 
+        // save sorted drivers to local stroage
+        if (flagSavingLocalStorage) {
+            saveLocalStorage();
+        }
+
         // draw circle map drivers
         if (GDriver.IS_ENABLE) {
             GDriver.resetDrivers(sortedRealDrivers);
@@ -1179,6 +1184,52 @@ $(function () {
         }
         
         return sortedRealDrivers;
+    }
+
+
+    // save local storage
+    // store parameters : [{ Driver.number : [{ LAP : [LAPTIME, SECTOR1, SECTOR2, SECTOR3] }] }]
+    function saveLocalStorage() {
+        let currentRoundTitle = "formula_"+timingScope.roundSeason+"_"+timingScope.roundRace+"_"+timingScope.month+"_"+timingScope.day;
+        let data = {};
+        
+        console.log("[save local storage]", currentRoundTitle);
+
+        // clear old formula store
+        let keys = Object.keys(localStorage);
+        keys.forEach(k => {
+            if (k.substr(0, 8) === "formula_" && k != currentRoundTitle) localStorage.removeItem(k);
+        });
+
+        // read old data
+        data = localStorage.getItem(currentRoundTitle);
+        try {
+            if (data) data = JSON.parse(data);
+            else data = {};
+        }
+        catch(e) {
+            data = {};
+        }
+
+        // update data
+        if (sortedRealDrivers && sortedRealDrivers.length) {
+            sortedRealDrivers.forEach(d => {
+                if (!d.isReal) return;
+                let no = d.number;
+                let lap = d.LAP;
+                if (!data[no]) data[no] = {};
+                if (!data[no][lap]) data[no][lap] = [];
+                if (d.LAPTIME && d.LAPTIME != "") {
+                    data[no][lap][0] = "" + (parseTime(d.LAPTIME).getTime() / 1000);
+                }
+                data[no][lap][1] = d.S1;
+                data[no][lap][2] = d.S2;
+                data[no][lap][3] = d.S3;
+            });
+        }
+
+        // save new data
+        localStorage.setItem(currentRoundTitle, JSON.stringify(data));
     }
     
     
@@ -2867,6 +2918,8 @@ $(function () {
 
             // chart series data
         });
+
+        return;
 
 
         currentXAxis = [1, 2, 3, 4, 5, 6, 7];

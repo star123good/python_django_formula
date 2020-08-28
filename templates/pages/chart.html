@@ -67,7 +67,10 @@ Formula - CHARTS
                                         {% for player in team.players %}
         
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{ player.number }}" disabled>
+                                            <input type="checkbox" class="custom-control-input check-chart-driver" 
+                                                id="customCheck{{ player.number }}" 
+                                                data-title="{{ team.short_name }}-{{ player.number }}.{{ player.short_name }}" 
+                                                disabled>
                                             <label class="custom-control-label" for="customCheck{{ player.number }}">
                                                 {{ player.number }}.{{ player.short_name }}
                                             </label>
