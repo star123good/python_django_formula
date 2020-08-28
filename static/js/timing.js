@@ -2653,6 +2653,8 @@ $(function () {
         }
         return checkedChartDrivers;
     }
+
+
     var chartAnalysis = null;
 
     var slider = null;
@@ -2849,7 +2851,7 @@ $(function () {
 
         chartPageCheckDrivers();
 
-        if (!getCheckedChartDrivers().length) return;
+        getCheckedChartDrivers();
 
         var currentSeries = {};
         var currentXAxis = [];
