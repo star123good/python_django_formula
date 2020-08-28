@@ -1019,7 +1019,7 @@ $(function () {
     }
 
     function getTableData(realDrivers, virtualDrivers){
-        console.log("[getTableData] get table data", realDrivers, virtualDrivers, timingScope.feed.Session);
+        // console.log("[getTableData] get table data", realDrivers, virtualDrivers, timingScope.feed.Session);
     
         let index = 0;
         let findPos, findGAP, temp, tempNames;
@@ -1166,7 +1166,7 @@ $(function () {
         }
     
         sortedRealDrivers = mergeDrivers;
-        console.log("[getTableData] sorted Real Drivers", sortedRealDrivers);
+        // console.log("[getTableData] sorted Real Drivers", sortedRealDrivers);
 
         // save sorted drivers to local stroage
         if (flagSavingLocalStorage) {
@@ -2186,6 +2186,8 @@ $(function () {
         this.data = {};
         this.yAxisMin = 0;
         this.yAxisMax = 100;
+        this.yValueMin = 1e10;
+        this.yValueMax = -1e10;
         this.xAxisTitle = "";
         this.setDefaultOptions();
         this.setOptions(options);
@@ -2196,6 +2198,8 @@ $(function () {
     // random color list
     CustomApexChart.COLOR_LIST_COUNT = 100;
     CustomApexChart.COLOR_LIST = [];
+    // step of axis
+    CustomApexChart.STEP_AXIS = 10;
 
     // get random color
     CustomApexChart.prototype.getRandomColor = function(isStatic=true) {
@@ -2410,12 +2414,10 @@ $(function () {
         }
         if ("yAxisMin" in options) {
             this.yAxisMin = options['yAxisMin'];
-            this.reloadData();
             delete options["yAxisMin"];
         }
         if ("yAxisMax" in options) {
             this.yAxisMax = options['yAxisMax'];
-            this.reloadData();
             delete options["yAxisMax"];
         }
 
@@ -2519,7 +2521,7 @@ $(function () {
                 data : this.data[key] || []
             });
         }
-        this.reloadData(true);
+        this.reloadData();
         this.setOptions({
             series : seriesData
         });
@@ -2532,27 +2534,22 @@ $(function () {
     // reaload data
     // calculate yMin & yMax from data
     CustomApexChart.prototype.reloadData = function(force=false) {
-        let tempMin = 1e10, tempMax = -1e10, step = 10;
         for (let key in this.series) {
             if (key in this.data) {
                 this.data[key].forEach(val => {
-                    if (tempMin > val) tempMin = val;
-                    if (tempMax < val) tempMax = val;
+                    if (this.yValueMin > val) this.yValueMin = val;
+                    if (this.yValueMax < val) this.yValueMax = val;
                 });
             }
         }
-        if (force || (!force && this.yAxisMin > tempMin)) {
-            this.yAxisMin = tempMin;
-            this.yAxisMin = parseInt((this.yAxisMin) / step) * step;
+        if (force) {
+            this.yAxisMin = parseInt((this.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+            this.yAxisMax = parseInt((this.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+            if (this.yAxisMax < this.yAxisMin) {
+                this.yAxisMax = this.yAxisMin + CustomApexChart.STEP_AXIS;
+            }
         }
-        if (force || (!force && this.yAxisMax < tempMax)) {
-            this.yAxisMax = tempMax;
-            this.yAxisMax = parseInt((this.yAxisMax - 1) / step + 1) * step;
-        }
-        if (this.yAxisMax < this.yAxisMin) {
-            this.yAxisMax = this.yAxisMin + step;
-        }
-        // console.log("[CustomApexChart reaload data]", tempMin, tempMax, this.yAxisMin, this.yAxisMax);
+        // console.log("[CustomApexChart reaload data]", this.yValueMin, this.yValueMax, this.yAxisMin, this.yAxisMax);
     };
 
     // chart render
@@ -2719,7 +2716,7 @@ $(function () {
 
     var chartAnalysis = null;
 
-    var slider = null;
+    var sliderAnalysis = null;
 
     // analysis page - chart
     function chartRenderAnalysis(flagYAXISOnly=false){
@@ -2820,10 +2817,10 @@ $(function () {
                 chartAnalysis.setXAxis(xAxis);
                 chartAnalysis.setData(data);
 
-                if(slider){
-                    slider.update({
-                        from: chartAnalysis.yAxisMax,
-                        to: chartAnalysis.yAxisMax
+                if(sliderAnalysis){
+                    sliderAnalysis.update({
+                        from: chartAnalysis.yValueMin,
+                        to: chartAnalysis.yValueMax
                     });
                 }
             }
@@ -2850,10 +2847,10 @@ $(function () {
                     chartAnalysis.setXAxis(xAxis);
                     chartAnalysis.setData(data);
 
-                    if(slider){
-                        slider.update({
-                            from: chartAnalysis.yAxisMax,
-                            to: chartAnalysis.yAxisMax
+                    if(sliderAnalysis){
+                        sliderAnalysis.update({
+                            from: chartAnalysis.yValueMin,
+                            to: chartAnalysis.yValueMax
                         });
                     }
                 }
@@ -2971,6 +2968,11 @@ $(function () {
         chartSector3 = null;
     var isCheckedDrivers = false;
 
+    var sliderLaptime = null,
+        sliderSector1 = null,
+        sliderSector2 = null,
+        sliderSector3 = null;
+
     // chart page - charts render
     function chartRenderCharts() {
         if(!document.getElementById("apex_line2_chart")) return ;
@@ -3036,21 +3038,65 @@ $(function () {
                 chartLaptime.setSeries(currentSeries);
                 chartLaptime.setXAxis(gameChartsLapsValues);
                 chartLaptime.setData(gameChartsData);
+
+                if(sliderLaptime){
+                    let tempMin = parseInt((chartLaptime.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+                    let tempMax = parseInt((chartLaptime.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    sliderLaptime.update({
+                        from: tempMin,
+                        to: tempMax,
+                        min: tempMin,
+                        max: tempMax
+                    });
+                }
             }
             if (chartSector1) {
                 chartSector1.setSeries(currentSeries);
                 chartSector1.setXAxis(gameChartsLapsValues);
                 chartSector1.setData(gameChartsSector1Data);
+
+                if(sliderSector1){
+                    let tempMin = parseInt((chartSector1.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+                    let tempMax = parseInt((chartSector1.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    sliderSector1.update({
+                        from: tempMin,
+                        to: tempMax,
+                        min: tempMin,
+                        max: tempMax
+                    });
+                }
             }
             if (chartSector2) {
                 chartSector2.setSeries(currentSeries);
                 chartSector2.setXAxis(gameChartsLapsValues);
                 chartSector2.setData(gameChartsSector1Data);
+
+                if(sliderSector2){
+                    let tempMin = parseInt((chartSector2.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+                    let tempMax = parseInt((chartSector2.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    sliderSector2.update({
+                        from: tempMin,
+                        to: tempMax,
+                        min: tempMin,
+                        max: tempMax
+                    });
+                }
             }
             if (chartSector3) {
                 chartSector3.setSeries(currentSeries);
                 chartSector3.setXAxis(gameChartsLapsValues);
                 chartSector3.setData(gameChartsSector1Data);
+
+                if(sliderSector3){
+                    let tempMin = parseInt((chartSector3.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+                    let tempMax = parseInt((chartSector3.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    sliderSector3.update({
+                        from: tempMin,
+                        to: tempMax,
+                        min: tempMin,
+                        max: tempMax
+                    });
+                }
             }
         });
 
@@ -3397,7 +3443,111 @@ $(function () {
             });
 
             // Saving it's instance to var
-            slider = $("#range_03").data("ionRangeSlider");
+            sliderAnalysis = $("#range_03").data("ionRangeSlider");
+        }
+
+        if($("#range_chart_laptime").length){
+            // create
+            $("#range_chart_laptime").ionRangeSlider({
+                type: "double",
+                grid: true,
+                min: 0,
+                max: 2000,
+                from: 0,
+                to: 2000,
+                prefix: "",
+                onChange: function(value){
+                    yAxisMax = value.to;
+                    yAxisMin = value.from;
+                    if (chartLaptime) {
+                        chartLaptime.setOptions({
+                            'yAxisMin': yAxisMin,
+                            'yAxisMax': yAxisMax,
+                        });
+                    }
+                }
+            });
+
+            // Saving it's instance to var
+            sliderLaptime = $("#range_chart_laptime").data("ionRangeSlider");
+        }
+
+        if($("#range_chart_sector1").length){
+            // create
+            $("#range_chart_sector1").ionRangeSlider({
+                type: "double",
+                grid: true,
+                min: 0,
+                max: 1000,
+                from: 0,
+                to: 1000,
+                prefix: "",
+                onChange: function(value){
+                    yAxisMax = value.to;
+                    yAxisMin = value.from;
+                    if (chartSector1) {
+                        chartSector1.setOptions({
+                            'yAxisMin': yAxisMin,
+                            'yAxisMax': yAxisMax,
+                        });
+                    }
+                }
+            });
+
+            // Saving it's instance to var
+            sliderSector1 = $("#range_chart_sector1").data("ionRangeSlider");
+        }
+
+        if($("#range_chart_sector2").length){
+            // create
+            $("#range_chart_sector2").ionRangeSlider({
+                type: "double",
+                grid: true,
+                min: 0,
+                max: 1000,
+                from: 0,
+                to: 1000,
+                prefix: "",
+                onChange: function(value){
+                    yAxisMax = value.to;
+                    yAxisMin = value.from;
+                    if (chartSector2) {
+                        chartSector2.setOptions({
+                            'yAxisMin': yAxisMin,
+                            'yAxisMax': yAxisMax,
+                        });
+                    }
+                }
+            });
+
+            // Saving it's instance to var
+            sliderSector2 = $("#range_chart_sector2").data("ionRangeSlider");
+        }
+
+        if($("#range_chart_sector3").length){
+            // create
+            $("#range_chart_sector3").ionRangeSlider({
+                type: "double",
+                grid: true,
+                min: 0,
+                max: 1000,
+                from: 0,
+                to: 1000,
+                prefix: "",
+                onChange: function(value){
+                    yAxisMax = value.to;
+                    yAxisMin = value.from;
+                    if (chartSector3) {
+                        chartSector3.setOptions({
+                            'yAxisMin': yAxisMin,
+                            'yAxisMax': yAxisMax,
+                        });
+                    }
+                }
+            });
+
+            // Saving it's instance to var
+            sliderSector3 = $("#range_chart_sector3").data("ionRangeSlider");
         }
 
 
