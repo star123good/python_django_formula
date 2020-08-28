@@ -137,6 +137,7 @@ $(function () {
     var sortedRealDrivers = [];
 
     var flagSavingLocalStorage = true;
+    var savedLocalStorageData = {};
 
     function get_ISODate(){
         sentTime = new Date();
@@ -1186,11 +1187,10 @@ $(function () {
         return sortedRealDrivers;
     }
 
-
     // save local storage
     // store parameters : [{ Driver.number : [{ LAP : [LAPTIME, SECTOR1, SECTOR2, SECTOR3] }] }]
     function saveLocalStorage() {
-        let currentRoundTitle = "formula_"+timingScope.roundSeason+"_"+timingScope.roundRace+"_"+timingScope.month+"_"+timingScope.day;
+        let currentRoundTitle = "formula_"+timingScope.roundSeason+"_"+timingScope.roundRace+"_"+timingScope.month+"_"+timingScope.day+"_"+timingScope.roundSession;
         let data = {};
         
         console.log("[save local storage]", currentRoundTitle);
@@ -1227,6 +1227,8 @@ $(function () {
                 data[no][lap][3] = d.S3;
             });
         }
+
+        savedLocalStorageData = data;
 
         // save new data
         localStorage.setItem(currentRoundTitle, JSON.stringify(data));
@@ -2427,7 +2429,7 @@ $(function () {
             ...this.options,
             ...options
         };
-        console.log("[CustomApexChart set options]", this.options);
+        // console.log("[CustomApexChart set options]", this.options);
 
         if (this.isRendered) {
             this.chart.updateOptions(this.options);
@@ -2470,7 +2472,7 @@ $(function () {
         };
         if (colors.length) seriesDataOptions['colors'] = colors;
         if (seriesData.length) seriesDataOptions['series'] = seriesData;
-        console.log("[CustomApexChart set Series]", seriesDataOptions);
+        // console.log("[CustomApexChart set Series]", seriesDataOptions);
         this.setOptions(seriesDataOptions);
     };
 
@@ -2565,8 +2567,8 @@ $(function () {
     var gameLaps;
     var logLastGameId;
 
-    // get datas from database
-    function getDatas(callback){
+    // get datas for analysis from database
+    function getDatasAnalysis(callback){
         if (!chartAnalysis || !chartAnalysis.isEnabled) return;
 
         gameData = [];
@@ -2693,15 +2695,20 @@ $(function () {
 
 
     var checkedChartDrivers = [];
+    var checkedChartDriversChanged = true;
 
     // checked charts drivers
     function getCheckedChartDrivers() {
+        let oldStatus = "", newStatus = "";
+        oldStatus = checkedChartDrivers.join("");
         checkedChartDrivers = [];
         if($(".check-chart-driver").length){
             $(".check-chart-driver").each(function(){
                 if($(this).prop("checked")) checkedChartDrivers.push(parseInt($(this).attr('id').replace("customCheck", "")));
             });
         }
+        newStatus = checkedChartDrivers.join("");
+        checkedChartDriversChanged = (oldStatus != newStatus);
         return checkedChartDrivers;
     }
 
@@ -2818,7 +2825,7 @@ $(function () {
             }
         }
         else {
-            getDatas(function(){
+            getDatasAnalysis(function(){
                 // after get datas from database score
                 xAxis = gameLaps;
                 if(checkedChartDrivers.length && gameData.length){
@@ -2850,6 +2857,109 @@ $(function () {
         }
     }
 
+
+    var gameChartsLapsValues;
+    var gameChartsLapsValuesMax = 0;
+    var gameChartsData;
+    var gameChartsSector1Data;
+    var gameChartsSector2Data;
+    var gameChartsSector3Data;
+
+    // get datas for charts from localstorage
+    function getDatasCharts(callback) {
+        if (!savedLocalStorageData || !CustomApexChart.IS_ENABLE || !checkedChartDrivers.length) return;
+
+        gameChartsLapsValues = [];
+        gameChartsData = {};
+        gameChartsSector1Data = {};
+        gameChartsSector2Data = {};
+        gameChartsSector3Data = {};
+        let tempMax = 0;
+
+        for (let no in savedLocalStorageData) {
+            let driver = savedLocalStorageData[no];
+
+            for (let lap in driver) {
+                lap = parseInt(lap);
+                if (isNaN(lap)) continue;
+                if (gameChartsLapsValues.indexOf(lap) < 0) gameChartsLapsValues.push(lap);
+                if (tempMax < lap) tempMax = lap;
+            }
+        }
+        gameChartsLapsValues.sort(function(a, b) {
+          return a - b;
+        });
+        // console.log("[getDatasCharts] gameChartsLapsValues", gameChartsLapsValues, tempMax);
+        if (tempMax <= gameChartsLapsValuesMax && !checkedChartDriversChanged) return;
+        gameChartsLapsValuesMax = tempMax;
+        checkedChartDriversChanged = false;
+
+        for (let no in savedLocalStorageData) {
+            let driver = savedLocalStorageData[no];
+
+            let findDriver = checkedChartDrivers.find(d => d == no);
+            // console.log("[getDatasCharts]", findDriver);
+            if (findDriver) {
+                gameChartsData[no] = new Array(checkedChartDrivers.length);
+                gameChartsSector1Data[no] = new Array(checkedChartDrivers.length);
+                gameChartsSector2Data[no] = new Array(checkedChartDrivers.length);
+                gameChartsSector3Data[no] = new Array(checkedChartDrivers.length);
+
+                gameChartsData[no].fill(0);
+                gameChartsSector1Data[no].fill(0);
+                gameChartsSector2Data[no].fill(0);
+                gameChartsSector3Data[no].fill(0);
+                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
+
+                let avarage = 0, avarage1 = 0, avarage2 = 0, avarage3 = 0, count = 0, count1 = 0, count2 = 0, count3 = 0;
+                for (let lap in driver) {
+                    lap = parseInt(lap);
+                    let pos = gameChartsLapsValues.indexOf(lap);
+                    // console.log("[getDatasCharts]", gameChartsLapsValues, lap, pos);
+                    if (pos >= 0) {
+                        let temp = parseFloat(driver[lap][0]);
+                        if (temp > 0) {
+                            gameChartsData[no][pos] = temp;
+                            // avarage += temp;
+                            // count ++;
+                        }
+                        temp = parseFloat(driver[lap][1]);
+                        if (temp > 0) {
+                            gameChartsSector1Data[no][pos] = temp;
+                            // avarage1 += temp;
+                            // count1 ++;
+                        }
+                        temp = parseFloat(driver[lap][2]);
+                        if (temp > 0) {
+                            gameChartsSector2Data[no][pos] = temp;
+                            // avarage2 += temp;
+                            // count2 ++;
+                        }
+                        temp = parseFloat(driver[lap][3]);
+                        if (temp > 0) {
+                            gameChartsSector3Data[no][pos] = temp;
+                            // avarage3 += temp;
+                            // count3 ++;
+                        }
+                    }
+                }
+                // avarage = (count > 0) ? (avarage / count) : 0;
+                // avarage1 = (count1 > 0) ? (avarage1 / count1) : 0;
+                // avarage2 = (count2 > 0) ? (avarage2 / count2) : 0;
+                // avarage3 = (count3 > 0) ? (avarage3 / count3) : 0;
+                // console.log("[getDatasCharts]", avarage, avarage1, avarage2, avarage3);
+                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
+
+                // gameChartsData[no] = gameChartsData[no].map(g => ((g > 0) ? g : avarage));
+                // gameChartsSector1Data[no] = gameChartsSector1Data[no].map(g => ((g > 0) ? g : avarage1));
+                // gameChartsSector2Data[no] = gameChartsSector2Data[no].map(g => ((g > 0) ? g : avarage2));
+                // gameChartsSector3Data[no] = gameChartsSector3Data[no].map(g => ((g > 0) ? g : avarage3));
+            }
+            // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
+        }
+
+        callback();
+    }
 
     var chartLaptime = null, 
         chartSector1 = null, 
@@ -2905,11 +3015,6 @@ $(function () {
         getCheckedChartDrivers();
 
         var currentSeries = {};
-        var currentXAxis = [];
-        var currentData = {},
-            currentSector1Data = {},
-            currentSector2Data = {},
-            currentSector3Data = {};
 
         checkedChartDrivers.forEach(driverId => {
             // chart series name
@@ -2919,47 +3024,32 @@ $(function () {
             // chart series data
         });
 
-        return;
+        getDatasCharts(function() {
+            if (!gameChartsLapsValues || !gameChartsLapsValues.length) return;
+            console.log("[chartRenderCharts] after getDatasCharts", gameChartsLapsValues, currentSeries, gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
 
+            if (chartLaptime) {
+                chartLaptime.setSeries(currentSeries);
+                chartLaptime.setXAxis(gameChartsLapsValues);
+                chartLaptime.setData(gameChartsData);
+            }
+            if (chartSector1) {
+                chartSector1.setSeries(currentSeries);
+                chartSector1.setXAxis(gameChartsLapsValues);
+                chartSector1.setData(gameChartsSector1Data);
+            }
+            if (chartSector2) {
+                chartSector2.setSeries(currentSeries);
+                chartSector2.setXAxis(gameChartsLapsValues);
+                chartSector2.setData(gameChartsSector1Data);
+            }
+            if (chartSector3) {
+                chartSector3.setSeries(currentSeries);
+                chartSector3.setXAxis(gameChartsLapsValues);
+                chartSector3.setData(gameChartsSector1Data);
+            }
+        });
 
-        currentXAxis = [1, 2, 3, 4, 5, 6, 7];
-        currentData = {
-            '3' : [28, 29, 31, 25, 30, 36, 39],
-            '5' : [13, 8, 16, 19, 11, 15, 19],
-        };
-        currentSector1Data = {
-            '3' : [28, 41, 36, 34, 30, 30, 28],
-            '5' : [12, 10, 19, 25, 22, 23, 20],
-        };
-        currentSector2Data = {
-            '3' : [28, 29, 33, 36, 32, 32, 33],
-            '5' : [9, 11, 14, 18, 17, 13, 13],
-        };
-        currentSector3Data = {
-            '3' : [121, 119, 99, 110, 121, 125, 100],
-            '5' : [103, 116, 96, 118, 107, 93, 83],
-        };
-
-        if (chartLaptime) {
-            chartLaptime.setSeries(currentSeries);
-            chartLaptime.setXAxis(currentXAxis);
-            chartLaptime.setData(currentData);
-        }
-        if (chartSector1) {
-            chartSector1.setSeries(currentSeries);
-            chartSector1.setXAxis(currentXAxis);
-            chartSector1.setData(currentSector1Data);
-        }
-        if (chartSector2) {
-            chartSector2.setSeries(currentSeries);
-            chartSector2.setXAxis(currentXAxis);
-            chartSector2.setData(currentSector2Data);
-        }
-        if (chartSector3) {
-            chartSector3.setSeries(currentSeries);
-            chartSector3.setXAxis(currentXAxis);
-            chartSector3.setData(currentSector3Data);
-        }
     }
 
     // chart page - check drivers
