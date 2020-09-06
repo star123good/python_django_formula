@@ -58,7 +58,7 @@ Formula - CHARTS
                         </h4>
 
                         <div class="row">
-                            {% for team in teams %}
+                            <!-- {% for team in teams %}
         
                             <div class="col">
                                 <div class="rounded rounded-lg border border-secondary p-1 pb-2">
@@ -81,7 +81,32 @@ Formula - CHARTS
                                 </div>
                             </div>
         
-                            {% endfor %}
+                            {% endfor %} -->
+                        </div>
+
+                        <div class="row">
+
+                            {% verbatim %}
+
+                            <div ng-switch="feed.Session1">
+                                <!-- RACE -->
+                                <div class="chart-wrapper">
+                                    <div class="form-group row">
+                                        <div class="col-md-12" ng-cloak="" ng-switch-when="Race">
+                                            <div class="col-md-1 form-check-inline" ng-repeat="line in sortedRealDrivers | orderBy : 'number/1' track by $index" ng-if="line.number && line.isReal">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{line.number}}" data-parsley-multiple="groups" data-parsley-mincheck="2" 
+                                                    data-title="{{ line.number }}.{{ line.shortName }}">
+                                                    <label class="custom-control-label" for="customCheck{{line.number}}">{{line.number + "." + line.shortName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endverbatim %}
+
                         </div>
         
 
