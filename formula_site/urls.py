@@ -40,8 +40,16 @@ def redirect_view_analysis(request):
     response = redirect('/formula_2_3/analysis')
     return response
 
+def redirect_view_analysis_gap(request):
+    response = redirect('/formula_2_3/analysis_gap')
+    return response
+
 def redirect_view_map(request):
     response = redirect('/formula_2_3/map')
+    return response
+
+def redirect_view_chart(request):
+    response = redirect('/formula_2_3/chart')
     return response
 
 def redirect_view_admin(request):
@@ -64,8 +72,10 @@ urlpatterns = [
     path('virtual', redirect_view_virtual),
     path('camera', redirect_view),
     path('map', redirect_view_map),
+    path('chart', redirect_view_chart),
     path('pit', redirect_view),
     path('analysis', redirect_view_analysis),
+    path('analysis_gap', redirect_view_analysis_gap),
     path('adminer', redirect_view_admin),
     path('manage', redirect_view_manage),
     path('score', redirect_view_score_e),

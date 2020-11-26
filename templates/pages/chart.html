@@ -1,0 +1,202 @@
+{% extends 'layouts/main.layout.html' %}
+
+{% load static %}
+
+{% block title %}
+Formula - CHARTS
+{% endblock title %}
+
+{% block extra_css %}
+
+    <link href="{% static 'css/vendor/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/ion.rangeSlider.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/ion.rangeSlider.skinModern.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/powerange.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="/">Formula Live Site</a></li>
+                            <li class="breadcrumb-item active">charts</li>
+                        </ol>
+                    </div>
+                    <div class="page-title row">
+                        <h4 class="page-title col-auto">
+                            CHARTS - Live
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <!-- end page title --> 
+
+        <div class="row">
+            <div class="col-12">
+    
+                <!--   Start of Chart Graph -->
+                <div class="card ">
+                    <div class="card-body">
+
+                        <h4 class="mt-1 header-title mb-4">
+                            <i class="mdi mdi-chart-multiline mr-2"></i> 
+                            <span id="chart-graph-title">
+                                {{ current_session_title }}
+                            </span>
+                            <a href="#" class="float-right" id="btn-chart-gragh-refresh" title="refresh">
+                                <i class="mdi mdi-refresh mdi-24px"></i>
+                            </a>
+                        </h4>
+
+                        <div class="row">
+                            <!-- {% for team in teams %}
+        
+                            <div class="col">
+                                <div class="rounded rounded-lg border border-secondary p-1 pb-2">
+                                    <h5 class="text-center">{{ team.short_name }}</h5>
+                                    <div class="mt-2">
+                                        {% for player in team.players %}
+        
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input check-chart-driver" 
+                                                id="customCheck{{ player.number }}" 
+                                                data-title="{{ team.short_name }}-{{ player.number }}.{{ player.short_name }}" 
+                                                disabled>
+                                            <label class="custom-control-label" for="customCheck{{ player.number }}">
+                                                {{ player.number }}.{{ player.short_name }}
+                                            </label>
+                                        </div>
+        
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+        
+                            {% endfor %} -->
+                        </div>
+
+                        <div class="row">
+
+                            {% verbatim %}
+
+                            <div ng-switch="feed.Session1">
+                                <!-- RACE -->
+                                <div class="chart-wrapper">
+                                    <div class="form-group row">
+                                        <div class="col-md-12" ng-cloak="" ng-switch-when="Race">
+                                            <div class="col-md-1 form-check-inline" ng-repeat="line in sortedRealDrivers | orderBy : 'number/1' track by $index" ng-if="line.number && line.isReal">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{line.number}}" data-parsley-multiple="groups" data-parsley-mincheck="2" data-title="{{ line.number }}.{{ line.shortName }}">
+                                                    <label class="custom-control-label" for="customCheck{{line.number}}">{{line.number + "." + line.shortName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endverbatim %}
+
+                        </div>
+        
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title mb-4">laptime(seconds)/lap</h4>
+                                <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                                    <input type="text" id="range_chart_laptime">
+                                </div>
+                                <div id="apex_line2_chart" class="apex-charts"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Sector1(seconds)/lap</h4>
+                                <div class="col-sm-12 m-1">
+                                    <input type="text" id="range_chart_sector1">
+                                </div>
+                                <div id="basic-column-sector1" class="apex-charts"></div>
+                            </div>
+                            <!-- end card body-->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col-->
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Sector2(seconds)/lap</h4>
+                                <div class="col-sm-12 m-1">
+                                    <input type="text" id="range_chart_sector2">
+                                </div>
+                                <div id="basic-column-sector2" class="apex-charts"></div>
+                            </div>
+                            <!-- end card body-->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col-->
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Sector3(seconds)/lap</h4>
+                                <div class="col-sm-12 m-1">
+                                    <input type="text" id="range_chart_sector3">
+                                </div>
+                                <div id="basic-column-sector3" class="apex-charts"></div>
+                            </div>
+                            <!-- end card body-->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col-->
+                </div>
+                <!--   End of Chart Graph -->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+
+    <!-- third party js -->
+    <script src="{% static 'js/vendor/Chart.bundle.min.js' %}"></script>
+    <script src="{% static 'js/vendor/sweetalert2.min.js' %}"></script>
+    <script src="{% static 'js/vendor/powerange.js' %}"></script>
+    <script src="{% static 'js/vendor/apexcharts.min.js' %}"></script>
+    <!-- third party js ends -->
+
+    <!-- signalR js -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-custom.js' %}"></script>
+    <script src="{% static 'js/jquery.signalR-2.4.1.min.js' %}"></script>
+    <script src="{% static 'js/angular-1.5.0.min.js' %}"></script>
+    <script src="{% static 'js/hubs.js' %}"></script>
+    <script src="{% static 'js/vendor/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'js/timing.js' %}"></script>
+    <!-- signalR js ends -->
+    
+{% endblock extra_js %}

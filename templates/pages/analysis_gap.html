@@ -1,0 +1,130 @@
+{% extends 'layouts/main.layout.html' %}
+
+{% load static %}
+
+{% block title %}
+Formula - ANALYSIS
+{% endblock title %}
+
+{% block extra_css %}
+
+    <link href="{% static 'css/vendor/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/ion.rangeSlider.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/ion.rangeSlider.skinModern.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/vendor/powerange.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="/">Formula Live Site</a></li>
+                            <li class="breadcrumb-item active">analysis</li>
+                        </ol>
+                    </div>
+                    <div class="page-title row">
+                        <h4 class="page-title col-auto">
+                            Analysis by GAP - Live Scoreboard
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <!-- end page title --> 
+
+        <div class="row">
+            <div class="col-12">
+    
+                <!--   Start of Analysis Graph -->
+                <div class="card ">
+                    <div class="card-body">
+                        <h4 class="mt-1 header-title mb-4">
+                            <i class="mdi mdi-chart-bell-curve mr-2"></i> 
+                            <span id="analysis-graph-title">
+                                {{ current_session_title }}
+                            </span>
+                            <a href="#" class="float-right" id="btn-analysis-gragh-refresh" title="refresh">
+                                <i class="mdi mdi-refresh mdi-24px"></i>
+                            </a>
+                        </h4>
+
+                        {% verbatim %}
+
+                        <div ng-switch="feed.Session1">
+                            <!-- RACE -->
+                            <div class="chart-wrapper">
+                                <div class="form-group row">
+                                    <label class="col-sm-1 col-form-label text-right text-uppercase">Main</label>
+                                    <div class="col-sm-2">
+                                        <select class="custom-select" id="select-main-driver" ng-cloak="" ng-switch-when="Race">
+                                            <option value="{{line.number}}" ng-repeat="line in sortedRealDrivers | orderBy : 'number/1' track by $index" ng-if="line.number && line.isReal">{{line.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 offset-sm-4">
+                                        <input type="text" id="range_analysis_gap">
+                                    </div>
+                                </div>
+                                <div class="chart-demo">
+                                    <div id="apex_line3" class="apex-charts"></div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12" ng-cloak="" ng-switch-when="Race">
+                                        <div class="col-md-1 form-check-inline" ng-repeat="line in sortedRealDrivers | orderBy : 'number/1' track by $index" ng-if="line.number && line.isReal">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{line.number}}" data-parsley-multiple="groups" data-parsley-mincheck="2" data-title="{{ line.number }}.{{ line.shortName }}">
+                                                <label class="custom-control-label" for="customCheck{{line.number}}">{{line.number + "." + line.shortName}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <!-- LOADER -->
+                                    <div class="loader" ng-switch-default="" aria-hidden="true">
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="fallback">Loading...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endverbatim %}
+                
+                    </div>
+                </div>
+                <!--   End of Analysis Graph -->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+
+    <!-- third party js -->
+    <script src="{% static 'js/vendor/Chart.bundle.min.js' %}"></script>
+    <script src="{% static 'js/vendor/sweetalert2.min.js' %}"></script>
+    <script src="{% static 'js/vendor/powerange.js' %}"></script>
+    <script src="{% static 'js/vendor/apexcharts.min.js' %}"></script>
+    <!-- third party js ends -->
+
+    <!-- signalR js -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-custom.js' %}"></script>
+    <script src="{% static 'js/jquery.signalR-2.4.1.min.js' %}"></script>
+    <script src="{% static 'js/angular-1.5.0.min.js' %}"></script>
+    <script src="{% static 'js/hubs.js' %}"></script>
+    <script src="{% static 'js/vendor/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'js/timing.js' %}"></script>
+    <!-- signalR js ends -->
+    
+{% endblock extra_js %}
