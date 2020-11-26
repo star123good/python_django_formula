@@ -2510,7 +2510,7 @@ $(function () {
     };
 
     // set data
-    CustomApexChart.prototype.setData = function(data) {
+    CustomApexChart.prototype.setData = function(data, reloadForce=false) {
         // update data
         for (let key in data) {
             let value = data[key];
@@ -2527,7 +2527,7 @@ $(function () {
                 data : this.data[key] || []
             });
         }
-        this.reloadData();
+        this.reloadData(reloadForce);
         this.setOptions({
             series : seriesData
         });
@@ -2537,8 +2537,17 @@ $(function () {
         }
     };
 
+    // calculate yMin from yValueMin
+    CustomApexChart.calcYAxisMin = function(yValueMin) {
+        return parseInt((yValueMin + 1) / CustomApexChart.STEP_AXIS - 1) * CustomApexChart.STEP_AXIS;
+    }
+
+    // calculate yMax from yValueMax
+    CustomApexChart.calcYAxisMax = function(yValueMax) {
+        return parseInt((yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+    }
+
     // reaload data
-    // calculate yMin & yMax from data
     CustomApexChart.prototype.reloadData = function(force=false) {
         for (let key in this.series) {
             if (key in this.data) {
@@ -2549,13 +2558,13 @@ $(function () {
             }
         }
         if (force) {
-            this.yAxisMin = parseInt((this.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-            this.yAxisMax = parseInt((this.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+            this.yAxisMin = CustomApexChart.calcYAxisMin(this.yValueMin);
+            this.yAxisMax = CustomApexChart.calcYAxisMax(this.yValueMax);
             if (this.yAxisMax < this.yAxisMin) {
                 this.yAxisMax = this.yAxisMin + CustomApexChart.STEP_AXIS;
             }
         }
-        // console.log("[CustomApexChart reaload data]", this.yValueMin, this.yValueMax, this.yAxisMin, this.yAxisMax);
+        console.log("[CustomApexChart reaload data]", this.yValueMin, this.yValueMax, this.yAxisMin, this.yAxisMax);
     };
 
     // chart render
@@ -2902,16 +2911,29 @@ $(function () {
 
         getDatasCharts(function() {
             if (!gameChartsLapsValues || !gameChartsLapsValues.length) return;
-            console.log("[chartRenderAnalysisGAP] after getDatasCharts", gameChartsLapsValues, currentSeries, gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, mainAnalysisGAP);
+            console.log("[chartRenderAnalysisGAP] after getDatasCharts", gameChartsLapsValues, currentSeries, gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, gameChartAnalysisGAPData, mainAnalysisGAP);
 
             if (chartAnalysisGAP) {
                 chartAnalysisGAP.setSeries(currentSeries);
                 chartAnalysisGAP.setXAxis(gameChartsLapsValues);
-                chartAnalysisGAP.setData(gameChartAnalysisGAPData);
+
+                // compare main to others
+                let mainDriver = savedLocalStorageData[mainAnalysisGAP];
+                if (mainDriver) {
+                    let dataArrayNo = getArraysFromDriver(mainDriver);
+                    if (dataArrayNo) {
+                        mainDriverGameChartAnalysisGAPData = dataArrayNo['ChartAnalysisGAP'];
+                    }
+                }
+                for (let no in gameChartAnalysisGAPData) {
+                    gameChartAnalysisGAPData[no] = gameChartAnalysisGAPData[no].map((v, i) => v - mainDriverGameChartAnalysisGAPData[i]);
+                }
+
+                chartAnalysisGAP.setData(gameChartAnalysisGAPData, true);
 
                 if(sliderAnalysisGAP){
-                    let tempMin = parseInt((chartAnalysisGAP.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-                    let tempMax = parseInt((chartAnalysisGAP.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    let tempMin = CustomApexChart.calcYAxisMin(chartAnalysisGAP.yValueMin);
+                    let tempMax = CustomApexChart.calcYAxisMax(chartAnalysisGAP.yValueMax);
                     sliderAnalysisGAP.update({
                         from: tempMin,
                         to: tempMax,
@@ -2920,7 +2942,7 @@ $(function () {
                     });
                 }
             }
-        });
+        }, true);
 
     }
 
@@ -2933,8 +2955,80 @@ $(function () {
     var gameChartsSector3Data;
     var gameChartAnalysisGAPData;
 
+    // get arrays from driver of savedLocalStorageData
+    function getArraysFromDriver(driver) {
+        if (!checkedChartDrivers || !checkedChartDrivers.length) return null;
+        
+        gameChartsDataNo = new Array(checkedChartDrivers.length);
+        gameChartsSector1DataNo = new Array(checkedChartDrivers.length);
+        gameChartsSector2DataNo = new Array(checkedChartDrivers.length);
+        gameChartsSector3DataNo = new Array(checkedChartDrivers.length);
+        gameChartAnalysisGAPDataNo = new Array(checkedChartDrivers.length);
+
+        gameChartsDataNo.fill(0);
+        gameChartsSector1DataNo.fill(0);
+        gameChartsSector2DataNo.fill(0);
+        gameChartsSector3DataNo.fill(0);
+        gameChartAnalysisGAPDataNo.fill(0);
+
+        let avarage = 0, avarage1 = 0, avarage2 = 0, avarage3 = 0, count = 0, count1 = 0, count2 = 0, count3 = 0;
+        for (let lap in driver) {
+            lap = parseInt(lap);
+            let pos = gameChartsLapsValues.indexOf(lap);
+            // console.log("[getDatasCharts]", gameChartsLapsValues, lap, pos);
+            if (pos >= 0) {
+                let temp = parseFloat(driver[lap][0]);
+                if (temp > 0) {
+                    gameChartsDataNo[pos] = temp;
+                    // avarage += temp;
+                    // count ++;
+                }
+                temp = parseFloat(driver[lap][1]);
+                if (temp > 0) {
+                    gameChartsSector1DataNo[pos] = temp;
+                    // avarage1 += temp;
+                    // count1 ++;
+                }
+                temp = parseFloat(driver[lap][2]);
+                if (temp > 0) {
+                    gameChartsSector2DataNo[pos] = temp;
+                    // avarage2 += temp;
+                    // count2 ++;
+                }
+                temp = parseFloat(driver[lap][3]);
+                if (temp > 0) {
+                    gameChartsSector3DataNo[pos] = temp;
+                    // avarage3 += temp;
+                    // count3 ++;
+                }
+                temp = parseFloat(driver[lap][4]);
+                if (temp > 0) {
+                    gameChartAnalysisGAPDataNo[pos] = temp;
+                }
+            }
+        }
+        // avarage = (count > 0) ? (avarage / count) : 0;
+        // avarage1 = (count1 > 0) ? (avarage1 / count1) : 0;
+        // avarage2 = (count2 > 0) ? (avarage2 / count2) : 0;
+        // avarage3 = (count3 > 0) ? (avarage3 / count3) : 0;
+        // console.log("[getDatasCharts]", avarage, avarage1, avarage2, avarage3);
+
+        // gameChartsDataNo = gameChartsDataNo.map(g => ((g > 0) ? g : avarage));
+        // gameChartsSector1DataNo = gameChartsSector1DataNo.map(g => ((g > 0) ? g : avarage1));
+        // gameChartsSector2DataNo = gameChartsSector2DataNo.map(g => ((g > 0) ? g : avarage2));
+        // gameChartsSector3DataNo = gameChartsSector3DataNo.map(g => ((g > 0) ? g : avarage3));
+
+        return {
+            Charts: gameChartsDataNo,
+            ChartsSector1: gameChartsSector1DataNo,
+            ChartsSector2: gameChartsSector2DataNo,
+            ChartsSector3: gameChartsSector3DataNo,
+            ChartAnalysisGAP: gameChartAnalysisGAPDataNo,
+        }
+    }
+
     // get datas for charts from localstorage
-    function getDatasCharts(callback) {
+    function getDatasCharts(callback, force=false) {
         if (!savedLocalStorageData || !CustomApexChart.IS_ENABLE || !checkedChartDrivers) return;
 
         gameChartsLapsValues = [];
@@ -2959,7 +3053,7 @@ $(function () {
           return a - b;
         });
         // console.log("[getDatasCharts] gameChartsLapsValues", gameChartsLapsValues, tempMax);
-        if (tempMax <= gameChartsLapsValuesMax && !checkedChartDriversChanged) return;
+        if (tempMax <= gameChartsLapsValuesMax && !checkedChartDriversChanged && !force) return;
         gameChartsLapsValuesMax = tempMax;
         checkedChartDriversChanged = false;
 
@@ -2969,66 +3063,15 @@ $(function () {
             let findDriver = checkedChartDrivers.find(d => d == no);
             // console.log("[getDatasCharts]", findDriver);
             if (findDriver) {
-                gameChartsData[no] = new Array(checkedChartDrivers.length);
-                gameChartsSector1Data[no] = new Array(checkedChartDrivers.length);
-                gameChartsSector2Data[no] = new Array(checkedChartDrivers.length);
-                gameChartsSector3Data[no] = new Array(checkedChartDrivers.length);
-                gameChartAnalysisGAPData[no] = new Array(checkedChartDrivers.length);
-
-                gameChartsData[no].fill(0);
-                gameChartsSector1Data[no].fill(0);
-                gameChartsSector2Data[no].fill(0);
-                gameChartsSector3Data[no].fill(0);
-                gameChartAnalysisGAPData[no].fill(0);
-                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, gameChartAnalysisGAPData);
-
-                let avarage = 0, avarage1 = 0, avarage2 = 0, avarage3 = 0, count = 0, count1 = 0, count2 = 0, count3 = 0;
-                for (let lap in driver) {
-                    lap = parseInt(lap);
-                    let pos = gameChartsLapsValues.indexOf(lap);
-                    // console.log("[getDatasCharts]", gameChartsLapsValues, lap, pos);
-                    if (pos >= 0) {
-                        let temp = parseFloat(driver[lap][0]);
-                        if (temp > 0) {
-                            gameChartsData[no][pos] = temp;
-                            // avarage += temp;
-                            // count ++;
-                        }
-                        temp = parseFloat(driver[lap][1]);
-                        if (temp > 0) {
-                            gameChartsSector1Data[no][pos] = temp;
-                            // avarage1 += temp;
-                            // count1 ++;
-                        }
-                        temp = parseFloat(driver[lap][2]);
-                        if (temp > 0) {
-                            gameChartsSector2Data[no][pos] = temp;
-                            // avarage2 += temp;
-                            // count2 ++;
-                        }
-                        temp = parseFloat(driver[lap][3]);
-                        if (temp > 0) {
-                            gameChartsSector3Data[no][pos] = temp;
-                            // avarage3 += temp;
-                            // count3 ++;
-                        }
-                        temp = parseFloat(driver[lap][4]);
-                        if (temp > 0) {
-                            gameChartAnalysisGAPData[no][pos] = temp;
-                        }
-                    }
+                let dataArrayNo = getArraysFromDriver(driver);
+                if (dataArrayNo) {
+                    gameChartsData[no] = dataArrayNo['Charts'];
+                    gameChartsSector1Data[no] = dataArrayNo['ChartsSector1'];
+                    gameChartsSector2Data[no] = dataArrayNo['ChartsSector2'];
+                    gameChartsSector3Data[no] = dataArrayNo['ChartsSector3'];
+                    gameChartAnalysisGAPData[no] = dataArrayNo['ChartAnalysisGAP'];
                 }
-                // avarage = (count > 0) ? (avarage / count) : 0;
-                // avarage1 = (count1 > 0) ? (avarage1 / count1) : 0;
-                // avarage2 = (count2 > 0) ? (avarage2 / count2) : 0;
-                // avarage3 = (count3 > 0) ? (avarage3 / count3) : 0;
-                // console.log("[getDatasCharts]", avarage, avarage1, avarage2, avarage3);
-                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
-
-                // gameChartsData[no] = gameChartsData[no].map(g => ((g > 0) ? g : avarage));
-                // gameChartsSector1Data[no] = gameChartsSector1Data[no].map(g => ((g > 0) ? g : avarage1));
-                // gameChartsSector2Data[no] = gameChartsSector2Data[no].map(g => ((g > 0) ? g : avarage2));
-                // gameChartsSector3Data[no] = gameChartsSector3Data[no].map(g => ((g > 0) ? g : avarage3));
+                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, gameChartAnalysisGAPData);
             }
             // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
         }
@@ -3114,8 +3157,8 @@ $(function () {
                 chartLaptime.setData(gameChartsData);
 
                 if(sliderLaptime){
-                    let tempMin = parseInt((chartLaptime.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-                    let tempMax = parseInt((chartLaptime.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    let tempMin = CustomApexChart.calcYAxisMin(chartLaptime.yValueMin);
+                    let tempMax = CustomApexChart.calcYAxisMax(chartLaptime.yValueMax);
                     sliderLaptime.update({
                         from: tempMin,
                         to: tempMax,
@@ -3130,8 +3173,8 @@ $(function () {
                 chartSector1.setData(gameChartsSector1Data);
 
                 if(sliderSector1){
-                    let tempMin = parseInt((chartSector1.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-                    let tempMax = parseInt((chartSector1.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    let tempMin = CustomApexChart.calcYAxisMin(chartSector1.yValueMin);
+                    let tempMax = CustomApexChart.calcYAxisMax(chartSector1.yValueMax);
                     sliderSector1.update({
                         from: tempMin,
                         to: tempMax,
@@ -3146,8 +3189,8 @@ $(function () {
                 chartSector2.setData(gameChartsSector1Data);
 
                 if(sliderSector2){
-                    let tempMin = parseInt((chartSector2.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-                    let tempMax = parseInt((chartSector2.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    let tempMin = CustomApexChart.calcYAxisMin(chartSector2.yValueMin);
+                    let tempMax = CustomApexChart.calcYAxisMax(chartSector2.yValueMax);
                     sliderSector2.update({
                         from: tempMin,
                         to: tempMax,
@@ -3162,8 +3205,8 @@ $(function () {
                 chartSector3.setData(gameChartsSector1Data);
 
                 if(sliderSector3){
-                    let tempMin = parseInt((chartSector3.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
-                    let tempMax = parseInt((chartSector3.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    let tempMin = CustomApexChart.calcYAxisMin(chartSector3.yValueMin);
+                    let tempMax = CustomApexChart.calcYAxisMax(chartSector3.yValueMax);
                     sliderSector3.update({
                         from: tempMin,
                         to: tempMax,
