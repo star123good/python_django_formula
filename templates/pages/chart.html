@@ -95,8 +95,7 @@ Formula - CHARTS
                                         <div class="col-md-12" ng-cloak="" ng-switch-when="Race">
                                             <div class="col-md-1 form-check-inline" ng-repeat="line in sortedRealDrivers | orderBy : 'number/1' track by $index" ng-if="line.number && line.isReal">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{line.number}}" data-parsley-multiple="groups" data-parsley-mincheck="2" 
-                                                    data-title="{{ line.number }}.{{ line.shortName }}">
+                                                    <input type="checkbox" class="custom-control-input check-chart-driver" id="customCheck{{line.number}}" data-parsley-multiple="groups" data-parsley-mincheck="2" data-title="{{ line.number }}.{{ line.shortName }}">
                                                     <label class="custom-control-label" for="customCheck{{line.number}}">{{line.number + "." + line.shortName}}</label>
                                                 </div>
                                             </div>

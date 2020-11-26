@@ -1181,6 +1181,7 @@ $(function () {
         // render charts
         if (CustomApexChart.IS_ENABLE) {
             chartRenderAnalysis();
+            chartRenderAnalysisGAP();
             chartRenderCharts();
         }
         
@@ -1220,11 +1221,13 @@ $(function () {
                 if (!data[no]) data[no] = {};
                 if (!data[no][lap]) data[no][lap] = [];
                 if (d.LAPTIME && d.LAPTIME != "") {
+                    // lap | 0 => LAPTIME
                     data[no][lap][0] = "" + (parseTime(d.LAPTIME).getTime() / 1000);
                 }
-                data[no][lap][1] = d.S1;
-                data[no][lap][2] = d.S2;
-                data[no][lap][3] = d.S3;
+                data[no][lap][1] = d.S1;    // lap | 1 => SECTOR1
+                data[no][lap][2] = d.S2;    // lap | 2 => SECTOR2
+                data[no][lap][3] = d.S3;    // lap | 3 => SECTOR3
+                data[no][lap][4] = d.GAP;   // lap | 4 => GAP
             });
         }
 
@@ -1526,6 +1529,9 @@ $(function () {
 
                     // analysis
                     chartRenderAnalysis();
+
+                    // analysis_gap
+                    chartRenderAnalysisGAP();
 
                     // chart page
                     chartRenderCharts();
@@ -2859,12 +2865,73 @@ $(function () {
     }
 
 
+    var chartAnalysisGAP = null;
+
+    var sliderAnalysisGAP = null;
+
+    var mainAnalysisGAP = null;
+
+    // analysis_gap page - chart
+    function chartRenderAnalysisGAP(){
+        if(!document.getElementById("apex_line3")) return ;
+
+        if (!chartAnalysisGAP) {
+            // create chart analysis_gap
+            chartAnalysisGAP = new CustomApexChart("#apex_line3", "line");
+            chartAnalysisGAP.setOptions({
+                'title' : 'ANALYSIS by GAP CHART',
+                'height' : 396,
+                'xAxisTitle' : 'LAP',
+                'yAxisTitle' : 'GAP',
+            });
+            chartAnalysisGAP.render();
+        }
+
+        if (!getCheckedChartDrivers().length) return;
+
+        if($("#select-main-driver").length) mainAnalysisGAP = $("#select-main-driver").val();
+        if (!mainAnalysisGAP) return;
+
+        var currentSeries = {};
+
+        checkedChartDrivers.forEach(driverId => {
+            // chart series name
+            currentSeries[driverId] = "";
+            if ($("#customCheck"+driverId).length) currentSeries[driverId] = $("#customCheck"+driverId).attr('data-title');
+        });
+
+        getDatasCharts(function() {
+            if (!gameChartsLapsValues || !gameChartsLapsValues.length) return;
+            console.log("[chartRenderAnalysisGAP] after getDatasCharts", gameChartsLapsValues, currentSeries, gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, mainAnalysisGAP);
+
+            if (chartAnalysisGAP) {
+                chartAnalysisGAP.setSeries(currentSeries);
+                chartAnalysisGAP.setXAxis(gameChartsLapsValues);
+                chartAnalysisGAP.setData(gameChartAnalysisGAPData);
+
+                if(sliderAnalysisGAP){
+                    let tempMin = parseInt((chartAnalysisGAP.yValueMin) / CustomApexChart.STEP_AXIS) * CustomApexChart.STEP_AXIS;
+                    let tempMax = parseInt((chartAnalysisGAP.yValueMax - 1) / CustomApexChart.STEP_AXIS + 1) * CustomApexChart.STEP_AXIS;
+                    sliderAnalysisGAP.update({
+                        from: tempMin,
+                        to: tempMax,
+                        min: tempMin,
+                        max: tempMax
+                    });
+                }
+            }
+        });
+
+    }
+
+
     var gameChartsLapsValues;
     var gameChartsLapsValuesMax = 0;
     var gameChartsData;
     var gameChartsSector1Data;
     var gameChartsSector2Data;
     var gameChartsSector3Data;
+    var gameChartAnalysisGAPData;
 
     // get datas for charts from localstorage
     function getDatasCharts(callback) {
@@ -2875,6 +2942,7 @@ $(function () {
         gameChartsSector1Data = {};
         gameChartsSector2Data = {};
         gameChartsSector3Data = {};
+        gameChartAnalysisGAPData = {};
         let tempMax = 0;
 
         for (let no in savedLocalStorageData) {
@@ -2905,12 +2973,14 @@ $(function () {
                 gameChartsSector1Data[no] = new Array(checkedChartDrivers.length);
                 gameChartsSector2Data[no] = new Array(checkedChartDrivers.length);
                 gameChartsSector3Data[no] = new Array(checkedChartDrivers.length);
+                gameChartAnalysisGAPData[no] = new Array(checkedChartDrivers.length);
 
                 gameChartsData[no].fill(0);
                 gameChartsSector1Data[no].fill(0);
                 gameChartsSector2Data[no].fill(0);
                 gameChartsSector3Data[no].fill(0);
-                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data);
+                gameChartAnalysisGAPData[no].fill(0);
+                // console.log("[getDatasCharts]", gameChartsData, gameChartsSector1Data, gameChartsSector2Data, gameChartsSector3Data, gameChartAnalysisGAPData);
 
                 let avarage = 0, avarage1 = 0, avarage2 = 0, avarage3 = 0, count = 0, count1 = 0, count2 = 0, count3 = 0;
                 for (let lap in driver) {
@@ -2941,6 +3011,10 @@ $(function () {
                             gameChartsSector3Data[no][pos] = temp;
                             // avarage3 += temp;
                             // count3 ++;
+                        }
+                        temp = parseFloat(driver[lap][4]);
+                        if (temp > 0) {
+                            gameChartAnalysisGAPData[no][pos] = temp;
                         }
                     }
                 }
@@ -3405,10 +3479,13 @@ $(function () {
         refreshCompareDrivers();
 
 
-        // chart - analysis
+        // charts - analysis, analysis_gap, chart
         // select xAxis
-        $(document).on("change", "#select-xAxis, #select-yAxis, .check-chart-driver", function(){
+        $(document).on("change", "#select-xAxis, #select-yAxis, #select-main-driver, .check-chart-driver", function(){
+            // analysis page refresh
             chartRenderAnalysis();
+            // analysis_gap page refresh
+            chartRenderAnalysisGAP();
             // chart page refresh
             chartRenderCharts();
         });
@@ -3421,6 +3498,9 @@ $(function () {
 
         // analysis page - charts render
         chartRenderAnalysis();
+
+        // analysis_gap page - charts render
+        chartRenderAnalysisGAP();
 
         // chart page - charts render
         chartRenderCharts();
@@ -3444,6 +3524,32 @@ $(function () {
 
             // Saving it's instance to var
             sliderAnalysis = $("#range_03").data("ionRangeSlider");
+        }
+
+        if($("#range_analysis_gap").length){
+            // create
+            $("#range_analysis_gap").ionRangeSlider({
+                type: "double",
+                grid: true,
+                min: 0,
+                max: 1000,
+                from: 0,
+                to: 1000,
+                prefix: "",
+                onChange: function(value){
+                    yAxisMax = value.to;
+                    yAxisMin = value.from;
+                    if (chartAnalysisGAP) {
+                        chartAnalysisGAP.setOptions({
+                            'yAxisMin': yAxisMin,
+                            'yAxisMax': yAxisMax,
+                        });
+                    }
+                }
+            });
+
+            // Saving it's instance to var
+            sliderAnalysisGAP = $("#range_analysis_gap").data("ionRangeSlider");
         }
 
         if($("#range_chart_laptime").length){

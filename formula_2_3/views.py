@@ -132,6 +132,13 @@ class Formula23View():
             return render(request, 'pages/analysis.html', Formula23View.getInitParams(request))
         else:
             return redirect('/user/login')
+    
+    # analysis_gap page
+    def analysis_gap(request):
+        if request.session.get('user_id', False):
+            return render(request, 'pages/analysis_gap.html', Formula23View.getInitParams(request))
+        else:
+            return redirect('/user/login')
 
     # chart page
     def chart(request):
