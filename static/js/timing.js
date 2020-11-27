@@ -3579,6 +3579,7 @@ $(function () {
                 from: 0,
                 to: 1000,
                 prefix: "",
+                step: 0.1,
                 onChange: function(value){
                     yAxisMax = value.to;
                     yAxisMin = value.from;
@@ -3605,7 +3606,6 @@ $(function () {
                 from: 0,
                 to: 2000,
                 prefix: "",
-                step: 0.1,
                 onChange: function(value){
                     yAxisMax = value.to;
                     yAxisMin = value.from;
